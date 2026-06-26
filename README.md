@@ -13,7 +13,21 @@ Demo pendiente: `https://clickmemories.example.com`
 
 ## Vista previa
 
-![Vista previa editorial de ClickMemories](https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1400&q=82)
+<p align="center">
+  <img src="docs/assets/readme/crop-home-hero.svg" alt="Hero principal de ClickMemories" width="100%" />
+</p>
+
+| Showreel visual | Trabajos destacados |
+| --- | --- |
+| <img src="docs/assets/readme/crop-home-showreel.svg" alt="Showreel visual de ClickMemories" /> | <img src="docs/assets/readme/crop-home-featured.svg" alt="Trabajos destacados de ClickMemories" /> |
+
+| Portafolio editorial | Servicios a medida |
+| --- | --- |
+| <img src="docs/assets/readme/crop-work-grid.svg" alt="Grilla editorial de trabajos de ClickMemories" /> | <img src="docs/assets/readme/crop-services-grid.svg" alt="Servicios a medida de ClickMemories" /> |
+
+<p align="center">
+  <img src="docs/assets/readme/crop-contact-experience.svg" alt="Preguntas frecuentes y formulario de contacto de ClickMemories" width="100%" />
+</p>
 
 ## Características principales
 
