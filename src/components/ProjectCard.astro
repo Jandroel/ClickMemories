@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"trabajos">;
+}
+
+const { project } = Astro.props;
+const galleryPreview = project.data.gallery.slice(0, 3);
+const assetCount = project.data.gallery.length + (project.data.video ? 1 : 0);
+---
+
+<article class="project-card">
+  <a class="project-card__image" href={`/trabajos/${project.slug}/`} aria-label={`Ver proyecto ${project.data.title}`}>
+    <img src={project.data.cover} alt={project.data.coverAlt} loading="lazy" />
+    <span class="project-card__badge">{assetCount} piezas</span>
+  </a>
+  <div class="project-card__body">
+    <p class="eyebrow">{project.data.category}</p>
+    <h3><a href={`/trabajos/${project.slug}/`}>{project.data.title}</a></h3>
+    <p>{project.data.excerpt}</p>
+    <div class="project-card__strip" aria-hidden="true">
+      {galleryPreview.map((item) => <img src={item.src} alt="" loading="lazy" />)}
+    </div>
+    <div class="project-card__meta">
+      <span>{project.data.location}</span>
+      <span>{project.data.duration}</span>
+    </div>
+  </div>
+</article>

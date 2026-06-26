@@ -1,0 +1,24 @@
+---
+interface Props {
+  service: {
+    title: string;
+    description: string;
+    details: string[];
+    startingAt: string;
+  };
+}
+
+const { service } = Astro.props;
+---
+
+<article class="service-card">
+  <div>
+    <p class="service-card__price">{service.startingAt}</p>
+    <h3>{service.title}</h3>
+    <p>{service.description}</p>
+  </div>
+  <ul>
+    {service.details.map((detail) => <li>{detail}</li>)}
+  </ul>
+</article>
+

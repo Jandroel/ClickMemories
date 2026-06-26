@@ -1,0 +1,146 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import ServiceCard from "@components/ServiceCard.astro";
+import { imageLibrary, processSteps, services, showreelFrames, siteConfig, stats, testimonials } from "@data/site";
+
+const projects = (await getCollection("trabajos"))
+  .filter((project) => project.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout image={imageLibrary.wedding}>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__media">
+      <img src={imageLibrary.wedding} alt="Pareja de novios abrazada bajo luz cálida durante una boda." />
+    </div>
+    <div class="hero__content">
+      <p class="eyebrow">Fotografía y video cinematográfico</p>
+      <h1 id="hero-title">ClickMemories</h1>
+      <p class="hero__line">Historias reales, recuerdos que permanecen.</p>
+      <p>
+        ClickMemories crea fotografía y video con mirada cinematográfica para bodas, eventos, marcas y personas que quieren recordar cada detalle con intención.
+      </p>
+      <div class="hero__actions">
+        <a class="button button--light" href="/trabajos/">Ver trabajos</a>
+        <a class="button button--secondary" href="/contacto/">Cotizar mi sesión</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="stats-title">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Mirada documental"
+        title="Capturamos momentos que se sienten vivos."
+        description="Nos interesan los gestos que pasan rápido: una mano que calma, una risa fuera de protocolo, una marca que se revela en su proceso."
+      />
+      <div class="stats-grid" id="stats-title">
+        {stats.map((item) => <div class="stat"><strong>{item.value}</strong><span>{item.label}</span></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark section--showreel" aria-labelledby="showreel-title">
+    <div class="container">
+      <div class="showreel-header">
+        <div>
+          <p class="eyebrow">Showreel visual</p>
+          <h2 id="showreel-title">Foto, video y memoria en una misma línea visual.</h2>
+        </div>
+        <a class="button button--light" href="/trabajos/">Ver trabajos</a>
+      </div>
+      <div class="filmstrip" aria-label="Frames destacados de ClickMemories">
+        <div class="filmstrip__track">
+          {[...showreelFrames, ...showreelFrames].map((frame) => (
+            <figure>
+              <img src={frame.src} alt={frame.alt} loading="lazy" />
+              <figcaption>{frame.label}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream" aria-labelledby="featured-title">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Trabajos destacados"
+        title="Cada historia merece verse como una película."
+        description="Una selección de bodas, retratos y marcas donde la emoción guía la estética."
+      />
+      <div class="project-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+      <div class="section-actions" style="margin-top: 2rem;">
+        <a class="button button--primary" href="/trabajos/">Explorar portafolio</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="services-title">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Servicios"
+        title="Coberturas pensadas para recordar, comunicar y permanecer."
+        description="Desde un film de boda hasta contenido vertical para una marca, cada entrega se diseña según intención, formato y ritmo de uso."
+      />
+      <div class="service-grid">
+        {services.slice(0, 3).map((service) => <ServiceCard service={service} />)}
+      </div>
+      <div class="section-actions" style="margin-top: 2rem;">
+        <a class="button button--primary" href="/servicios/">Ver servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="image-band" style={`background-image: url(${imageLibrary.production});`}>
+    <div class="image-band__content">
+      <p class="eyebrow">Proceso</p>
+      <h2>Recuerdos honestos, luz natural y narrativa visual.</h2>
+      <p>Trabajamos con planificación suficiente para cuidar el resultado y con presencia ligera para no convertir la experiencia en una producción ajena.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="process-title">
+    <div class="container">
+      <SectionHeading eyebrow="Cómo trabajamos" title="Una ruta clara para que todo fluya." />
+      <div class="process-grid">
+        {processSteps.map((step) => <article class="process-step"><h3>{step.title}</h3><p>{step.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream" aria-labelledby="testimonials-title">
+    <div class="container">
+      <SectionHeading eyebrow="Clientes" title="Historias contadas con cuidado." />
+      <div class="testimonial-grid">
+        {
+          testimonials.map((item) => (
+            <figure class="testimonial">
+              <blockquote>“{item.quote}”</blockquote>
+              <figcaption><strong>{item.author}</strong><br /><cite>{item.context}</cite></figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Reserva"
+        title="Cuéntanos tu historia y creemos algo memorable."
+        description={`Escríbenos a ${siteConfig.email} o completa el formulario para revisar disponibilidad, alcance y estilo.`}
+      />
+      <div class="cta-actions">
+        <a class="button button--light" href="/contacto/">Ver disponibilidad</a>
+        <a class="button button--secondary" href="/trabajos/">Ver trabajos</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
