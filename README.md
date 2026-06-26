@@ -14,19 +14,19 @@ Demo pendiente: `https://clickmemories.example.com`
 ## Vista previa
 
 <p align="center">
-  <img src="docs/assets/readme/crop-home-hero.svg" alt="Hero principal de ClickMemories" width="100%" />
+  <img src="docs/assets/readme/preview-home-hero.png" alt="Hero principal de ClickMemories" width="100%" />
 </p>
 
 | Showreel visual | Trabajos destacados |
 | --- | --- |
-| <img src="docs/assets/readme/crop-home-showreel.svg" alt="Showreel visual de ClickMemories" /> | <img src="docs/assets/readme/crop-home-featured.svg" alt="Trabajos destacados de ClickMemories" /> |
+| <img src="docs/assets/readme/preview-home-showreel.png" alt="Showreel visual de ClickMemories" /> | <img src="docs/assets/readme/preview-home-featured.png" alt="Trabajos destacados de ClickMemories" /> |
 
 | Portafolio editorial | Servicios a medida |
 | --- | --- |
-| <img src="docs/assets/readme/crop-work-grid.svg" alt="Grilla editorial de trabajos de ClickMemories" /> | <img src="docs/assets/readme/crop-services-grid.svg" alt="Servicios a medida de ClickMemories" /> |
+| <img src="docs/assets/readme/preview-work-grid.png" alt="Portafolio editorial de ClickMemories" /> | <img src="docs/assets/readme/preview-services-grid.png" alt="Servicios a medida de ClickMemories" /> |
 
 <p align="center">
-  <img src="docs/assets/readme/crop-contact-experience.svg" alt="Preguntas frecuentes y formulario de contacto de ClickMemories" width="100%" />
+  <img src="docs/assets/readme/preview-contact-form.png" alt="Preguntas frecuentes y formulario de contacto de ClickMemories" width="100%" />
 </p>
 
 ## Características principales
@@ -116,6 +116,7 @@ npm run dev       # Servidor local
 npm run build     # Build estático
 npm run preview   # Vista previa del build
 npm run check     # Revisión de Astro y TypeScript
+npm run readme:crops # Recorta las capturas PNG del README
 npm run test      # Pruebas e2e
 ```
 

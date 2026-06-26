@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "readme:crops": "node tools/crop-readme-images.mjs",
     "test": "npm run test:e2e",
     "test:e2e": "playwright test"
   },
