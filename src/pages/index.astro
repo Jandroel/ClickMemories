@@ -33,11 +33,12 @@ const projects = (await getCollection("trabajos"))
   <section class="section" aria-labelledby="stats-title">
     <div class="container">
       <SectionHeading
+        id="stats-title"
         eyebrow="Mirada documental"
         title="Capturamos momentos que se sienten vivos."
         description="Nos interesan los gestos que pasan rápido: una mano que calma, una risa fuera de protocolo, una marca que se revela en su proceso."
       />
-      <div class="stats-grid" id="stats-title">
+      <div class="stats-grid">
         {stats.map((item) => <div class="stat"><strong>{item.value}</strong><span>{item.label}</span></div>)}
       </div>
     </div>
@@ -68,6 +69,7 @@ const projects = (await getCollection("trabajos"))
   <section class="section section--cream" aria-labelledby="featured-title">
     <div class="container">
       <SectionHeading
+        id="featured-title"
         eyebrow="Trabajos destacados"
         title="Cada historia merece verse como una película."
         description="Una selección de bodas, retratos y marcas donde la emoción guía la estética."
@@ -84,6 +86,7 @@ const projects = (await getCollection("trabajos"))
   <section class="section" aria-labelledby="services-title">
     <div class="container">
       <SectionHeading
+        id="services-title"
         eyebrow="Servicios"
         title="Coberturas pensadas para recordar, comunicar y permanecer."
         description="Desde un film de boda hasta contenido vertical para una marca, cada entrega se diseña según intención, formato y ritmo de uso."
@@ -107,7 +110,7 @@ const projects = (await getCollection("trabajos"))
 
   <section class="section" aria-labelledby="process-title">
     <div class="container">
-      <SectionHeading eyebrow="Cómo trabajamos" title="Una ruta clara para que todo fluya." />
+      <SectionHeading id="process-title" eyebrow="Cómo trabajamos" title="Una ruta clara para que todo fluya." />
       <div class="process-grid">
         {processSteps.map((step) => <article class="process-step"><h3>{step.title}</h3><p>{step.text}</p></article>)}
       </div>
@@ -116,7 +119,7 @@ const projects = (await getCollection("trabajos"))
 
   <section class="section section--cream" aria-labelledby="testimonials-title">
     <div class="container">
-      <SectionHeading eyebrow="Clientes" title="Historias contadas con cuidado." />
+      <SectionHeading id="testimonials-title" eyebrow="Clientes" title="Historias contadas con cuidado." />
       <div class="testimonial-grid">
         {
           testimonials.map((item) => (
