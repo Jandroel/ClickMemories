@@ -1,0 +1,78 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import { imageLibrary } from "@data/site";
+
+const values = [
+  {
+    title: "Presencia discreta",
+    text: "La cámara acompaña sin apropiarse del momento. Dirigimos cuando ayuda y observamos cuando la verdad aparece sola."
+  },
+  {
+    title: "Edición con intención",
+    text: "Cada corte, color y silencio debe servir a la emoción de la historia, no a una moda pasajera."
+  },
+  {
+    title: "Entrega clara",
+    text: "Cuidamos tiempos, formatos y comunicación para que el proceso sea tan ordenado como el resultado final."
+  }
+];
+---
+
+<BaseLayout
+  title="Sobre mí"
+  description="Conoce la mirada, valores y forma de trabajo de ClickMemories."
+  image={imageLibrary.studio}
+>
+  <section class="page-hero">
+    <div class="container page-intro">
+      <p class="eyebrow">Sobre mí</p>
+      <h1>Una mirada tranquila para historias que importan.</h1>
+      <p>ClickMemories nace de una idea simple: los recuerdos no necesitan verse perfectos para ser poderosos; necesitan sentirse verdaderos.</p>
+    </div>
+  </section>
+
+  <section class="image-band" style={`background-image: url(${imageLibrary.studio});`}>
+    <div class="image-band__content">
+      <p class="eyebrow">Filosofía</p>
+      <h2>Cada historia merece una imagen honesta, elegante y viva.</h2>
+      <p>La estética cinematográfica aquí no significa exagerar. Significa mirar con paciencia, componer con intención y editar con respeto.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detail-grid">
+      <div class="prose">
+        <h2>La forma de mirar</h2>
+        <p>
+          Trabajo desde la mezcla entre dirección visual y sensibilidad documental. Antes de grabar o fotografiar, busco entender qué hace única a cada persona, celebración o marca.
+        </p>
+        <p>
+          Me interesan los detalles que no siempre aparecen en una lista de tomas: la pausa antes de entrar, una mirada de complicidad, las manos preparando algo, la textura de un lugar cuando empieza a cambiar la luz.
+        </p>
+        <p>
+          El objetivo es que cada entrega tenga belleza, sí, pero también memoria. Que puedas volver a verla sin sentir que fue fabricada para parecer importante.
+        </p>
+      </div>
+      <aside class="info-panel">
+        <h2>Enfoque</h2>
+        <ul class="sidebar-list">
+          <li><strong>Estilo</strong><span>Documental cinematográfico</span></li>
+          <li><strong>Luz</strong><span>Natural y disponible</span></li>
+          <li><strong>Entrega</strong><span>Digital, curada y optimizada</span></li>
+          <li><strong>Base</strong><span>Lima, Perú</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <SectionHeading eyebrow="Valores" title="Lo que guía cada proyecto." />
+      <div class="value-grid">
+        {values.map((value) => <article class="value-card"><h3>{value.title}</h3><p>{value.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
