@@ -1,0 +1,180 @@
+---
+interface GalleryItem {
+  src: string;
+  alt: string;
+  caption: string;
+  orientation: "vertical" | "horizontal" | "square";
+}
+
+interface VideoPreview {
+  title: string;
+  description: string;
+  poster: string;
+  duration: string;
+}
+
+interface Props {
+  title: string;
+  items: GalleryItem[];
+  video?: VideoPreview;
+}
+
+const { title, items, video } = Astro.props;
+const galleryId = `galeria-${title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}`;
+const firstItem = items[0];
+---
+
+<section class="section section--gallery" id="galeria">
+  <div class="container">
+    <div class="gallery-layout">
+      <div class="section-heading">
+        <p class="eyebrow">Galería</p>
+        <h2>Más que una portada: una historia completa.</h2>
+        <p>Recorre una selección de frames, detalles y momentos clave. Puedes abrir cada imagen en pantalla completa.</p>
+      </div>
+
+      {video && (
+        <article class="video-preview">
+          <img src={video.poster} alt={`Poster de ${video.title}`} loading="lazy" />
+          <div class="video-preview__overlay">
+            <span class="play-mark" aria-hidden="true">▶</span>
+            <div>
+              <p class="eyebrow">Teaser visual · {video.duration}</p>
+              <h3>{video.title}</h3>
+              <p>{video.description}</p>
+            </div>
+          </div>
+        </article>
+      )}
+    </div>
+
+    <div class="work-gallery" data-gallery id={galleryId}>
+      <div class="gallery-stage">
+        <button class="gallery-nav gallery-nav--prev" type="button" data-gallery-prev aria-label="Imagen anterior">‹</button>
+        <button class="gallery-stage__button" type="button" data-lightbox-open aria-label={`Abrir imagen de ${title} en pantalla completa`}>
+          <img data-gallery-main src={firstItem.src} alt={firstItem.alt} loading="eager" />
+        </button>
+        <button class="gallery-nav gallery-nav--next" type="button" data-gallery-next aria-label="Imagen siguiente">›</button>
+      </div>
+
+      <div class="gallery-caption" data-gallery-caption>{firstItem.caption}</div>
+
+      <div class="gallery-thumbs" aria-label={`Miniaturas de ${title}`}>
+        {
+          items.map((item, index) => (
+            <button
+              type="button"
+              class:list={["gallery-thumb", index === 0 && "is-active"]}
+              data-gallery-thumb
+              data-index={index}
+              data-src={item.src}
+              data-alt={item.alt}
+              data-caption={item.caption}
+              aria-label={`Ver imagen ${index + 1}: ${item.caption}`}
+            >
+              <img src={item.src} alt="" loading="lazy" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" data-lightbox={galleryId} hidden>
+    <button class="lightbox__close" type="button" data-lightbox-close aria-label="Cerrar imagen">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Imagen anterior">‹</button>
+    <figure>
+      <img data-lightbox-image src={firstItem.src} alt={firstItem.alt} />
+      <figcaption data-lightbox-caption>{firstItem.caption}</figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Imagen siguiente">›</button>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
+    const main = gallery.querySelector<HTMLImageElement>("[data-gallery-main]");
+    const caption = gallery.querySelector<HTMLElement>("[data-gallery-caption]");
+    const thumbs = Array.from(gallery.querySelectorAll<HTMLButtonElement>("[data-gallery-thumb]"));
+    const prev = gallery.querySelector<HTMLButtonElement>("[data-gallery-prev]");
+    const next = gallery.querySelector<HTMLButtonElement>("[data-gallery-next]");
+    const open = gallery.querySelector<HTMLButtonElement>("[data-lightbox-open]");
+    const lightbox = document.querySelector<HTMLElement>(`[data-lightbox="${gallery.id}"]`);
+    const lightboxImage = lightbox?.querySelector<HTMLImageElement>("[data-lightbox-image]");
+    const lightboxCaption = lightbox?.querySelector<HTMLElement>("[data-lightbox-caption]");
+    const close = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-close]");
+    const lightboxPrev = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-prev]");
+    const lightboxNext = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-next]");
+    let activeIndex = 0;
+    let startX = 0;
+
+    const update = (index: number) => {
+      activeIndex = (index + thumbs.length) % thumbs.length;
+      const thumb = thumbs[activeIndex];
+      const src = thumb.dataset.src ?? "";
+      const alt = thumb.dataset.alt ?? "";
+      const text = thumb.dataset.caption ?? "";
+
+      if (main) {
+        main.src = src;
+        main.alt = alt;
+      }
+      if (caption) caption.textContent = text;
+      if (lightboxImage) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt;
+      }
+      if (lightboxCaption) lightboxCaption.textContent = text;
+
+      thumbs.forEach((item, itemIndex) => {
+        item.classList.toggle("is-active", itemIndex === activeIndex);
+        item.setAttribute("aria-pressed", String(itemIndex === activeIndex));
+      });
+    };
+
+    thumbs.forEach((thumb, index) => thumb.addEventListener("click", () => update(index)));
+    prev?.addEventListener("click", () => update(activeIndex - 1));
+    next?.addEventListener("click", () => update(activeIndex + 1));
+    lightboxPrev?.addEventListener("click", () => update(activeIndex - 1));
+    lightboxNext?.addEventListener("click", () => update(activeIndex + 1));
+
+    open?.addEventListener("click", () => {
+      if (!lightbox) return;
+      lightbox.hidden = false;
+      document.body.classList.add("has-lightbox");
+      close?.focus();
+    });
+
+    const closeLightbox = () => {
+      if (!lightbox) return;
+      lightbox.hidden = true;
+      document.body.classList.remove("has-lightbox");
+      open?.focus();
+    };
+
+    close?.addEventListener("click", closeLightbox);
+    lightbox?.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    gallery.addEventListener("pointerdown", (event) => {
+      startX = event.clientX;
+    });
+
+    gallery.addEventListener("pointerup", (event) => {
+      const distance = event.clientX - startX;
+      if (Math.abs(distance) < 42) return;
+      update(distance < 0 ? activeIndex + 1 : activeIndex - 1);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox || lightbox.hidden) return;
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") update(activeIndex - 1);
+      if (event.key === "ArrowRight") update(activeIndex + 1);
+    });
+
+    update(0);
+  });
+</script>
+

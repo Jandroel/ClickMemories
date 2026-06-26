@@ -1,0 +1,116 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import WorkGallery from "@components/WorkGallery.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("trabajos");
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+const related = (await getCollection("trabajos"))
+  .filter((item) => item.slug !== project.slug)
+  .slice(0, 3);
+---
+
+<BaseLayout title={project.data.title} description={project.data.excerpt} image={project.data.cover}>
+  <article>
+    <header class="detail-hero">
+      <img src={project.data.cover} alt={project.data.coverAlt} />
+      <div class="detail-hero__content">
+        <div class="detail-meta">
+          <span>{project.data.category}</span>
+          <span>{project.data.location}</span>
+          <span>{project.data.duration}</span>
+        </div>
+        <h1>{project.data.title}</h1>
+        <p>{project.data.excerpt}</p>
+      </div>
+    </header>
+
+    <section class="section project-summary">
+      <div class="container detail-grid">
+        <div>
+          <SectionHeading
+            eyebrow="Resumen visual"
+            title="Una lectura rápida del proyecto."
+            description="Antes de entrar a la galería completa, estos son los elementos que definieron la cobertura y el tono de la entrega."
+          />
+          <div class="category-list">
+            {project.data.mood.map((mood) => <span class="pill">{mood}</span>)}
+          </div>
+        </div>
+        <aside class="info-panel" aria-label="Resumen del proyecto">
+          <h2>Detalles</h2>
+          <ul class="sidebar-list">
+            <li><strong>Categoría</strong><span>{project.data.category}</span></li>
+            <li><strong>Ubicación</strong><span>{project.data.location}</span></li>
+            <li><strong>Duración</strong><span>{project.data.duration}</span></li>
+          </ul>
+          <h2 style="margin-top: 1.5rem;">Servicios</h2>
+          <div class="category-list">
+            {project.data.services.map((service) => <span class="pill">{service}</span>)}
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <WorkGallery title={project.data.title} items={project.data.gallery} video={project.data.video} />
+
+    <section class="section">
+      <div class="container detail-grid">
+        <div class="prose">
+          <Content />
+        </div>
+        <aside class="info-panel project-quote" aria-label="Testimonio del cliente">
+          {
+            project.data.testimonial ? (
+              <figure>
+                <blockquote>“{project.data.testimonial.quote}”</blockquote>
+                <figcaption>
+                  <strong>{project.data.testimonial.author}</strong>
+                  <span>{project.data.testimonial.context}</span>
+                </figcaption>
+              </figure>
+            ) : (
+              <p>Este proyecto está listo para sumar un testimonio real del cliente.</p>
+            )
+          }
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container">
+        <SectionHeading
+          eyebrow="Reserva"
+          title="¿Quieres una historia con esta mirada?"
+          description="Podemos adaptar el ritmo, los formatos y la cobertura a tu fecha, campaña o sesión."
+        />
+        <div class="cta-actions">
+          <a class="button button--light" href="/contacto/">Quiero una historia así</a>
+          <a class="button button--secondary" href="/servicios/">Ver servicios</a>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <section class="section section--cream">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Más historias</p>
+        <h2>Otros trabajos de ClickMemories.</h2>
+      </div>
+      <div class="project-grid">
+        {related.map((item) => <ProjectCard project={item} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

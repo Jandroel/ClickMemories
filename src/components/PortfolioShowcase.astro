@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "@components/ProjectCard.astro";
+
+interface Props {
+  projects: CollectionEntry<"trabajos">[];
+  categories: string[];
+}
+
+const { projects, categories } = Astro.props;
+---
+
+<div class="portfolio-showcase" data-portfolio>
+  <div class="filter-bar" aria-label="Filtrar trabajos por categoría">
+    <button class="filter-chip is-active" type="button" data-filter="Todos" aria-pressed="true">Todos</button>
+    {categories.map((category) => <button class="filter-chip" type="button" data-filter={category} aria-pressed="false">{category}</button>)}
+  </div>
+
+  <div class="masonry-grid" data-project-list>
+    {
+      projects.map((project, index) => (
+        <div class:list={["masonry-item", index % 4 === 0 && "masonry-item--wide"]} data-project data-category={project.data.category}>
+          <ProjectCard project={project} />
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="portfolio-empty" data-portfolio-empty hidden>No hay trabajos en esta categoría todavía.</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
+    const chips = Array.from(portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]"));
+    const projects = Array.from(portfolio.querySelectorAll<HTMLElement>("[data-project]"));
+    const empty = portfolio.querySelector<HTMLElement>("[data-portfolio-empty]");
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const selected = chip.dataset.filter ?? "Todos";
+        let visibleCount = 0;
+
+        chips.forEach((item) => {
+          const isActive = item === chip;
+          item.classList.toggle("is-active", isActive);
+          item.setAttribute("aria-pressed", String(isActive));
+        });
+
+        projects.forEach((project) => {
+          const shouldShow = selected === "Todos" || project.dataset.category === selected;
+          project.hidden = !shouldShow;
+          if (shouldShow) visibleCount += 1;
+        });
+
+        if (empty) empty.hidden = visibleCount > 0;
+      });
+    });
+  });
+</script>
+

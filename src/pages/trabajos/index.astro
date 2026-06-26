@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PortfolioShowcase from "@components/PortfolioShowcase.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+
+const projects = (await getCollection("trabajos")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = [...new Set(projects.map((project) => project.data.category))];
+---
+
+<BaseLayout
+  title="Trabajos"
+  description="Portafolio de fotografía y video de ClickMemories para bodas, retratos, marcas, eventos y contenido social."
+>
+  <section class="page-hero">
+    <div class="container page-intro">
+      <p class="eyebrow">Portafolio</p>
+      <h1>Trabajos que conservan emoción, luz y detalle.</h1>
+      <p>Explora una selección de historias con dirección cinematográfica, edición cuidada y una mirada documental que evita lo genérico.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PortfolioShowcase projects={projects} categories={categories} />
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Próximo proyecto"
+        title="¿Quieres una historia con esta mirada?"
+        description="Podemos adaptar cobertura, ritmo y formato a una boda, sesión, campaña o evento corporativo."
+      />
+      <a class="button button--primary" href="/contacto/">Hablemos de tu proyecto</a>
+    </div>
+  </section>
+</BaseLayout>
