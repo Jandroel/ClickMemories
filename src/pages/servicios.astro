@@ -1,0 +1,102 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactForm from "@components/ContactForm.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import ServiceCard from "@components/ServiceCard.astro";
+import { faqs, imageLibrary, processSteps, servicePackages, services } from "@data/site";
+---
+
+<BaseLayout
+  title="Servicios"
+  description="Servicios de fotografía y video de ClickMemories para bodas, eventos, marcas, retratos, reels y postproducción."
+  image={imageLibrary.production}
+>
+  <section class="page-hero">
+    <div class="container page-intro">
+      <p class="eyebrow">Servicios</p>
+      <h1>Fotografía y video con mirada cinematográfica.</h1>
+      <p>Elige una cobertura completa o una pieza específica. Cada servicio se ajusta a la historia, el contexto y el uso final del material.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Paquetes"
+        title="Tres formas claras de empezar."
+        description="Cada paquete funciona como punto de partida. Ajustamos horas, entregables y formatos según la historia."
+      />
+      <div class="package-grid">
+        {
+          servicePackages.map((item) => (
+            <article class="package-card">
+              <p class="package-card__price">{item.price}</p>
+              <h3>{item.name}</h3>
+              <p>{item.idealFor}</p>
+              <ul>
+                {item.includes.map((detail) => <li>{detail}</li>)}
+              </ul>
+              <strong>{item.delivery}</strong>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Servicios a medida"
+        title="Coberturas y piezas que se pueden combinar."
+        description="Si necesitas foto, video, reels o postproducción, partimos de estos servicios para armar una propuesta precisa."
+      />
+      <div class="service-grid">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="image-band" style={`background-image: url(${imageLibrary.weddingVeil});`}>
+    <div class="image-band__content">
+      <p class="eyebrow">Cobertura completa</p>
+      <h2>Una experiencia cuidada antes, durante y después de la fecha.</h2>
+      <p>La planificación, la dirección en sesión y la postproducción trabajan juntas para que el resultado se sienta coherente.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Método" title="De la primera conversación a la entrega final." />
+      <div class="process-grid">
+        {processSteps.map((step) => <article class="process-step"><h3>{step.title}</h3><p>{step.text}</p></article>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detail-grid">
+      <div>
+        <SectionHeading
+          eyebrow="Preguntas frecuentes"
+          title="Lo esencial antes de reservar."
+          description="Resolvemos tiempos, entregables y forma de trabajo para que puedas decidir con tranquilidad."
+        />
+        <div class="faq-list">
+          {
+            faqs.map((faq) => (
+              <details class="faq-item">
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+      <div>
+        <SectionHeading eyebrow="Cotización" title="Cuéntanos qué estás imaginando." />
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

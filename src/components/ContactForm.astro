@@ -1,0 +1,109 @@
+---
+import { budgetRanges, contactOptions } from "@data/site";
+---
+
+<form class="contact-form" data-contact-form novalidate>
+  <div class="form-grid">
+    <label>
+      <span>Nombre</span>
+      <input name="nombre" type="text" autocomplete="name" required data-message="Ingresa tu nombre." />
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+    <label>
+      <span>Correo electrónico</span>
+      <input name="correo" type="email" autocomplete="email" required data-message="Ingresa un correo válido." />
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+    <label>
+      <span>Tipo de servicio</span>
+      <select name="servicio" required data-message="Selecciona un tipo de servicio.">
+        <option value="">Selecciona una opción</option>
+        {contactOptions.map((option) => <option value={option}>{option}</option>)}
+      </select>
+      <small class="service-hint" data-service-hint>Elige un servicio para ajustar la solicitud.</small>
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+    <label>
+      <span>Fecha del evento o proyecto</span>
+      <input name="fecha" type="date" />
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+    <label>
+      <span>Ubicación</span>
+      <input name="ubicacion" type="text" autocomplete="address-level2" />
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+    <label>
+      <span>Rango de presupuesto</span>
+      <select name="presupuesto">
+        <option value="">Selecciona una opción</option>
+        {budgetRanges.map((range) => <option value={range}>{range}</option>)}
+      </select>
+      <small class="field-error" aria-live="polite"></small>
+    </label>
+  </div>
+  <label>
+    <span>Mensaje</span>
+    <textarea name="mensaje" rows="6" required data-message="Cuéntanos un poco sobre tu proyecto."></textarea>
+    <small class="field-error" aria-live="polite"></small>
+  </label>
+  <button class="button button--primary" type="submit">Hablemos de tu proyecto</button>
+  <p class="form-status" data-form-status aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.querySelector("[data-contact-form]");
+
+  if (form instanceof HTMLFormElement) {
+    const fields = Array.from(form.querySelectorAll("input, select, textarea"));
+    const status = form.querySelector("[data-form-status]");
+    const serviceSelect = form.querySelector<HTMLSelectElement>('select[name="servicio"]');
+    const serviceHint = form.querySelector<HTMLElement>("[data-service-hint]");
+    const serviceHints: Record<string, string> = {
+      "Film de boda": "Incluye fecha, locación, número aproximado de invitados y momentos importantes.",
+      "Fotografía de eventos": "Cuéntanos horario, tipo de evento, número de asistentes y entregables esperados.",
+      "Video para marcas": "Comparte objetivo de campaña, canales de publicación y referencias visuales.",
+      "Sesión de retrato": "Indica si buscas imagen personal, editorial, prensa o redes.",
+      "Reels para redes sociales": "Cuéntanos cuántas piezas necesitas, duración estimada y estilo de edición.",
+      "Cobertura completa": "Describe la jornada completa para estimar equipo, tiempos y entregables.",
+      "Edición y postproducción": "Indica el material existente, duración final y fecha límite."
+    };
+
+    const showError = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      const wrapper = field.closest("label");
+      const error = wrapper?.querySelector(".field-error");
+      const message = field.dataset.message ?? "";
+
+      if (!field.validity.valid && error) {
+        error.textContent = message;
+        field.setAttribute("aria-invalid", "true");
+        return false;
+      }
+
+      if (error) error.textContent = "";
+      field.removeAttribute("aria-invalid");
+      return true;
+    };
+
+    fields.forEach((field) => {
+      field.addEventListener("blur", () => showError(field));
+      field.addEventListener("input", () => showError(field));
+    });
+
+    serviceSelect?.addEventListener("change", () => {
+      if (!serviceHint) return;
+      serviceHint.textContent = serviceHints[serviceSelect.value] ?? "Elige un servicio para ajustar la solicitud.";
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const isValid = fields.map((field) => showError(field)).every(Boolean);
+
+      if (status) {
+        status.textContent = isValid
+          ? "Gracias. Recibimos tu solicitud y te responderemos pronto."
+          : "Revisa los campos marcados antes de enviar.";
+      }
+    });
+  }
+</script>

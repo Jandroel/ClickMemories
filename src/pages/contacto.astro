@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ContactForm from "@components/ContactForm.astro";
+import SectionHeading from "@components/SectionHeading.astro";
+import { imageLibrary, siteConfig } from "@data/site";
+
+const whatsappUrl = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent("Hola ClickMemories, quiero consultar disponibilidad para un proyecto.")}`;
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Reserva una sesión, cobertura o proyecto audiovisual con ClickMemories."
+  image={imageLibrary.coffeeBeans}
+>
+  <section class="page-hero">
+    <div class="container page-intro">
+      <p class="eyebrow">Contacto</p>
+      <h1>Hablemos de tu proyecto.</h1>
+      <p>Cuéntanos fecha, lugar, tipo de historia y lo que quieres recordar o comunicar. Te responderemos con disponibilidad y una propuesta clara.</p>
+      <div class="category-list">
+        <span class="pill">{siteConfig.availability}</span>
+        <span class="pill">{siteConfig.responseTime}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div>
+        <SectionHeading
+          eyebrow="Reserva"
+          title="Ver disponibilidad"
+          description="Para bodas y eventos, incluye fecha y ubicación. Para marcas o retratos, comparte referencias, objetivo y formato de entrega."
+        />
+        <div class="info-panel">
+          <h2>Canales directos</h2>
+          <ul class="sidebar-list">
+            <li><strong>Correo</strong><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></li>
+            <li><strong>Teléfono</strong><a href={`tel:${siteConfig.phone.replaceAll(" ", "")}`}>{siteConfig.phone}</a></li>
+            <li><strong>Base</strong><span>{siteConfig.location}</span></li>
+          </ul>
+          <div class="section-actions" style="margin-top: 1.5rem;">
+            <a class="button button--primary" href={whatsappUrl} target="_blank" rel="noreferrer">Escribir por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>
