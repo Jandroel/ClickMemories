@@ -13,27 +13,33 @@ test("homepage shows Spanish brand copy and navigation", async ({ page }) => {
 test("contact page guides the visitor through a tailored request", async ({ page }) => {
   await page.goto("/contacto/");
 
-  await expect(page.getByRole("heading", { name: "Construyamos una propuesta alrededor de tu historia." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Cuéntanos lo esencial." })).toBeVisible();
   await expect(page.getByLabel("Nombre")).toBeVisible();
   await expect(page.getByLabel("Correo electrónico")).toBeVisible();
+  await page.getByLabel("Nombre").fill("María Torres");
+  await page.getByLabel("Correo electrónico").fill("maria@example.com");
+  await page.getByRole("button", { name: "Continuar" }).click();
   await expect(page.getByRole("group", { name: "Tipo de servicio" })).toBeVisible();
   await page.getByRole("radio", { name: "Video para marcas" }).check();
   await expect(page.getByText(/Comparte objetivo de campaña/)).toBeVisible();
-  await expect(page.getByLabel("Cuéntanos sobre el proyecto")).toBeVisible();
+  await page.getByRole("button", { name: "Continuar" }).click();
+  await expect(page.getByLabel("¿Qué debería lograr o hacer sentir?")).toBeVisible();
   await expect(page.getByRole("button", { name: "Solicitar una propuesta" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Escribir por WhatsApp" })).toBeVisible();
 });
 
-test("contact demo validates and completes the request flow", async ({ page }) => {
+test("contact form validates and completes the guided request flow", async ({ page }) => {
   await page.goto("/contacto/");
 
   await page.getByLabel("Nombre").fill("María Torres");
   await page.getByLabel("Correo electrónico").fill("maria@example.com");
+  await page.getByRole("button", { name: "Continuar" }).click();
   await page.getByRole("radio", { name: "Film de boda" }).check();
-  await page.getByLabel("Cuéntanos sobre el proyecto").fill("Una boda íntima al atardecer en Lima.");
+  await page.getByRole("button", { name: "Continuar" }).click();
+  await page.getByLabel("¿Qué debería lograr o hacer sentir?").fill("Una boda íntima al atardecer en Lima.");
   await page.getByRole("button", { name: "Solicitar una propuesta" }).click();
 
-  await expect(page.getByText(/Demostración completada/)).toBeVisible();
+  await expect(page.getByText(/Todo listo/)).toBeVisible();
 });
 
 test("work portfolio presents an editorial selection and grouped filters", async ({ page }) => {

@@ -4,131 +4,164 @@ import { budgetRanges, contactOptions } from "@data/site";
 
 <form class="contact-form" data-contact-form novalidate>
   <header class="contact-form__intro">
-    <span class="demo-label"><i aria-hidden="true"></i> Demo interactiva</span>
-    <h2>Construyamos una propuesta alrededor de tu historia.</h2>
-    <p>Completa lo esencial. La experiencia se adapta al servicio que elijas y mantiene cada paso claro.</p>
+    <div class="contact-form__intro-top">
+      <p class="eyebrow">Solicitud de proyecto</p>
+      <span data-step-count>Paso 1 de 3</span>
+    </div>
+    <h2>Cuéntanos lo esencial.</h2>
+    <p>En tres pasos reunimos lo necesario para preparar una primera propuesta.</p>
   </header>
 
-  <section class="form-section" aria-labelledby="form-step-person">
-    <div class="form-section__heading">
-      <span aria-hidden="true">01</span>
-      <div>
-        <h3 id="form-step-person">Tus datos</h3>
-        <p>Lo necesario para responderte de forma directa.</p>
+  <nav class="form-progress" aria-label="Progreso de la solicitud">
+    <ol>
+      <li class="is-active" data-progress-item aria-current="step">
+        <span>01</span>
+        <strong>Tus datos</strong>
+      </li>
+      <li data-progress-item>
+        <span>02</span>
+        <strong>El proyecto</strong>
+      </li>
+      <li data-progress-item>
+        <span>03</span>
+        <strong>La idea</strong>
+      </li>
+    </ol>
+    <div class="form-progress__track" aria-hidden="true"><span data-progress-bar></span></div>
+  </nav>
+
+  <div class="form-steps">
+    <section class="form-section" data-form-step data-step="0" aria-labelledby="form-step-person">
+      <div class="form-section__heading">
+        <h3 id="form-step-person" tabindex="-1">Empecemos por ti</h3>
+        <p>Lo necesario para poder responderte de forma directa.</p>
       </div>
-    </div>
-    <div class="form-grid">
-      <label class="form-field">
-        <span>Nombre</span>
-        <input name="nombre" type="text" autocomplete="name" required data-field data-message="Ingresa tu nombre." />
-        <small class="field-error" aria-live="polite"></small>
-      </label>
-      <label class="form-field">
-        <span>Correo electrónico</span>
-        <input name="correo" type="email" autocomplete="email" required data-field data-message="Ingresa un correo válido." />
-        <small class="field-error" aria-live="polite"></small>
-      </label>
-    </div>
-  </section>
-
-  <section class="form-section" aria-labelledby="form-step-project">
-    <div class="form-section__heading">
-      <span aria-hidden="true">02</span>
-      <div>
-        <h3 id="form-step-project">El proyecto</h3>
-        <p>Selecciona el punto de partida y añade contexto.</p>
+      <div class="form-grid">
+        <label class="form-field">
+          <span>Nombre</span>
+          <input name="nombre" type="text" autocomplete="name" required data-field data-message="Ingresa tu nombre." />
+          <small class="field-error" aria-live="polite"></small>
+        </label>
+        <label class="form-field">
+          <span>Correo electrónico</span>
+          <input name="correo" type="email" autocomplete="email" required data-field data-message="Ingresa un correo válido." />
+          <small class="field-error" aria-live="polite"></small>
+        </label>
       </div>
-    </div>
-
-    <fieldset class="form-option-group" data-service-group aria-describedby="service-hint service-error">
-      <legend>Tipo de servicio</legend>
-      <div class="option-grid option-grid--services">
-        {
-          contactOptions.map((option) => (
-            <label class="option-card">
-              <input type="radio" name="servicio" value={option} required />
-              <span>{option}</span>
-            </label>
-          ))
-        }
+      <div class="form-step-actions form-step-actions--end">
+        <button class="button button--primary" type="button" data-next>
+          Continuar <span aria-hidden="true">→</span>
+        </button>
       </div>
-      <small class="service-hint" id="service-hint" data-service-hint>Elige una opción para personalizar la guía.</small>
-      <small class="field-error" id="service-error" data-service-error aria-live="polite"></small>
-    </fieldset>
+    </section>
 
-    <div class="form-grid">
-      <label class="form-field">
-        <span>Fecha del evento o proyecto <small>Opcional</small></span>
-        <input name="fecha" type="date" data-field />
-        <small class="field-error" aria-live="polite"></small>
-      </label>
-      <label class="form-field">
-        <span>Ubicación <small>Opcional</small></span>
-        <input name="ubicacion" type="text" autocomplete="address-level2" placeholder="Ciudad o locación" data-field />
-        <small class="field-error" aria-live="polite"></small>
-      </label>
-    </div>
-  </section>
+    <section class="form-section" data-form-step data-step="1" aria-labelledby="form-step-project" hidden aria-hidden="true">
+      <div class="form-section__heading">
+        <h3 id="form-step-project" tabindex="-1">¿Qué vamos a crear?</h3>
+        <p>Selecciona el punto de partida y añade el contexto principal.</p>
+      </div>
 
-  <section class="form-section" aria-labelledby="form-step-idea">
-    <div class="form-section__heading">
-      <span aria-hidden="true">03</span>
-      <div>
-        <h3 id="form-step-idea">La idea</h3>
+      <fieldset class="form-option-group" data-service-group aria-describedby="service-hint service-error">
+        <legend>Tipo de servicio</legend>
+        <div class="option-grid option-grid--services">
+          {
+            contactOptions.map((option) => (
+              <label class="option-card">
+                <input type="radio" name="servicio" value={option} required />
+                <span>{option}</span>
+              </label>
+            ))
+          }
+        </div>
+        <small class="service-hint" id="service-hint" data-service-hint>Elige una opción para personalizar las siguientes preguntas.</small>
+        <small class="field-error" id="service-error" data-service-error aria-live="polite"></small>
+      </fieldset>
+
+      <div class="form-grid">
+        <label class="form-field">
+          <span>Fecha del evento o proyecto <small>Opcional</small></span>
+          <input name="fecha" type="date" data-field />
+          <small class="field-error" aria-live="polite"></small>
+        </label>
+        <label class="form-field">
+          <span>Ubicación <small>Opcional</small></span>
+          <input name="ubicacion" type="text" autocomplete="address-level2" placeholder="Ciudad o locación" data-field />
+          <small class="field-error" aria-live="polite"></small>
+        </label>
+      </div>
+
+      <div class="form-step-actions">
+        <button class="form-back" type="button" data-back><span aria-hidden="true">←</span> Volver</button>
+        <button class="button button--primary" type="button" data-next>
+          Continuar <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step data-step="2" aria-labelledby="form-step-idea" hidden aria-hidden="true">
+      <div class="form-section__heading">
+        <h3 id="form-step-idea" tabindex="-1">Cuéntanos la idea</h3>
         <p>Una referencia de inversión y el corazón de lo que imaginas.</p>
       </div>
-    </div>
 
-    <fieldset class="form-option-group form-option-group--budget">
-      <legend>Rango de presupuesto <small>Opcional</small></legend>
-      <div class="option-grid">
-        {
-          budgetRanges.map((range) => (
-            <label class="option-card">
-              <input type="radio" name="presupuesto" value={range} />
-              <span>{range}</span>
-            </label>
-          ))
-        }
+      <fieldset class="form-option-group form-option-group--budget">
+        <legend>Rango de presupuesto <small>Opcional</small></legend>
+        <div class="option-grid">
+          {
+            budgetRanges.map((range) => (
+              <label class="option-card">
+                <input type="radio" name="presupuesto" value={range} />
+                <span>{range}</span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+
+      <label class="form-field form-field--message">
+        <span>¿Qué debería lograr o hacer sentir?</span>
+        <textarea
+          name="mensaje"
+          rows="5"
+          required
+          data-field
+          data-message="Cuéntanos un poco sobre tu proyecto."
+          placeholder="Comparte la intención, referencias y cualquier detalle que nos ayude a imaginarlo contigo."
+        ></textarea>
+        <small class="field-error" aria-live="polite"></small>
+      </label>
+
+      <div class="form-step-actions">
+        <button class="form-back" type="button" data-back><span aria-hidden="true">←</span> Volver</button>
+        <button class="button button--primary" type="submit">
+          Solicitar una propuesta <span aria-hidden="true">→</span>
+        </button>
       </div>
-    </fieldset>
+      <p class="form-assurance"><span aria-hidden="true">✓</span> Respuesta inicial en menos de 24 horas hábiles.</p>
+    </section>
+  </div>
 
-    <label class="form-field form-field--message">
-      <span>Cuéntanos sobre el proyecto</span>
-      <textarea
-        name="mensaje"
-        rows="7"
-        required
-        data-field
-        data-message="Cuéntanos un poco sobre tu proyecto."
-        placeholder="Qué quieres crear, qué debería sentir y cualquier detalle que nos ayude a imaginarlo contigo."
-      ></textarea>
-      <small class="field-error" aria-live="polite"></small>
-    </label>
-  </section>
-
-  <footer class="form-submit">
-    <button class="button button--primary" type="submit">
-      <span>Solicitar una propuesta</span>
-      <span aria-hidden="true">→</span>
-    </button>
-    <p class="form-disclaimer"><strong>Demostración:</strong> puedes probar la validación; ningún dato será enviado ni almacenado.</p>
-    <p class="form-status" data-form-status aria-live="polite"></p>
-  </footer>
+  <p class="form-status" data-form-status aria-live="polite"></p>
 </form>
 
 <script>
   const form = document.querySelector("[data-contact-form]");
 
   if (form instanceof HTMLFormElement) {
-    const fields = Array.from(
-      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]")
-    );
+    const steps = Array.from(form.querySelectorAll<HTMLElement>("[data-form-step]"));
+    const progressItems = Array.from(form.querySelectorAll<HTMLElement>("[data-progress-item]"));
+    const nextButtons = Array.from(form.querySelectorAll<HTMLButtonElement>("[data-next]"));
+    const backButtons = Array.from(form.querySelectorAll<HTMLButtonElement>("[data-back]"));
+    const stepCount = form.querySelector<HTMLElement>("[data-step-count]");
+    const progressBar = form.querySelector<HTMLElement>("[data-progress-bar]");
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]"));
     const serviceInputs = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="servicio"]'));
     const serviceGroup = form.querySelector<HTMLElement>("[data-service-group]");
     const serviceError = form.querySelector<HTMLElement>("[data-service-error]");
     const serviceHint = form.querySelector<HTMLElement>("[data-service-hint]");
     const status = form.querySelector<HTMLElement>("[data-form-status]");
+    let currentStep = 0;
+
     const serviceHints: Record<string, string> = {
       "Film de boda": "Incluye fecha, locación, invitados aproximados y los momentos que no pueden faltar.",
       "Fotografía de eventos": "Cuéntanos horario, tipo de evento, asistentes y entregables esperados.",
@@ -168,6 +201,48 @@ import { budgetRanges, contactOptions } from "@data/site";
       return true;
     };
 
+    const validateStep = (index: number) => {
+      const step = steps[index];
+      if (!step) return false;
+      const stepFields = Array.from(step.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]"));
+      const fieldsAreValid = stepFields.map((field) => showError(field)).every(Boolean);
+      const serviceIsValid = index === 1 ? validateService() : true;
+      return fieldsAreValid && serviceIsValid;
+    };
+
+    const showStep = (index: number, moveFocus = true) => {
+      currentStep = Math.max(0, Math.min(index, steps.length - 1));
+
+      steps.forEach((step, stepIndex) => {
+        const isCurrent = stepIndex === currentStep;
+        step.hidden = !isCurrent;
+        step.setAttribute("aria-hidden", String(!isCurrent));
+      });
+
+      progressItems.forEach((item, itemIndex) => {
+        item.classList.toggle("is-active", itemIndex === currentStep);
+        item.classList.toggle("is-complete", itemIndex < currentStep);
+        if (itemIndex === currentStep) item.setAttribute("aria-current", "step");
+        else item.removeAttribute("aria-current");
+      });
+
+      if (stepCount) stepCount.textContent = `Paso ${currentStep + 1} de ${steps.length}`;
+      if (progressBar) progressBar.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+      if (status) status.textContent = "";
+
+      if (moveFocus) {
+        window.requestAnimationFrame(() => steps[currentStep]?.querySelector<HTMLElement>("h3")?.focus());
+      }
+    };
+
+    const continueToNextStep = () => {
+      if (validateStep(currentStep)) {
+        showStep(currentStep + 1);
+      } else if (status) {
+        status.textContent = "Completa los campos de este paso antes de continuar.";
+      }
+    };
+
     fields.forEach((field) => {
       field.addEventListener("blur", () => showError(field));
       field.addEventListener("input", () => showError(field));
@@ -182,22 +257,31 @@ import { budgetRanges, contactOptions } from "@data/site";
       });
     });
 
+    nextButtons.forEach((button) => button.addEventListener("click", continueToNextStep));
+    backButtons.forEach((button) => button.addEventListener("click", () => showStep(currentStep - 1)));
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const fieldResults = fields.map((field) => showError(field));
-      const serviceIsValid = validateService();
-      const isValid = fieldResults.every(Boolean) && serviceIsValid;
 
-      if (status) {
-        status.textContent = isValid
-          ? "Demostración completada. En un proyecto publicado, esta solicitud se enviaría al canal configurado."
-          : "Revisa los campos marcados antes de continuar.";
+      if (currentStep < steps.length - 1) {
+        continueToNextStep();
+        return;
       }
 
-      if (!isValid) {
-        const firstInvalidField = fields.find((field) => !field.validity.valid);
-        (firstInvalidField ?? serviceInputs[0])?.focus();
+      const stepResults = steps.map((_, index) => validateStep(index));
+      const firstInvalidStep = stepResults.findIndex((result) => !result);
+
+      if (firstInvalidStep >= 0) {
+        showStep(firstInvalidStep);
+        if (status) status.textContent = "Revisa los campos marcados antes de continuar.";
+        const invalidField = steps[firstInvalidStep]?.querySelector<HTMLElement>('[aria-invalid="true"]');
+        invalidField?.focus();
+        return;
       }
+
+      if (status) status.textContent = "Todo listo. La solicitud está preparada para continuar.";
     });
+
+    showStep(0, false);
   }
 </script>
