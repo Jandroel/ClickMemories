@@ -4,23 +4,69 @@ import ProjectCard from "@components/ProjectCard.astro";
 
 interface Props {
   projects: CollectionEntry<"trabajos">[];
-  categories: string[];
+  headingId?: string;
 }
 
-const { projects, categories } = Astro.props;
+const { projects, headingId = "portfolio-heading" } = Astro.props;
+
+const categoryGroup = (category: string) => {
+  if (["Bodas", "Editorial"].includes(category)) return "historias";
+  if (category === "Retratos") return "retratos";
+  return "marcas";
+};
+
+const filters = [
+  { value: "Todos", label: "Todos" },
+  { value: "historias", label: "Bodas + editorial" },
+  { value: "retratos", label: "Retratos" },
+  { value: "marcas", label: "Marcas + contenido" }
+];
+
+const projectCount = (filter: string) =>
+  filter === "Todos" ? projects.length : projects.filter((project) => categoryGroup(project.data.category) === filter).length;
 ---
 
-<div class="portfolio-showcase" data-portfolio data-reveal>
-  <div class="filter-bar" aria-label="Filtrar trabajos por categoría">
-    <button class="filter-chip is-active" type="button" data-filter="Todos" aria-pressed="true">Todos</button>
-    {categories.map((category) => <button class="filter-chip" type="button" data-filter={category} aria-pressed="false">{category}</button>)}
+<div class="portfolio-showcase" data-portfolio>
+  <header class="portfolio-header" data-reveal>
+    <div>
+      <p class="eyebrow">Colección seleccionada</p>
+      <h2 id={headingId}>Una mirada distinta para cada historia.</h2>
+    </div>
+    <p class="portfolio-count" aria-live="polite">
+      <strong data-result-count>{projects.length}</strong>
+      <span data-result-label>proyectos seleccionados</span>
+    </p>
+  </header>
+
+  <div class="portfolio-toolbar" data-reveal>
+    <div class="filter-bar" role="toolbar" aria-label="Filtrar trabajos por categoría">
+      {
+        filters.map((filter, index) => (
+          <button
+            class:list={["filter-chip", index === 0 && "is-active"]}
+            type="button"
+            data-filter={filter.value}
+            data-filter-label={filter.label}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            {filter.label} <span>{String(projectCount(filter.value)).padStart(2, "0")}</span>
+          </button>
+        ))
+      }
+    </div>
+    <p class="filter-status" data-filter-status aria-live="polite">Mostrando la colección completa.</p>
   </div>
 
-  <div class="masonry-grid" data-project-list>
+  <div class="portfolio-editorial-grid" data-project-list>
     {
       projects.map((project, index) => (
-        <div class:list={["masonry-item", index % 4 === 0 && "masonry-item--wide"]} data-project data-category={project.data.category}>
-          <ProjectCard project={project} />
+        <div
+          class:list={["portfolio-item", `portfolio-item--${(index % 4) + 1}`]}
+          data-project
+          data-group={categoryGroup(project.data.category)}
+          data-reveal
+        >
+          <ProjectCard project={project} index={index} />
         </div>
       ))
     }
@@ -33,12 +79,18 @@ const { projects, categories } = Astro.props;
   document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
     const chips = Array.from(portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]"));
     const projects = Array.from(portfolio.querySelectorAll<HTMLElement>("[data-project]"));
+    const list = portfolio.querySelector<HTMLElement>("[data-project-list]");
     const empty = portfolio.querySelector<HTMLElement>("[data-portfolio-empty]");
+    const resultCount = portfolio.querySelector<HTMLElement>("[data-result-count]");
+    const resultLabel = portfolio.querySelector<HTMLElement>("[data-result-label]");
+    const status = portfolio.querySelector<HTMLElement>("[data-filter-status]");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const selected = chip.dataset.filter ?? "Todos";
-        let visibleCount = 0;
+        const selectedLabel = chip.dataset.filterLabel ?? "Todos";
+        const visibleProjects: HTMLElement[] = [];
 
         chips.forEach((item) => {
           const isActive = item === chip;
@@ -47,14 +99,33 @@ const { projects, categories } = Astro.props;
         });
 
         projects.forEach((project) => {
-          const shouldShow = selected === "Todos" || project.dataset.category === selected;
+          const shouldShow = selected === "Todos" || project.dataset.group === selected;
           project.hidden = !shouldShow;
-          if (shouldShow) visibleCount += 1;
+          if (shouldShow) visibleProjects.push(project);
         });
 
-        if (empty) empty.hidden = visibleCount > 0;
+        list?.classList.toggle("is-filtered", selected !== "Todos");
+        if (empty) empty.hidden = visibleProjects.length > 0;
+        if (resultCount) resultCount.textContent = String(visibleProjects.length);
+        if (resultLabel) resultLabel.textContent = visibleProjects.length === 1 ? "proyecto seleccionado" : "proyectos seleccionados";
+        if (status) {
+          status.textContent = selected === "Todos"
+            ? "Mostrando la colección completa."
+            : `Mostrando ${visibleProjects.length} ${visibleProjects.length === 1 ? "proyecto" : "proyectos"} en ${selectedLabel}.`;
+        }
+
+        if (!reduceMotion) {
+          visibleProjects.forEach((project, index) => {
+            project.animate(
+              [
+                { opacity: 0, transform: "translateY(14px)" },
+                { opacity: 1, transform: "translateY(0)" }
+              ],
+              { duration: 320, delay: index * 55, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+            );
+          });
+        }
       });
     });
   });
 </script>
-

@@ -3,35 +3,38 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   project: CollectionEntry<"trabajos">;
+  index?: number;
 }
 
-const { project } = Astro.props;
-const galleryPreview = project.data.gallery.slice(0, 3);
-const assetCount = project.data.gallery.length + (project.data.video ? 1 : 0);
+const { project, index = 0 } = Astro.props;
+const projectUrl = `/trabajos/${project.id}/`;
+const projectNumber = String(index + 1).padStart(2, "0");
+const projectYear = project.data.date.getFullYear();
 ---
 
 <article class="project-card">
-  <a class="project-card__image" href={`/trabajos/${project.id}/`} aria-label={`Ver proyecto ${project.data.title}`}>
+  <a class="project-card__media" href={projectUrl} aria-label={`Ver historia ${project.data.title}`}>
     <img
       src={project.data.cover}
       alt={project.data.coverAlt}
-      width="1200"
-      height="1500"
+      width="1400"
+      height="1100"
       loading="lazy"
       style={`view-transition-name: project-${project.id};`}
     />
-    <span class="project-card__badge">{assetCount} piezas</span>
-    <span class="project-card__action">Ver historia <span aria-hidden="true">↗</span></span>
+    <span class="project-card__number" aria-hidden="true">{projectNumber}</span>
+    <span class="project-card__action">Explorar caso <span aria-hidden="true">↗</span></span>
   </a>
+
   <div class="project-card__body">
-    <p class="eyebrow">{project.data.category}</p>
-    <h3><a href={`/trabajos/${project.id}/`}>{project.data.title}</a></h3>
-    <p>{project.data.excerpt}</p>
-    <div class="project-card__strip" aria-hidden="true">
-      {galleryPreview.map((item) => <img src={item.src} alt="" width="400" height="300" loading="lazy" />)}
+    <div class="project-card__kicker">
+      <p>{project.data.category}</p>
+      <span>{projectYear}</span>
     </div>
+    <h3><a href={projectUrl}>{project.data.title}</a></h3>
     <div class="project-card__meta">
       <span>{project.data.location}</span>
+      <span aria-hidden="true">·</span>
       <span>{project.data.duration}</span>
     </div>
   </div>

@@ -36,12 +36,17 @@ test("contact demo validates and completes the request flow", async ({ page }) =
   await expect(page.getByText(/Demostración completada/)).toBeVisible();
 });
 
-test("work portfolio exposes filters", async ({ page }) => {
+test("work portfolio presents an editorial selection and grouped filters", async ({ page }) => {
   await page.goto("/trabajos/");
 
+  await expect(page.getByRole("heading", { name: "Historias que se sienten antes de explicarse." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Proyecto destacado Velo y memoria/ })).toBeVisible();
   await expect(page.getByRole("button", { name: "Todos" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Bodas" })).toBeVisible();
-  await expect(page.getByText("Luz de abril")).toBeVisible();
+  await page.getByRole("button", { name: /Marcas \+ contenido/ }).click();
+  await expect(page.getByText("Café Aurora")).toBeVisible();
+  await expect(page.getByText("Impulso social")).toBeVisible();
+  await expect(page.getByText(/Mostrando 2 proyectos en Marcas \+ contenido/)).toBeVisible();
+  await expect(page.getByText("Luz de abril")).toBeHidden();
 });
 
 test("work detail opens gallery lightbox", async ({ page }) => {

@@ -2,38 +2,62 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import PortfolioShowcase from "@components/PortfolioShowcase.astro";
-import SectionHeading from "@components/SectionHeading.astro";
 
 const projects = (await getCollection("trabajos")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const categories = [...new Set(projects.map((project) => project.data.category))];
+const featuredProject = projects[0];
+const portfolioProjects = projects.slice(1);
+const featuredYear = featuredProject.data.date.getFullYear();
+const ctaImage = featuredProject.data.gallery[1]?.src ?? featuredProject.data.cover;
 ---
 
 <BaseLayout
   title="Trabajos"
   description="Portafolio de fotografía y video de ClickMemories para bodas, retratos, marcas, eventos y contenido social."
+  image={featuredProject.data.cover}
 >
-  <section class="page-hero">
-    <div class="container page-intro">
-      <p class="eyebrow">Portafolio</p>
-      <h1>Trabajos que conservan emoción, luz y detalle.</h1>
-      <p>Explora una selección de historias con dirección cinematográfica, edición cuidada y una mirada documental que evita lo genérico.</p>
+  <section class="works-hero" aria-labelledby="works-title">
+    <img
+      src={featuredProject.data.cover}
+      alt={featuredProject.data.coverAlt}
+      width="1800"
+      height="1200"
+      loading="eager"
+      fetchpriority="high"
+      style={`view-transition-name: project-${featuredProject.id};`}
+    />
+    <div class="works-hero__veil"></div>
+    <div class="container works-hero__content">
+      <div class="works-hero__copy">
+        <p class="eyebrow">Portafolio · Selección {featuredYear}</p>
+        <h1 id="works-title">Historias que se sienten antes de explicarse.</h1>
+        <p>Fotografía y video construidos desde la emoción, la luz y los detalles que hacen única cada historia.</p>
+      </div>
+
+      <a class="works-featured" href={`/trabajos/${featuredProject.id}/`}>
+        <span class="works-featured__label">Proyecto destacado</span>
+        <strong>{featuredProject.data.title}</strong>
+        <span>{featuredProject.data.category} · {featuredProject.data.location}</span>
+        <span class="works-featured__action">Ver historia <span aria-hidden="true">↗</span></span>
+      </a>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section works-collection" aria-labelledby="works-collection-title">
     <div class="container">
-      <PortfolioShowcase projects={projects} categories={categories} />
+      <PortfolioShowcase projects={portfolioProjects} headingId="works-collection-title" />
     </div>
   </section>
 
-  <section class="section section--cream">
-    <div class="container">
-      <SectionHeading
-        eyebrow="Próximo proyecto"
-        title="¿Quieres una historia con esta mirada?"
-        description="Podemos adaptar cobertura, ritmo y formato a una boda, sesión, campaña o evento corporativo."
-      />
-      <a class="button button--primary" href="/contacto/">Hablemos de tu proyecto</a>
+  <section class="works-cta" aria-labelledby="works-cta-title">
+    <img src={ctaImage} alt="" width="1800" height="1200" loading="lazy" />
+    <div class="container works-cta__content">
+      <p class="eyebrow">La próxima historia</p>
+      <h2 id="works-cta-title">La imagen correcta no solo muestra. Hace sentir.</h2>
+      <p>Cuéntanos qué quieres conservar o comunicar y diseñaremos una propuesta visual alrededor de tu historia.</p>
+      <div class="section-actions">
+        <a class="button button--light" href="/contacto/">Ver disponibilidad</a>
+        <a class="works-cta__link" href="/servicios/">Explorar servicios <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 </BaseLayout>

@@ -1,10 +1,10 @@
 ---
 import { demoConfig } from "@data/site";
 
-const isContactPage = Astro.url.pathname.startsWith("/contacto");
+const hideOnImmersivePage = Astro.url.pathname.startsWith("/contacto") || Astro.url.pathname.startsWith("/trabajos");
 ---
 
-<aside class:list={["demo-dock", isContactPage && "demo-dock--compact"]} aria-label="Información del sitio demostrativo">
+<aside class:list={["demo-dock", hideOnImmersivePage && "demo-dock--hidden"]} aria-label="Información del sitio demostrativo">
   <span><i aria-hidden="true"></i> Sitio demostrativo</span>
   <button type="button" data-demo-open>Explorar la demo</button>
   <a href={demoConfig.contactUrl} target="_blank" rel="noreferrer">Quiero una web así <span aria-hidden="true">↗</span></a>
@@ -104,7 +104,7 @@ const isContactPage = Astro.url.pathname.startsWith("/contacto");
     color: white;
   }
 
-  .demo-dock--compact {
+  .demo-dock--hidden {
     display: none;
   }
 
