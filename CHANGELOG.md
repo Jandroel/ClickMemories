@@ -4,6 +4,23 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.3.1] - 2026-07-14
+
+### Agregado
+
+- Flujo guiado de contacto en tres pasos con progreso visible y navegación hacia atrás.
+- Validación independiente por etapa para mantener la experiencia enfocada.
+
+### Cambiado
+
+- Formulario de contacto compactado para mostrar únicamente los campos del paso actual.
+- Formulario priorizado antes del bloque editorial en pantallas móviles.
+- Encabezado del formulario simplificado para reforzar su función y reducir altura.
+
+### Eliminado
+
+- Etiqueta y mensajes de demostración dentro del formulario de contacto.
+
 ## [0.3.0] - 2026-07-14
 
 ### Agregado
