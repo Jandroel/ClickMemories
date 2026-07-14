@@ -4,6 +4,20 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.2.1] - 2026-07-14
+
+### Agregado
+
+- Selección visual de servicio y rango de presupuesto en el formulario de contacto.
+- Mensajes de orientación que se adaptan al tipo de proyecto elegido.
+- Prueba end-to-end del flujo completo de solicitud demostrativa.
+
+### Cambiado
+
+- Página de contacto rediseñada como una experiencia editorial de reserva.
+- Formulario reorganizado en tres etapas con una jerarquía más clara.
+- Panel flotante de la demo oculto en contacto para evitar superposiciones.
+
 ## [0.2.0] - 2026-07-14
 
 ### Agregado
