@@ -55,7 +55,9 @@ import { budgetRanges, contactOptions } from "@data/site";
   const form = document.querySelector("[data-contact-form]");
 
   if (form instanceof HTMLFormElement) {
-    const fields = Array.from(form.querySelectorAll("input, select, textarea"));
+    const fields = Array.from(
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>("input, select, textarea")
+    );
     const status = form.querySelector("[data-form-status]");
     const serviceSelect = form.querySelector<HTMLSelectElement>('select[name="servicio"]');
     const serviceHint = form.querySelector<HTMLElement>("[data-service-hint]");

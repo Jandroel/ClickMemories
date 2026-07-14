@@ -4,7 +4,7 @@ test("homepage shows Spanish brand copy and navigation", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "ClickMemories" })).toBeVisible();
-  await expect(page.getByText("Historias reales, recuerdos que permanecen.")).toBeVisible();
+  await expect(page.locator(".hero__line")).toHaveText("Historias reales, recuerdos que permanecen.");
   await expect(page.getByRole("link", { name: "Ver trabajos" }).first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Cotizar mi sesión" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Navegación principal" })).toBeVisible();
