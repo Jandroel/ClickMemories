@@ -4,6 +4,26 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.3.0] - 2026-07-14
+
+### Agregado
+
+- Portada inmersiva con un caso destacado dentro de la sección Trabajos.
+- Filtros comerciales agrupados con contadores y estado accesible de resultados.
+- CTA fotográfico integrado al cierre del portafolio.
+
+### Cambiado
+
+- Grilla de proyectos reestructurada como una composición editorial asimétrica.
+- Tarjetas simplificadas para priorizar fotografía, categoría, título y ubicación.
+- Dock demostrativo oculto en las rutas de trabajos para no competir con las imágenes.
+
+### Corregido
+
+- Espacios vacíos producidos por la antigua distribución de columnas.
+- Desbordamiento horizontal de filtros en pantallas móviles.
+- Recurso visual roto en el caso Impulso social.
+
 ## [0.2.1] - 2026-07-14
 
 ### Agregado

@@ -29,7 +29,7 @@ Los tamaños se ajustan por puntos de quiebre, no con escalado continuo por view
 - Header con navegación principal y menú móvil nativo.
 - Hero con imagen de fondo, marca visible y CTAs.
 - Tarjetas de proyecto con imagen, categoría, descripción, contador de piezas y mini tira visual.
-- Portafolio filtrable con grilla editorial tipo masonry.
+- Portafolio con portada inmersiva, filtros agrupados y grilla editorial asimétrica.
 - Galería de proyecto con carrusel, miniaturas, swipe y lightbox.
 - Tarjetas de servicio con precio inicial, descripción y entregables.
 - Paquetes de servicio para orientar decisiones comerciales.

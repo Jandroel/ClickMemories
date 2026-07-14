@@ -36,7 +36,7 @@ Demo pendiente: `https://clickmemories.example.com`
 - Comparador interactivo de dirección de color operable con puntero, táctil y teclado.
 - Capa comercial que identifica el sitio como demo y conecta con su creador.
 - Portafolio con colección tipada de proyectos en `src/content/trabajos`.
-- Portafolio filtrable por categoría con grilla editorial tipo masonry.
+- Portafolio editorial con proyecto destacado, filtros agrupados y composición asimétrica responsive.
 - Páginas de detalle con transición visual compartida, galería, carrusel, miniaturas, lightbox accesible, teaser visual y testimonio.
 - Servicios con paquetes, método de trabajo, FAQ y formulario de contacto.
 - Contacto con WhatsApp, señales de disponibilidad y guía dinámica según servicio.
