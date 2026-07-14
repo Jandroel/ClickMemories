@@ -3,11 +3,28 @@ import { expect, test } from "@playwright/test";
 test("homepage shows Spanish brand copy and navigation", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("heading", { name: "ClickMemories" })).toBeVisible();
-  await expect(page.locator(".hero__line")).toHaveText("Historias reales, recuerdos que permanecen.");
-  await expect(page.getByRole("link", { name: "Ver trabajos" }).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "Cotizar mi sesión" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Historias que vuelven a sentirse." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Explorar historias" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Contar mi proyecto/ })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Navegación principal" })).toBeVisible();
+});
+
+test("homepage service paths change their visual story", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("tab", { name: /Identidad en imágenes/ }).click();
+  await expect(page.getByRole("tab", { name: /Identidad en imágenes/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.locator("[role='tabpanel']:visible")).toContainText("Comunicar con intención sin perder humanidad.");
+});
+
+test("homepage mobile layout stays within the viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  await expect(page.getByRole("heading", { name: "Historias que vuelven a sentirse." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Consultar disponibilidad/ })).toBeVisible();
+  const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(horizontalOverflow).toBe(0);
 });
 
 test("contact page guides the visitor through a tailored request", async ({ page }) => {
@@ -84,13 +101,11 @@ test("work detail opens gallery lightbox", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Cerrar imagen" })).toBeVisible();
 });
 
-test("demo controls explain the concept and expose a creator CTA", async ({ page }) => {
+test("homepage exposes a creator CTA without interrupting the experience", async ({ page }) => {
   await page.goto("/");
 
-  await page.getByRole("button", { name: "Explorar la demo" }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("heading", { name: /Una marca ficticia/ })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Solicitar una web similar/ })).toHaveAttribute("href", /github\.com\/Jandroel/);
+  await expect(page.getByText("¿Quieres una experiencia digital con este nivel de detalle?")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Hablemos de tu web/ })).toHaveAttribute("href", /github\.com\/Jandroel/);
 });
 
 test("image comparison responds to keyboard input", async ({ page }) => {

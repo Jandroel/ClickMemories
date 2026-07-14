@@ -1,7 +1,6 @@
 ---
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import DemoDock from "@components/DemoDock.astro";
 import { siteConfig } from "@data/site";
 import "@styles/global.css";
 
@@ -45,7 +44,6 @@ const canonical = new URL(Astro.url.pathname, siteConfig.url).toString();
       <slot />
     </main>
     <Footer />
-    <DemoDock />
     <script>
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const revealItems = document.querySelectorAll<HTMLElement>("[data-reveal]");
