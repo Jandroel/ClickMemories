@@ -4,6 +4,27 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.6.0] - 2026-07-14
+
+### Agregado
+
+- Explorador interactivo de tres caminos de servicio con soporte para teclado.
+- Profundidad visual mediante parallax ligero y movimiento de entrada accesible.
+- CTA integrado para presentar los servicios de diseño y desarrollo sin interrumpir la experiencia.
+- Pruebas end-to-end para la interacción de servicios y el diseño móvil de Inicio.
+
+### Cambiado
+
+- Inicio reestructurado de diez bloques repetitivos a seis momentos editoriales.
+- Grilla genérica de proyectos reemplazada por un caso destacado con narrativa, atmósfera y testimonio.
+- Estadísticas, testimonio y comparación de color unificados en un solo bloque de confianza.
+- Proceso simplificado a tres etapas con una línea de progreso animada.
+- Experiencia móvil diseñada con pestañas desplazables, composiciones verticales y acciones a ancho completo.
+
+### Eliminado
+
+- Dock flotante de demostración y su diálogo modal.
+
 ## [0.5.0] - 2026-07-14
 
 ### Agregado
