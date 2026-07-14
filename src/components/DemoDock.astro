@@ -1,0 +1,218 @@
+---
+import { demoConfig } from "@data/site";
+---
+
+<aside class="demo-dock" aria-label="Información del sitio demostrativo">
+  <span><i aria-hidden="true"></i> Sitio demostrativo</span>
+  <button type="button" data-demo-open>Explorar la demo</button>
+  <a href={demoConfig.contactUrl} target="_blank" rel="noreferrer">Quiero una web así <span aria-hidden="true">↗</span></a>
+</aside>
+
+<dialog class="demo-dialog" data-demo-dialog aria-labelledby="demo-dialog-title">
+  <button class="demo-dialog__close" type="button" data-demo-close aria-label="Cerrar información de la demo">×</button>
+  <div class="demo-dialog__eyebrow">Concepto digital · {demoConfig.creator}</div>
+  <h2 id="demo-dialog-title">Una marca ficticia. Una experiencia completamente funcional.</h2>
+  <p>
+    ClickMemories es una demostración creada para mostrar cómo un negocio visual puede convertir su trabajo en una experiencia clara, memorable y preparada para crecer.
+  </p>
+  <ul>
+    <li><span>01</span><strong>Dirección visual</strong><small>Identidad, ritmo editorial y diseño responsive.</small></li>
+    <li><span>02</span><strong>Experiencia</strong><small>Portafolio filtrable, galerías y movimiento accesible.</small></li>
+    <li><span>03</span><strong>Base técnica</strong><small>Astro, contenido tipado, SEO y pruebas automatizadas.</small></li>
+  </ul>
+  <div class="demo-dialog__actions">
+    <a class="button button--light" href={demoConfig.contactUrl} target="_blank" rel="noreferrer">Solicitar una web similar</a>
+    <a class="demo-dialog__source" href={demoConfig.sourceUrl} target="_blank" rel="noreferrer">Ver código fuente <span aria-hidden="true">↗</span></a>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-demo-dialog]");
+  const openButton = document.querySelector<HTMLButtonElement>("[data-demo-open]");
+  const closeButton = document.querySelector<HTMLButtonElement>("[data-demo-close]");
+
+  openButton?.addEventListener("click", () => dialog?.showModal());
+  closeButton?.addEventListener("click", () => dialog?.close());
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+</script>
+
+<style>
+  .demo-dock {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 0.35rem;
+    background: rgba(22, 21, 19, 0.88);
+    color: white;
+    box-shadow: 0 18px 45px rgba(22, 21, 19, 0.28);
+    backdrop-filter: blur(18px);
+  }
+
+  .demo-dock > span {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0 0.7rem;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .demo-dock i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #d9a441;
+    box-shadow: 0 0 0 4px rgba(217, 164, 65, 0.16);
+  }
+
+  .demo-dock button,
+  .demo-dock a {
+    min-height: 2.45rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.65rem 0.85rem;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .demo-dock button {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .demo-dock a {
+    background: white;
+    color: #161513;
+  }
+
+  .demo-dock button:hover,
+  .demo-dock button:focus-visible {
+    color: white;
+  }
+
+  .demo-dialog {
+    width: min(720px, calc(100% - 2rem));
+    max-height: min(760px, calc(100svh - 2rem));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 22px;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    background: #161513;
+    color: white;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.46);
+  }
+
+  .demo-dialog::backdrop {
+    background: rgba(22, 21, 19, 0.76);
+    backdrop-filter: blur(10px);
+  }
+
+  .demo-dialog__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .demo-dialog__eyebrow {
+    margin-bottom: 1rem;
+    color: #d9a441;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .demo-dialog h2 {
+    max-width: 620px;
+    color: white;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+  }
+
+  .demo-dialog > p {
+    max-width: 610px;
+    margin-top: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .demo-dialog ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .demo-dialog li {
+    display: grid;
+    gap: 0.35rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    padding-top: 1rem;
+  }
+
+  .demo-dialog li span {
+    color: #d9a441;
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+  }
+
+  .demo-dialog li small {
+    color: rgba(255, 255, 255, 0.58);
+    line-height: 1.45;
+  }
+
+  .demo-dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .demo-dialog__source {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 800;
+  }
+
+  @media (max-width: 700px) {
+    .demo-dock {
+      right: 0.65rem;
+      bottom: 0.65rem;
+      left: 0.65rem;
+      justify-content: space-between;
+    }
+
+    .demo-dock > span,
+    .demo-dock button {
+      display: none;
+    }
+
+    .demo-dock a {
+      width: 100%;
+      text-align: center;
+    }
+
+    .demo-dialog ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -80,7 +80,7 @@ const firstItem = items[0];
     </div>
   </div>
 
-  <div class="lightbox" data-lightbox={galleryId} hidden>
+  <dialog class="lightbox" data-lightbox={galleryId} aria-label={`Galería ampliada de ${title}`}>
     <button class="lightbox__close" type="button" data-lightbox-close aria-label="Cerrar imagen">×</button>
     <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Imagen anterior">‹</button>
     <figure>
@@ -88,7 +88,7 @@ const firstItem = items[0];
       <figcaption data-lightbox-caption>{firstItem.caption}</figcaption>
     </figure>
     <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Imagen siguiente">›</button>
-  </div>
+  </dialog>
 </section>
 
 <script>
@@ -99,7 +99,7 @@ const firstItem = items[0];
     const prev = gallery.querySelector<HTMLButtonElement>("[data-gallery-prev]");
     const next = gallery.querySelector<HTMLButtonElement>("[data-gallery-next]");
     const open = gallery.querySelector<HTMLButtonElement>("[data-lightbox-open]");
-    const lightbox = document.querySelector<HTMLElement>(`[data-lightbox="${gallery.id}"]`);
+    const lightbox = document.querySelector<HTMLDialogElement>(`[data-lightbox="${gallery.id}"]`);
     const lightboxImage = lightbox?.querySelector<HTMLImageElement>("[data-lightbox-image]");
     const lightboxCaption = lightbox?.querySelector<HTMLElement>("[data-lightbox-caption]");
     const close = lightbox?.querySelector<HTMLButtonElement>("[data-lightbox-close]");
@@ -140,14 +140,14 @@ const firstItem = items[0];
 
     open?.addEventListener("click", () => {
       if (!lightbox) return;
-      lightbox.hidden = false;
+      lightbox.showModal();
       document.body.classList.add("has-lightbox");
       close?.focus();
     });
 
     const closeLightbox = () => {
       if (!lightbox) return;
-      lightbox.hidden = true;
+      if (lightbox.open) lightbox.close();
       document.body.classList.remove("has-lightbox");
       open?.focus();
     };
@@ -155,6 +155,10 @@ const firstItem = items[0];
     close?.addEventListener("click", closeLightbox);
     lightbox?.addEventListener("click", (event) => {
       if (event.target === lightbox) closeLightbox();
+    });
+
+    lightbox?.addEventListener("close", () => {
+      document.body.classList.remove("has-lightbox");
     });
 
     gallery.addEventListener("pointerdown", (event) => {
@@ -168,7 +172,7 @@ const firstItem = items[0];
     });
 
     document.addEventListener("keydown", (event) => {
-      if (!lightbox || lightbox.hidden) return;
+      if (!lightbox?.open) return;
       if (event.key === "Escape") closeLightbox();
       if (event.key === "ArrowLeft") update(activeIndex - 1);
       if (event.key === "ArrowRight") update(activeIndex + 1);

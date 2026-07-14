@@ -12,6 +12,12 @@ export const siteConfig = {
   location: "Lima, Perú"
 };
 
+export const demoConfig = {
+  creator: "Jandroel",
+  contactUrl: "https://github.com/Jandroel",
+  sourceUrl: "https://github.com/Jandroel/ClickMemories"
+};
+
 export const navItems = [
   { href: "/", label: "Inicio" },
   { href: "/trabajos/", label: "Trabajos" },

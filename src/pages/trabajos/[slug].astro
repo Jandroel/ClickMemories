@@ -23,7 +23,13 @@ const related = (await getCollection("trabajos"))
 <BaseLayout title={project.data.title} description={project.data.excerpt} image={project.data.cover}>
   <article>
     <header class="detail-hero">
-      <img src={project.data.cover} alt={project.data.coverAlt} />
+      <img
+        src={project.data.cover}
+        alt={project.data.coverAlt}
+        width="1800"
+        height="1200"
+        style={`view-transition-name: project-${project.slug};`}
+      />
       <div class="detail-hero__content">
         <div class="detail-meta">
           <span>{project.data.category}</span>

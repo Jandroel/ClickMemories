@@ -1,0 +1,192 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<section class="comparison-section" aria-labelledby="comparison-title">
+  <div class="comparison-copy" data-reveal>
+    <p class="eyebrow">Dirección de color interactiva</p>
+    <h2 id="comparison-title">La intención también vive en el acabado.</h2>
+    <p id="comparison-help">
+      Desliza para explorar cómo temperatura, contraste y color pueden cambiar la lectura emocional de una misma escena.
+    </p>
+  </div>
+
+  <div class="comparison" data-image-comparison data-reveal style="--comparison-position: 52%;">
+    <img class="comparison__image comparison__image--final" src={src} alt={alt} width="1800" height="1125" loading="lazy" />
+    <div class="comparison__before" aria-hidden="true">
+      <img class="comparison__image comparison__image--before" src={src} alt="" width="1800" height="1125" loading="lazy" />
+    </div>
+    <div class="comparison__divider" aria-hidden="true">
+      <span>↔</span>
+    </div>
+    <span class="comparison__label comparison__label--before">Luz neutra</span>
+    <span class="comparison__label comparison__label--after">Acabado final</span>
+    <input
+      class="comparison__range"
+      type="range"
+      min="0"
+      max="100"
+      value="52"
+      aria-label="Comparar luz neutra y acabado cinematográfico"
+      aria-describedby="comparison-help"
+    />
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-image-comparison]").forEach((comparison) => {
+    const range = comparison.querySelector<HTMLInputElement>(".comparison__range");
+    range?.addEventListener("input", () => {
+      comparison.style.setProperty("--comparison-position", `${range.value}%`);
+    });
+  });
+</script>
+
+<style>
+  .comparison-section {
+    width: min(1180px, calc(100% - 2rem));
+    margin: 0 auto;
+  }
+
+  .comparison-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    gap: 1rem 3rem;
+    align-items: end;
+    margin-bottom: 2.25rem;
+  }
+
+  .comparison-copy .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+  }
+
+  .comparison-copy h2 {
+    max-width: 720px;
+    font-size: clamp(2.25rem, 5vw, 4.2rem);
+  }
+
+  .comparison-copy > p:last-child {
+    max-width: 540px;
+  }
+
+  .comparison {
+    --comparison-position: 52%;
+    position: relative;
+    min-height: 34rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    background: #161513;
+    box-shadow: 0 28px 70px rgba(22, 21, 19, 0.24);
+    isolation: isolate;
+  }
+
+  .comparison__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .comparison__image--before {
+    filter: saturate(0.52) contrast(0.9) brightness(1.08) sepia(0.08);
+  }
+
+  .comparison__before {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--comparison-position)) 0 0);
+  }
+
+  .comparison__divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--comparison-position);
+    z-index: 2;
+    width: 2px;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    pointer-events: none;
+  }
+
+  .comparison__divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(22, 21, 19, 0.78);
+    color: white;
+    box-shadow: 0 10px 30px rgba(22, 21, 19, 0.25);
+    backdrop-filter: blur(12px);
+  }
+
+  .comparison__label {
+    position: absolute;
+    top: 1rem;
+    z-index: 2;
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    background: rgba(22, 21, 19, 0.72);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+    pointer-events: none;
+  }
+
+  .comparison__label--before {
+    left: 1rem;
+  }
+
+  .comparison__label--after {
+    right: 1rem;
+  }
+
+  .comparison__range {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: ew-resize;
+    opacity: 0;
+  }
+
+  .comparison:has(.comparison__range:focus-visible) {
+    outline: 3px solid #d9a441;
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 760px) {
+    .comparison-copy {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .comparison-copy .eyebrow {
+      grid-column: auto;
+    }
+
+    .comparison {
+      min-height: 28rem;
+      border-radius: 14px;
+    }
+  }
+</style>

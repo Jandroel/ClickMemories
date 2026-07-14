@@ -3,6 +3,10 @@ import { budgetRanges, contactOptions } from "@data/site";
 ---
 
 <form class="contact-form" data-contact-form novalidate>
+  <div class="demo-form-note">
+    <strong>Formulario demostrativo</strong>
+    <span>Puedes probar la validación. Ningún dato será enviado ni almacenado.</span>
+  </div>
   <div class="form-grid">
     <label>
       <span>Nombre</span>
@@ -103,7 +107,7 @@ import { budgetRanges, contactOptions } from "@data/site";
 
       if (status) {
         status.textContent = isValid
-          ? "Gracias. Recibimos tu solicitud y te responderemos pronto."
+          ? "Demostración completada. En un proyecto publicado, esta solicitud se enviaría al canal configurado."
           : "Revisa los campos marcados antes de enviar.";
       }
     });

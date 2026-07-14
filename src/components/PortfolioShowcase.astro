@@ -10,7 +10,7 @@ interface Props {
 const { projects, categories } = Astro.props;
 ---
 
-<div class="portfolio-showcase" data-portfolio>
+<div class="portfolio-showcase" data-portfolio data-reveal>
   <div class="filter-bar" aria-label="Filtrar trabajos por categoría">
     <button class="filter-chip is-active" type="button" data-filter="Todos" aria-pressed="true">Todos</button>
     {categories.map((category) => <button class="filter-chip" type="button" data-filter={category} aria-pressed="false">{category}</button>)}

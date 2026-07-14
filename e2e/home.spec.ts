@@ -36,3 +36,21 @@ test("work detail opens gallery lightbox", async ({ page }) => {
   await page.getByRole("button", { name: /Abrir imagen de Luz de abril/ }).click();
   await expect(page.getByRole("button", { name: "Cerrar imagen" })).toBeVisible();
 });
+
+test("demo controls explain the concept and expose a creator CTA", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Explorar la demo" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Una marca ficticia/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Solicitar una web similar/ })).toHaveAttribute("href", /github\.com\/Jandroel/);
+});
+
+test("image comparison responds to keyboard input", async ({ page }) => {
+  await page.goto("/");
+
+  const comparison = page.getByRole("slider", { name: /Comparar luz neutra/ });
+  await comparison.focus();
+  await comparison.press("ArrowRight");
+  await expect(comparison).toHaveValue("53");
+});

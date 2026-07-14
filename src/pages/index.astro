@@ -4,6 +4,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import SectionHeading from "@components/SectionHeading.astro";
 import ServiceCard from "@components/ServiceCard.astro";
+import BeforeAfter from "@components/BeforeAfter.astro";
 import { imageLibrary, processSteps, services, showreelFrames, siteConfig, stats, testimonials } from "@data/site";
 
 const projects = (await getCollection("trabajos"))
@@ -38,7 +39,7 @@ const projects = (await getCollection("trabajos"))
         title="Capturamos momentos que se sienten vivos."
         description="Nos interesan los gestos que pasan rápido: una mano que calma, una risa fuera de protocolo, una marca que se revela en su proceso."
       />
-      <div class="stats-grid">
+      <div class="stats-grid" data-reveal>
         {stats.map((item) => <div class="stat"><strong>{item.value}</strong><span>{item.label}</span></div>)}
       </div>
     </div>
@@ -74,13 +75,20 @@ const projects = (await getCollection("trabajos"))
         title="Cada historia merece verse como una película."
         description="Una selección de bodas, retratos y marcas donde la emoción guía la estética."
       />
-      <div class="project-grid">
+      <div class="project-grid" data-reveal>
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
       <div class="section-actions" style="margin-top: 2rem;">
         <a class="button button--primary" href="/trabajos/">Explorar portafolio</a>
       </div>
     </div>
+  </section>
+
+  <section class="section section--comparison">
+    <BeforeAfter
+      src={imageLibrary.weddingVeil}
+      alt="Pareja bajo un velo con un acabado visual cálido y cinematográfico."
+    />
   </section>
 
   <section class="section" aria-labelledby="services-title">
@@ -91,7 +99,7 @@ const projects = (await getCollection("trabajos"))
         title="Coberturas pensadas para recordar, comunicar y permanecer."
         description="Desde un film de boda hasta contenido vertical para una marca, cada entrega se diseña según intención, formato y ritmo de uso."
       />
-      <div class="service-grid">
+      <div class="service-grid" data-reveal>
         {services.slice(0, 3).map((service) => <ServiceCard service={service} />)}
       </div>
       <div class="section-actions" style="margin-top: 2rem;">
@@ -111,7 +119,7 @@ const projects = (await getCollection("trabajos"))
   <section class="section" aria-labelledby="process-title">
     <div class="container">
       <SectionHeading id="process-title" eyebrow="Cómo trabajamos" title="Una ruta clara para que todo fluya." />
-      <div class="process-grid">
+       <div class="process-grid" data-reveal>
         {processSteps.map((step) => <article class="process-step"><h3>{step.title}</h3><p>{step.text}</p></article>)}
       </div>
     </div>
@@ -120,7 +128,7 @@ const projects = (await getCollection("trabajos"))
   <section class="section section--cream" aria-labelledby="testimonials-title">
     <div class="container">
       <SectionHeading id="testimonials-title" eyebrow="Clientes" title="Historias contadas con cuidado." />
-      <div class="testimonial-grid">
+      <div class="testimonial-grid" data-reveal>
         {
           testimonials.map((item) => (
             <figure class="testimonial">
