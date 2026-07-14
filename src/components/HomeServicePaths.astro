@@ -137,7 +137,7 @@ const { paths } = Astro.props;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    animation: home-service-image 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: home-service-image var(--duration-narrative) var(--ease-out) both;
   }
 
   .home-service-paths__panel figcaption {
@@ -148,7 +148,7 @@ const { paths } = Astro.props;
     z-index: 1;
     display: grid;
     gap: 0.5rem;
-    animation: home-service-copy 520ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: home-service-copy var(--duration-medium) 90ms var(--ease-out) both;
   }
 
   .home-service-paths__panel figcaption span {
@@ -202,7 +202,9 @@ const { paths } = Astro.props;
     color: rgba(255, 255, 255, 0.55);
     text-align: left;
     cursor: pointer;
-    transition: color 180ms ease, padding 180ms ease;
+    transition:
+      color var(--duration-fast) var(--ease-standard),
+      padding var(--duration-fast) var(--ease-standard);
   }
 
   .home-service-paths__tabs button:hover,
@@ -249,7 +251,9 @@ const { paths } = Astro.props;
     opacity: 0;
     font-style: normal;
     transform: translate(-0.3rem, 0.3rem);
-    transition: opacity 180ms ease, transform 180ms ease;
+    transition:
+      opacity var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
   }
 
   .home-service-paths__tabs button[aria-selected="true"] > span:first-child,

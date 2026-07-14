@@ -9,6 +9,33 @@ test("homepage shows Spanish brand copy and navigation", async ({ page }) => {
   await expect(page.getByRole("navigation", { name: "Navegación principal" })).toBeVisible();
 });
 
+test("visual system loads the local brand fonts and shared tokens", async ({ page }) => {
+  await page.goto("/");
+
+  const visualSystem = await page.evaluate(async () => {
+    await document.fonts.ready;
+    const root = getComputedStyle(document.documentElement);
+    const heading = getComputedStyle(document.querySelector("h1")!);
+    return {
+      bodyFont: getComputedStyle(document.body).fontFamily,
+      headingFont: heading.fontFamily,
+      headingWeight: heading.fontWeight,
+      manropeLoaded: document.fonts.check('16px "Manrope Variable"'),
+      instrumentLoaded: document.fonts.check('48px "Instrument Serif"'),
+      focusColor: root.getPropertyValue("--color-focus").trim(),
+      goldText: root.getPropertyValue("--color-gold-text").trim()
+    };
+  });
+
+  expect(visualSystem.bodyFont).toContain("Manrope Variable");
+  expect(visualSystem.headingFont).toContain("Instrument Serif");
+  expect(visualSystem.headingWeight).toBe("400");
+  expect(visualSystem.manropeLoaded).toBe(true);
+  expect(visualSystem.instrumentLoaded).toBe(true);
+  expect(visualSystem.focusColor).toBe("#8a6518");
+  expect(visualSystem.goldText).toBe("#8a6518");
+});
+
 test("homepage service paths change their visual story", async ({ page }) => {
   await page.goto("/");
 

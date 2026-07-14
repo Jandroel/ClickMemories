@@ -81,7 +81,7 @@ const { src, alt } = Astro.props;
     min-height: 34rem;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
+    border-radius: var(--radius-panel-large);
     background: #161513;
     box-shadow: 0 28px 70px rgba(22, 21, 19, 0.24);
     isolation: isolate;
@@ -126,7 +126,7 @@ const { src, alt } = Astro.props;
     height: 3.25rem;
     place-items: center;
     border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
+    border-radius: var(--radius-round);
     transform: translate(-50%, -50%);
     background: rgba(22, 21, 19, 0.78);
     color: white;
@@ -138,7 +138,7 @@ const { src, alt } = Astro.props;
     position: absolute;
     top: 1rem;
     z-index: 2;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     padding: 0.45rem 0.75rem;
     background: rgba(22, 21, 19, 0.72);
     color: white;
@@ -170,7 +170,7 @@ const { src, alt } = Astro.props;
   }
 
   .comparison:has(.comparison__range:focus-visible) {
-    outline: 3px solid #d9a441;
+    outline: 3px solid var(--color-focus);
     outline-offset: 4px;
   }
 
@@ -186,7 +186,7 @@ const { src, alt } = Astro.props;
 
     .comparison {
       min-height: 28rem;
-      border-radius: 14px;
+      border-radius: var(--radius-panel);
     }
   }
 </style>
