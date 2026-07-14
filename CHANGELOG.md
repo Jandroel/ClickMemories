@@ -4,6 +4,21 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.5.0] - 2026-07-14
+
+### Agregado
+
+- Narrativa editorial sobre la mirada, los principios y la experiencia de trabajar con ClickMemories.
+- Composición fotográfica para conectar retratos, celebraciones y producciones de marca.
+- Prueba end-to-end de contenido, CTA y presentación de la página Sobre mí.
+
+### Cambiado
+
+- Página Sobre mí rediseñada con una portada inmersiva y una voz más personal.
+- Valores genéricos reemplazados por principios y etapas de trabajo comparables.
+- Cierre comercial conectado directamente con el formulario guiado de Contacto.
+- Dock demostrativo oculto en Sobre mí para no competir con la narrativa visual.
+
 ## [0.4.0] - 2026-07-14
 
 ### Agregado
