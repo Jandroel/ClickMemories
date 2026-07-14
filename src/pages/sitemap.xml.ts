@@ -4,7 +4,7 @@ import { siteConfig } from "@data/site";
 export async function GET() {
   const projects = await getCollection("trabajos");
   const routes = ["", "trabajos/", "servicios/", "sobre-mi/", "contacto/"];
-  const projectRoutes = projects.map((project) => `trabajos/${project.slug}/`);
+  const projectRoutes = projects.map((project) => `trabajos/${project.id}/`);
   const urls = [...routes, ...projectRoutes]
     .map((route) => `  <url><loc>${siteConfig.url}/${route}</loc></url>`)
     .join("\n");

@@ -1,14 +1,16 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const trabajos = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/trabajos" }),
   schema: z.object({
     title: z.string(),
     category: z.string(),
     location: z.string(),
-    date: z.date(),
+    date: z.coerce.date(),
     excerpt: z.string(),
-    cover: z.string().url(),
+    cover: z.url(),
     coverAlt: z.string(),
     featured: z.boolean().default(false),
     services: z.array(z.string()),
@@ -17,7 +19,7 @@ const trabajos = defineCollection({
     gallery: z
       .array(
         z.object({
-          src: z.string().url(),
+          src: z.url(),
           alt: z.string(),
           caption: z.string(),
           orientation: z.enum(["vertical", "horizontal", "square"]).default("vertical")
@@ -28,7 +30,7 @@ const trabajos = defineCollection({
       .object({
         title: z.string(),
         description: z.string(),
-        poster: z.string().url(),
+        poster: z.url(),
         duration: z.string()
       })
       .optional(),
