@@ -4,7 +4,8 @@ import { demoConfig } from "@data/site";
 const hideOnImmersivePage =
   Astro.url.pathname.startsWith("/contacto") ||
   Astro.url.pathname.startsWith("/trabajos") ||
-  Astro.url.pathname.startsWith("/servicios");
+  Astro.url.pathname.startsWith("/servicios") ||
+  Astro.url.pathname.startsWith("/sobre-mi");
 ---
 
 <aside class:list={["demo-dock", hideOnImmersivePage && "demo-dock--hidden"]} aria-label="Información del sitio demostrativo">

@@ -66,6 +66,16 @@ test("services page guides visitors through offers and packages", async ({ page 
   await expect(page.getByRole("link", { name: /Diseñar mi propuesta/ })).toHaveAttribute("href", "/contacto/#solicitud");
 });
 
+test("about page presents a personal editorial narrative", async ({ page }) => {
+  await page.goto("/sobre-mi/");
+
+  await expect(page.getByRole("heading", { name: "Observar primero. Crear después." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Las mejores imágenes casi nunca/ })).toBeVisible();
+  await expect(page.getByText("Presencia discreta")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Contar mi proyecto/ })).toHaveAttribute("href", "/contacto/#solicitud");
+  await expect(page.locator(".demo-dock")).toBeHidden();
+});
+
 test("work detail opens gallery lightbox", async ({ page }) => {
   await page.goto("/trabajos/luz-de-abril/");
 

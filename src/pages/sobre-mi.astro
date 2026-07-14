@@ -1,12 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import SectionHeading from "@components/SectionHeading.astro";
-import { imageLibrary } from "@data/site";
+import { imageLibrary, siteConfig } from "@data/site";
 
-const values = [
+const principles = [
   {
     title: "Presencia discreta",
-    text: "La cámara acompaña sin apropiarse del momento. Dirigimos cuando ayuda y observamos cuando la verdad aparece sola."
+    text: "Acompaño sin apropiarme del momento. Dirijo cuando ayuda y observo cuando la verdad aparece sola."
   },
   {
     title: "Edición con intención",
@@ -14,65 +13,737 @@ const values = [
   },
   {
     title: "Entrega clara",
-    text: "Cuidamos tiempos, formatos y comunicación para que el proceso sea tan ordenado como el resultado final."
+    text: "Cuido tiempos, formatos y comunicación para que el proceso sea tan ordenado como el resultado final."
+  }
+];
+
+const stages = [
+  {
+    moment: "Antes",
+    title: "Escuchar antes de proponer",
+    text: "Conversamos sobre personas, intención, referencias y aquello que no puede faltar. La propuesta nace de ahí."
+  },
+  {
+    moment: "Durante",
+    title: "Guiar sin romper lo real",
+    text: "Creo condiciones para que te sientas acompañado, sin convertir cada instante en una pose o una escena forzada."
+  },
+  {
+    moment: "Después",
+    title: "Elegir lo que merece permanecer",
+    text: "La selección, el color y el montaje construyen una memoria coherente, lista para volver a ella con el tiempo."
   }
 ];
 ---
 
 <BaseLayout
   title="Sobre mí"
-  description="Conoce la mirada, valores y forma de trabajo de ClickMemories."
+  description="Conoce la mirada, los valores y la forma de trabajar detrás de ClickMemories."
   image={imageLibrary.studio}
 >
-  <section class="page-hero">
-    <div class="container page-intro">
-      <p class="eyebrow">Sobre mí</p>
-      <h1>Una mirada tranquila para historias que importan.</h1>
-      <p>ClickMemories nace de una idea simple: los recuerdos no necesitan verse perfectos para ser poderosos; necesitan sentirse verdaderos.</p>
-    </div>
-  </section>
+  <section class="about-hero">
+    <div class="container about-hero__grid">
+      <div class="about-hero__copy">
+        <p class="eyebrow">Detrás de ClickMemories</p>
+        <h1>Observar primero. Crear después.</h1>
+        <p>Trabajo desde la sensibilidad documental y la dirección cinematográfica para convertir momentos reales en imágenes que todavía se sientan vivas con los años.</p>
+        <div class="hero__actions">
+          <a class="button button--light" href="#mirada">Conocer mi mirada</a>
+          <a class="button button--secondary" href="/trabajos/">Ver historias <span aria-hidden="true">↗</span></a>
+        </div>
 
-  <section class="image-band" style={`background-image: url(${imageLibrary.studio});`}>
-    <div class="image-band__content">
-      <p class="eyebrow">Filosofía</p>
-      <h2>Cada historia merece una imagen honesta, elegante y viva.</h2>
-      <p>La estética cinematográfica aquí no significa exagerar. Significa mirar con paciencia, componer con intención y editar con respeto.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container detail-grid">
-      <div class="prose">
-        <h2>La forma de mirar</h2>
-        <p>
-          Trabajo desde la mezcla entre dirección visual y sensibilidad documental. Antes de grabar o fotografiar, busco entender qué hace única a cada persona, celebración o marca.
-        </p>
-        <p>
-          Me interesan los detalles que no siempre aparecen en una lista de tomas: la pausa antes de entrar, una mirada de complicidad, las manos preparando algo, la textura de un lugar cuando empieza a cambiar la luz.
-        </p>
-        <p>
-          El objetivo es que cada entrega tenga belleza, sí, pero también memoria. Que puedas volver a verla sin sentir que fue fabricada para parecer importante.
-        </p>
+        <dl class="about-hero__signals">
+          <div><dt>Base</dt><dd>{siteConfig.location}</dd></div>
+          <div><dt>Enfoque</dt><dd>Documental cinematográfico</dd></div>
+          <div><dt>Proyectos</dt><dd>Bodas · Marcas · Retratos</dd></div>
+        </dl>
       </div>
-      <aside class="info-panel">
-        <h2>Enfoque</h2>
-        <ul class="sidebar-list">
-          <li><strong>Estilo</strong><span>Documental cinematográfico</span></li>
-          <li><strong>Luz</strong><span>Natural y disponible</span></li>
-          <li><strong>Entrega</strong><span>Digital, curada y optimizada</span></li>
-          <li><strong>Base</strong><span>Lima, Perú</span></li>
-        </ul>
-      </aside>
+
+      <figure class="about-hero__visual">
+        <div class="about-hero__main-image">
+          <img src={imageLibrary.studio} alt="Cineasta trabajando detrás de una cámara en un estudio." width="1200" height="1500" loading="eager" />
+        </div>
+        <div class="about-hero__detail-image">
+          <img src={imageLibrary.wedding} alt="Pareja abrazada durante una boda al atardecer." width="640" height="800" loading="eager" />
+        </div>
+        <figcaption><span>ClickMemories</span><span>Historias con intención</span></figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="section section--cream">
+  <section class="section about-manifesto" id="mirada">
+    <div class="container about-manifesto__grid" data-reveal>
+      <div>
+        <p class="eyebrow">Una forma de estar presente</p>
+        <h2>Las mejores imágenes casi nunca empiezan con “mira a cámara”.</h2>
+      </div>
+      <div class="about-manifesto__copy">
+        <p class="about-manifesto__lead">Empiezan cuando alguien se olvida por un instante de que está siendo observado.</p>
+        <p>Por eso, antes de grabar o fotografiar, busco comprender qué hace única a cada persona, celebración o marca. La planificación sostiene el resultado; la atención permite que aparezca lo inesperado.</p>
+        <p>No persigo una perfección ajena. Busco imágenes honestas, elegantes y suficientemente vivas como para devolverte a lo que sentiste.</p>
+        <span>ClickMemories · Lima, Perú</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-principles">
+    <div class="container about-principles__grid">
+      <div class="about-principles__intro">
+        <p class="eyebrow">Principios</p>
+        <h2>Una mirada tranquila también necesita decisiones firmes.</h2>
+        <p>Estos tres criterios guían el trabajo desde la primera conversación hasta la entrega final.</p>
+      </div>
+
+      <div class="about-principles__list" data-reveal>
+        {
+          principles.map((principle, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-perspective">
+    <div class="container about-perspective__grid">
+      <div class="about-perspective__gallery" data-reveal>
+        <figure class="about-perspective__portrait">
+          <img src={imageLibrary.portrait} alt="Retrato editorial de una mujer con luz natural." width="900" height="1200" loading="lazy" />
+          <figcaption>Retrato · Presencia</figcaption>
+        </figure>
+        <figure class="about-perspective__brand">
+          <img src={imageLibrary.coffeeCup} alt="Manos sosteniendo una taza durante una producción de marca." width="900" height="700" loading="lazy" />
+          <figcaption>Marca · Identidad</figcaption>
+        </figure>
+      </div>
+
+      <div class="about-perspective__copy">
+        <p class="eyebrow">La misma atención</p>
+        <h2>Cada proyecto cambia. La intención de mirar bien, no.</h2>
+        <p>Una boda, un retrato y una historia de marca necesitan ritmos distintos. Lo que comparten es una búsqueda: que el resultado se parezca a quien está delante de la cámara.</p>
+        <ul>
+          <li><strong>Personas</strong><span>Dirección suave para que puedas reconocerte.</span></li>
+          <li><strong>Celebraciones</strong><span>Atención a lo importante y también a lo que ocurre alrededor.</span></li>
+          <li><strong>Marcas</strong><span>Imágenes con intención comercial sin perder humanidad.</span></li>
+        </ul>
+        <a class="about-text-link" href="/trabajos/">Explorar trabajos seleccionados <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-method">
     <div class="container">
-      <SectionHeading eyebrow="Valores" title="Lo que guía cada proyecto." />
-      <div class="value-grid">
-        {values.map((value) => <article class="value-card"><h3>{value.title}</h3><p>{value.text}</p></article>)}
+      <div class="about-method__heading">
+        <div>
+          <p class="eyebrow">Trabajar juntos</p>
+          <h2>Qué puedes esperar de mí.</h2>
+        </div>
+        <p>Claridad cuando hay que decidir, dirección cuando hace falta y espacio para que la historia respire.</p>
+      </div>
+
+      <div class="about-method__steps" data-reveal>
+        {
+          stages.map((stage, index) => (
+            <article>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <small>{stage.moment}</small>
+              <h3>{stage.title}</h3>
+              <p>{stage.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <img src={imageLibrary.weddingVeil} alt="Pareja bajo un velo durante una sesión íntima." width="1800" height="1200" loading="lazy" />
+    <div class="container about-cta__content">
+      <p class="eyebrow">Conversemos</p>
+      <h2>Si esta forma de mirar se parece a lo que quieres recordar, empecemos por tu historia.</h2>
+      <p>Cuéntame qué estás imaginando. Te responderé con disponibilidad, próximos pasos y una propuesta clara.</p>
+      <div class="cta-actions">
+        <a class="button button--light" href="/contacto/#solicitud">Contar mi proyecto <span aria-hidden="true">↗</span></a>
+        <a class="button button--secondary" href="/servicios/">Explorar servicios</a>
       </div>
     </div>
   </section>
 </BaseLayout>
 
+<style>
+  .about-hero {
+    overflow: hidden;
+    background: var(--color-ink);
+    color: white;
+  }
+
+  .about-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(410px, 0.8fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    min-height: calc(100svh - 72px);
+    align-items: center;
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .about-hero__copy {
+    display: grid;
+    gap: 1.45rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-hero .eyebrow,
+  .about-cta .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .about-hero h1 {
+    max-width: 760px;
+    color: white;
+    font-size: clamp(4rem, 7vw, 7.2rem);
+    letter-spacing: -0.045em;
+  }
+
+  .about-hero__copy > p:not(.eyebrow) {
+    max-width: 610px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.06rem;
+  }
+
+  .about-hero__signals {
+    display: grid;
+    grid-template-columns: 0.65fr 1.2fr 1.25fr;
+    margin-top: 2.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .about-hero__signals div {
+    display: grid;
+    gap: 0.1rem;
+    padding: 1rem 1rem 0 0;
+  }
+
+  .about-hero__signals dt {
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .about-hero__signals dd {
+    margin: 0;
+    color: white;
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .about-hero__visual {
+    position: relative;
+    min-height: min(700px, 72svh);
+    margin: 0;
+  }
+
+  .about-hero__main-image {
+    position: absolute;
+    inset: 0 0 3.4rem 3.4rem;
+    overflow: hidden;
+  }
+
+  .about-hero__main-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(22, 21, 19, 0.4), transparent 45%);
+  }
+
+  .about-hero__main-image img,
+  .about-hero__detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-hero__detail-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 38%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 7px solid var(--color-ink);
+  }
+
+  .about-hero__visual figcaption {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 0.8rem;
+    display: grid;
+    gap: 0.1rem;
+    color: white;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .about-hero__visual figcaption span:first-child {
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+  }
+
+  .about-hero__visual figcaption span:last-child {
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+
+  .about-manifesto {
+    scroll-margin-top: 4rem;
+  }
+
+  .about-manifesto__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.7fr);
+    gap: clamp(3rem, 9vw, 9rem);
+    align-items: start;
+  }
+
+  .about-manifesto h2 {
+    max-width: 780px;
+    font-size: clamp(3.4rem, 6.5vw, 6.5rem);
+    letter-spacing: -0.035em;
+  }
+
+  .about-manifesto__copy {
+    display: grid;
+    gap: 1.3rem;
+    border-top: 1px solid var(--color-line);
+    padding-top: 1.5rem;
+  }
+
+  .about-manifesto__lead {
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    line-height: 1.25;
+  }
+
+  .about-manifesto__copy > span {
+    margin-top: 1rem;
+    color: var(--color-clay);
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-principles {
+    background: var(--color-cream);
+  }
+
+  .about-principles__grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.35fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .about-principles__intro {
+    position: sticky;
+    top: 7rem;
+  }
+
+  .about-principles__intro h2,
+  .about-perspective__copy h2,
+  .about-method__heading h2 {
+    font-size: clamp(3rem, 5vw, 5rem);
+    letter-spacing: -0.03em;
+  }
+
+  .about-principles__intro > p:last-child,
+  .about-perspective__copy > p {
+    max-width: 560px;
+    margin-top: 1.2rem;
+  }
+
+  .about-principles__list {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about-principles__list article {
+    display: grid;
+    grid-template-columns: 3rem minmax(180px, 0.65fr) minmax(260px, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+    border-bottom: 1px solid var(--color-line);
+    padding: 2rem 0;
+  }
+
+  .about-principles__list article > span {
+    color: var(--color-clay);
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+  }
+
+  .about-principles__list h3 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+  }
+
+  .about-perspective__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.7fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: center;
+  }
+
+  .about-perspective__gallery {
+    position: relative;
+    min-height: 760px;
+  }
+
+  .about-perspective__gallery figure {
+    position: absolute;
+    margin: 0;
+    overflow: hidden;
+    background: var(--color-cream);
+  }
+
+  .about-perspective__gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .about-perspective__gallery figure:hover img {
+    transform: scale(1.025);
+  }
+
+  .about-perspective__portrait {
+    inset: 0 26% 4rem 0;
+  }
+
+  .about-perspective__brand {
+    right: 0;
+    bottom: 0;
+    width: 43%;
+    aspect-ratio: 4 / 3;
+    border: 8px solid var(--color-paper);
+  }
+
+  .about-perspective__gallery figcaption {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.8rem;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .about-perspective__copy ul {
+    margin-top: 2.3rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about-perspective__copy li {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-line);
+    padding: 1rem 0;
+  }
+
+  .about-perspective__copy li strong {
+    color: var(--color-ink);
+  }
+
+  .about-perspective__copy li span {
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
+  .about-text-link {
+    display: inline-flex;
+    gap: 0.4rem;
+    margin-top: 1.8rem;
+    border-bottom: 1px solid var(--color-ink);
+    padding-bottom: 0.25rem;
+    font-weight: 800;
+  }
+
+  .about-method {
+    background: var(--color-ink);
+    color: white;
+  }
+
+  .about-method__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.6fr);
+    gap: 2rem;
+    align-items: end;
+  }
+
+  .about-method .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .about-method h2,
+  .about-method h3 {
+    color: white;
+  }
+
+  .about-method__heading > p {
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 1.3rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .about-method__steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 3.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .about-method__steps article {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    min-height: 330px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.7rem 2rem 0 0;
+  }
+
+  .about-method__steps article + article {
+    padding-left: 2rem;
+  }
+
+  .about-method__steps article:last-child {
+    border-right: 0;
+  }
+
+  .about-method__steps article > span {
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+    font-size: 2.3rem;
+  }
+
+  .about-method__steps small {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .about-method__steps h3 {
+    max-width: 300px;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+  }
+
+  .about-method__steps p {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.9rem;
+  }
+
+  .about-cta {
+    position: relative;
+    min-height: 760px;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .about-cta > img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(22, 21, 19, 0.92) 0%, rgba(22, 21, 19, 0.68) 58%, rgba(22, 21, 19, 0.18) 100%);
+  }
+
+  .about-cta__content {
+    display: grid;
+    gap: 1.4rem;
+    padding-block: 6rem;
+  }
+
+  .about-cta h2 {
+    max-width: 900px;
+    color: white;
+    font-size: clamp(3.4rem, 6.5vw, 6.4rem);
+    letter-spacing: -0.035em;
+  }
+
+  .about-cta__content > p:not(.eyebrow) {
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  @media (max-width: 980px) {
+    .about-hero__grid,
+    .about-manifesto__grid,
+    .about-principles__grid,
+    .about-perspective__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-hero__grid {
+      min-height: auto;
+    }
+
+    .about-hero__visual {
+      min-height: 650px;
+    }
+
+    .about-manifesto__grid,
+    .about-principles__grid,
+    .about-perspective__grid {
+      gap: 3rem;
+    }
+
+    .about-principles__intro {
+      position: static;
+    }
+
+    .about-perspective__gallery {
+      min-height: 680px;
+    }
+
+    .about-method__steps article {
+      min-height: 380px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .about-hero__grid {
+      gap: 3.2rem;
+      padding-top: 3.5rem;
+    }
+
+    .about-hero h1 {
+      font-size: clamp(3.6rem, 18vw, 5rem);
+    }
+
+    .about-hero__signals {
+      grid-template-columns: 1fr;
+    }
+
+    .about-hero__signals div {
+      grid-template-columns: 0.8fr 1.4fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 0.75rem 0;
+    }
+
+    .about-hero__visual {
+      min-height: 480px;
+    }
+
+    .about-hero__main-image {
+      inset: 0 0 3rem 2.5rem;
+    }
+
+    .about-hero__detail-image {
+      width: 42%;
+      border-width: 5px;
+    }
+
+    .about-manifesto h2,
+    .about-principles__intro h2,
+    .about-perspective__copy h2,
+    .about-method__heading h2,
+    .about-cta h2 {
+      font-size: 3.2rem;
+    }
+
+    .about-manifesto__lead {
+      font-size: 1.55rem;
+    }
+
+    .about-principles__list article {
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0.65rem 1rem;
+    }
+
+    .about-principles__list article p {
+      grid-column: 2;
+    }
+
+    .about-perspective__gallery {
+      min-height: 500px;
+    }
+
+    .about-perspective__portrait {
+      inset: 0 18% 3.5rem 0;
+    }
+
+    .about-perspective__brand {
+      width: 48%;
+      border-width: 5px;
+    }
+
+    .about-perspective__copy li {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+
+    .about-method__heading,
+    .about-method__steps {
+      grid-template-columns: 1fr;
+    }
+
+    .about-method__heading {
+      gap: 1.5rem;
+    }
+
+    .about-method__steps article,
+    .about-method__steps article + article {
+      min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 1.5rem 0;
+    }
+
+    .about-method__steps article:last-child {
+      border-bottom: 0;
+    }
+
+    .about-cta {
+      min-height: 720px;
+    }
+
+    .about-cta__content {
+      padding-block: 4rem;
+    }
+
+    .about-cta .button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-perspective__gallery img {
+      transition: none;
+    }
+  }
+</style>
