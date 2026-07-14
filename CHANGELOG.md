@@ -4,6 +4,29 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.2.0] - 2026-07-14
+
+### Agregado
+
+- Capa comercial para presentar ClickMemories como demostración de servicios web.
+- Comparador interactivo de dirección de color con soporte para teclado.
+- Transiciones nativas entre tarjetas y páginas de proyecto.
+- Revelados suaves al hacer scroll con soporte para reducción de movimiento.
+- Metadatos sociales ampliados y pruebas end-to-end para las nuevas interacciones.
+
+### Cambiado
+
+- Migración a Astro 7 y a la API moderna Content Layer.
+- Lightbox migrado a un diálogo modal nativo.
+- CI ampliada con validación de tipos antes del build.
+- Formulario identificado claramente como demostrativo.
+
+### Corregido
+
+- Errores de tipos en los campos del formulario.
+- Selector ambiguo en la prueba de la página de inicio.
+- Alertas de seguridad reportadas por `npm audit`.
+
 ## [0.1.0] - 2026-06-26
 
 ### Agregado

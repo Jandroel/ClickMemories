@@ -10,7 +10,7 @@
 - Filtros de portafolio por categoría.
 - Paquetes comerciales en servicios.
 - README y documentación inicial.
-- Prueba smoke con Playwright.
+- Suite end-to-end con Playwright para rutas e interacciones principales.
 
 ## Fase 2: Producción visual
 

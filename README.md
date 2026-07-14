@@ -2,7 +2,7 @@
 
 Portfolio web para un estudio de fotografía y video con mirada cinematográfica, contenido en español y una experiencia pensada para clientes que buscan bodas, eventos, retratos y piezas de marca con una estética emocional y premium.
 
-![Astro](https://img.shields.io/badge/Astro-5-ff5d01?logo=astro&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-7-ff5d01?logo=astro&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
 ![Playwright](https://img.shields.io/badge/Playwright-e2e-2e7d32?logo=playwright&logoColor=white)
 ![Estado](https://img.shields.io/badge/estado-en%20desarrollo-d9a441)
@@ -33,14 +33,16 @@ Demo pendiente: `https://clickmemories.example.com`
 
 - Contenido público completamente en español.
 - Página de inicio con hero visual, trabajos destacados, servicios, proceso, testimonios y CTA final.
+- Comparador interactivo de dirección de color operable con puntero, táctil y teclado.
+- Capa comercial que identifica el sitio como demo y conecta con su creador.
 - Portafolio con colección tipada de proyectos en `src/content/trabajos`.
 - Portafolio filtrable por categoría con grilla editorial tipo masonry.
-- Páginas de detalle con galería, carrusel, miniaturas, lightbox, teaser visual y testimonio.
+- Páginas de detalle con transición visual compartida, galería, carrusel, miniaturas, lightbox accesible, teaser visual y testimonio.
 - Servicios con paquetes, método de trabajo, FAQ y formulario de contacto.
 - Contacto con WhatsApp, señales de disponibilidad y guía dinámica según servicio.
 - Metadatos SEO, Open Graph, `robots.txt` y `sitemap.xml`.
 - Diseño responsive, accesible y enfocado en lectura visual.
-- Prueba smoke con Playwright.
+- Seis pruebas end-to-end con Playwright.
 - Documentación técnica y de producto en `docs/`.
 
 ## Stack tecnológico
@@ -122,7 +124,7 @@ npm run test      # Pruebas e2e
 
 ## Testing
 
-Las pruebas en `e2e/home.spec.ts` verifican que la página de inicio cargue, que el contacto exponga campos en español, que el portafolio tenga filtros y que una página de trabajo abra su galería en lightbox.
+Las pruebas en `e2e/home.spec.ts` verifican la carga de la página de inicio, el formulario en español, los filtros del portafolio, el diálogo de galería, la capa comercial de demo y la interacción por teclado del comparador visual.
 
 Para ejecutar:
 
@@ -136,6 +138,8 @@ npm run test:e2e
 - El idioma del documento es `es`.
 - Existe enlace de salto al contenido.
 - Los formularios usan labels visibles y mensajes de validación en español.
+- Los movimientos respetan `prefers-reduced-motion`.
+- El lightbox usa un diálogo modal nativo con control de foco.
 - Las imágenes de cards usan `loading="lazy"`.
 - El sitio está preparado para salida estática y despliegue en CDN.
 
@@ -173,7 +177,6 @@ Antes de producción, actualizar `site` en `astro.config.mjs`, `siteConfig.url` 
 - Reemplazar imágenes placeholder por material propio de ClickMemories.
 - Añadir integración real de formulario.
 - Incorporar optimización avanzada de imágenes locales.
-- Agregar filtros interactivos en portafolio.
 - Añadir integración real de video o showreel hospedado.
 - Añadir más pruebas visuales y de accesibilidad.
 

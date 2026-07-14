@@ -18,7 +18,7 @@ ClickMemories está construido como un sitio estático con Astro. La prioridad e
 
 `src/components/` contiene piezas reutilizables como tarjetas de proyecto, tarjetas de servicio, encabezados de sección y formulario.
 
-`src/content/trabajos/` contiene proyectos en Markdown con frontmatter validado por `src/content/config.ts`.
+`src/content/trabajos/` contiene proyectos en Markdown con frontmatter validado por `src/content.config.ts` mediante la API Content Layer.
 
 `src/data/site.ts` centraliza datos de marca, navegación, servicios, testimonios, FAQs, opciones de contacto y referencias de imágenes.
 
@@ -26,7 +26,7 @@ ClickMemories está construido como un sitio estático con Astro. La prioridad e
 
 ## Flujo de datos
 
-Los proyectos se leen con `getCollection("trabajos")`. Astro valida el frontmatter con el esquema de `src/content/config.ts`, genera `/trabajos/` y crea una página estática para cada slug en `/trabajos/[slug]/`.
+Los proyectos se cargan mediante `glob()` y se consultan con `getCollection("trabajos")`. Astro valida el frontmatter con el esquema de `src/content.config.ts`, genera `/trabajos/` y crea una página estática para cada identificador en `/trabajos/[slug]/`.
 
 El resto del contenido reusable viene de `src/data/site.ts`, lo que evita repetir copy de servicios, FAQs o navegación en varias páginas.
 
