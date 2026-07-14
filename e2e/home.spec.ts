@@ -55,6 +55,17 @@ test("work portfolio presents an editorial selection and grouped filters", async
   await expect(page.getByText("Luz de abril")).toBeHidden();
 });
 
+test("services page guides visitors through offers and packages", async ({ page }) => {
+  await page.goto("/servicios/");
+
+  await expect(page.getByRole("heading", { name: "La historia define el formato. La intención define la mirada." })).toBeVisible();
+  await page.getByRole("tab", { name: /Video para marcas/ }).click();
+  await expect(page.locator("[role='tabpanel']:visible").getByRole("heading", { name: /Convertir una idea de marca/ })).toBeVisible();
+  await expect(page.getByText("Desde S/ 2,400")).toBeVisible();
+  await expect(page.getByText("Más elegido")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Diseñar mi propuesta/ })).toHaveAttribute("href", "/contacto/#solicitud");
+});
+
 test("work detail opens gallery lightbox", async ({ page }) => {
   await page.goto("/trabajos/luz-de-abril/");
 

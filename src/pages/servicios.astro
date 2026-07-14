@@ -1,9 +1,49 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import ContactForm from "@components/ContactForm.astro";
 import SectionHeading from "@components/SectionHeading.astro";
-import ServiceCard from "@components/ServiceCard.astro";
-import { faqs, imageLibrary, processSteps, servicePackages, services } from "@data/site";
+import ServiceExplorer from "@components/ServiceExplorer.astro";
+import { faqs, imageLibrary, processSteps, servicePackages, services, siteConfig } from "@data/site";
+
+const serviceVisuals = [
+  {
+    label: "Bodas",
+    outcome: "Volver a sentir el día, no solo recordarlo.",
+    image: imageLibrary.wedding,
+    imageAlt: "Pareja celebrando su boda bajo una luz cálida."
+  },
+  {
+    label: "Eventos",
+    outcome: "Documentar la energía sin interrumpirla.",
+    image: imageLibrary.weddingVeil,
+    imageAlt: "Pareja fotografiada a través de un velo blanco."
+  },
+  {
+    label: "Marcas",
+    outcome: "Convertir una idea de marca en una historia que se recuerda.",
+    image: imageLibrary.production,
+    imageAlt: "Cámara profesional durante una producción audiovisual."
+  },
+  {
+    label: "Retratos",
+    outcome: "Crear imágenes en las que puedas reconocerte.",
+    image: imageLibrary.portrait,
+    imageAlt: "Retrato editorial realizado con luz natural."
+  },
+  {
+    label: "Contenido social",
+    outcome: "Ganar atención sin perder identidad visual.",
+    image: imageLibrary.studio,
+    imageAlt: "Espacio de estudio preparado para grabar contenido."
+  },
+  {
+    label: "Postproducción",
+    outcome: "Dar coherencia, ritmo y acabado al material existente.",
+    image: imageLibrary.coffeeBeans,
+    imageAlt: "Composición editorial de café con tonos cálidos."
+  }
+];
+
+const serviceOffers = services.map((service, index) => ({ ...service, ...serviceVisuals[index] }));
 ---
 
 <BaseLayout
@@ -11,32 +51,81 @@ import { faqs, imageLibrary, processSteps, servicePackages, services } from "@da
   description="Servicios de fotografía y video de ClickMemories para bodas, eventos, marcas, retratos, reels y postproducción."
   image={imageLibrary.production}
 >
-  <section class="page-hero">
-    <div class="container page-intro">
-      <p class="eyebrow">Servicios</p>
-      <h1>Fotografía y video con mirada cinematográfica.</h1>
-      <p>Elige una cobertura completa o una pieza específica. Cada servicio se ajusta a la historia, el contexto y el uso final del material.</p>
+  <section class="services-hero">
+    <div class="container services-hero__grid">
+      <div class="services-hero__copy">
+        <p class="eyebrow">Servicios · Fotografía + Film</p>
+        <h1>La historia define el formato. La intención define la mirada.</h1>
+        <p>Diseñamos coberturas y piezas visuales alrededor de lo que necesitas hacer sentir, recordar o comunicar.</p>
+        <div class="hero__actions">
+          <a class="button button--light" href="#servicios-a-medida">Encontrar mi servicio</a>
+          <a class="button button--secondary" href="/contacto/#solicitud">Contar mi idea <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <dl class="services-hero__signals">
+          <div><dt>Formatos</dt><dd>Foto + video</dd></div>
+          <div><dt>Primer adelanto</dt><dd>Desde 72 h</dd></div>
+          <div><dt>Cobertura</dt><dd>Lima + destinos</dd></div>
+        </dl>
+      </div>
+
+      <div class="services-hero__visual" aria-label="Producción visual de ClickMemories">
+        <div class="services-hero__frame services-hero__frame--main">
+          <img src={imageLibrary.production} alt="Cámara grabando una producción de ClickMemories." width="1200" height="1500" loading="eager" />
+        </div>
+        <div class="services-hero__frame services-hero__frame--detail">
+          <img src={imageLibrary.portrait} alt="Retrato editorial con luz natural." width="640" height="800" loading="eager" />
+        </div>
+        <p class="services-hero__stamp"><span>Dirección</span><span>Captura</span><span>Edición</span></p>
+      </div>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section services-tailored" id="servicios-a-medida">
     <div class="container">
-      <SectionHeading
-        eyebrow="Paquetes"
-        title="Tres formas claras de empezar."
-        description="Cada paquete funciona como punto de partida. Ajustamos horas, entregables y formatos según la historia."
-      />
-      <div class="package-grid">
+      <div class="services-section-intro">
+        <SectionHeading
+          eyebrow="Servicios a medida"
+          title="Empieza por el resultado que buscas."
+          description="Explora cada formato y descubre qué incluye. Si tu proyecto combina varias necesidades, construimos una propuesta alrededor de ellas."
+        />
+        <p class="services-section-intro__note">Selecciona una categoría para ver su enfoque, entregables e inversión referencial.</p>
+      </div>
+      <ServiceExplorer offers={serviceOffers} />
+    </div>
+  </section>
+
+  <section class="section services-packages">
+    <div class="container">
+      <div class="services-package-heading">
+        <SectionHeading
+          eyebrow="Puntos de partida"
+          title="Tres alcances. Una misma intención."
+          description="No son moldes rígidos: sirven para comparar el nivel de producción y elegir un inicio claro."
+        />
+        <p>Todos los proyectos incluyen una conversación de enfoque, selección cuidada y entrega digital.</p>
+      </div>
+
+      <div class="services-package-grid">
         {
-          servicePackages.map((item) => (
-            <article class="package-card">
-              <p class="package-card__price">{item.price}</p>
-              <h3>{item.name}</h3>
-              <p>{item.idealFor}</p>
+          servicePackages.map((item, index) => (
+            <article class:list={["services-package", index === 1 && "services-package--featured"]}>
+              <header>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                {index === 1 && <em>Más elegido</em>}
+              </header>
+              <div>
+                <p class="services-package__price">{item.price}</p>
+                <h3>{item.name}</h3>
+                <p>{item.idealFor}</p>
+              </div>
               <ul>
                 {item.includes.map((detail) => <li>{detail}</li>)}
               </ul>
-              <strong>{item.delivery}</strong>
+              <p class="services-package__delivery"><span>Entrega</span>{item.delivery}</p>
+              <a class:list={["button", index === 1 ? "button--light" : "button--primary"]} href="/contacto/#solicitud">
+                Elegir como punto de partida <span aria-hidden="true">↗</span>
+              </a>
             </article>
           ))
         }
@@ -44,59 +133,677 @@ import { faqs, imageLibrary, processSteps, servicePackages, services } from "@da
     </div>
   </section>
 
-  <section class="section section--cream">
-    <div class="container">
-      <SectionHeading
-        eyebrow="Servicios a medida"
-        title="Coberturas y piezas que se pueden combinar."
-        description="Si necesitas foto, video, reels o postproducción, partimos de estos servicios para armar una propuesta precisa."
-      />
-      <div class="service-grid">
-        {services.map((service) => <ServiceCard service={service} />)}
+  <section class="services-included">
+    <img src={imageLibrary.weddingVeil} alt="Pareja bajo un velo durante una sesión editorial." width="1800" height="1200" loading="lazy" />
+    <div class="container services-included__content">
+      <div>
+        <p class="eyebrow">En cada proyecto</p>
+        <h2>La experiencia también forma parte del resultado.</h2>
+        <p>No se trata solo de llegar con una cámara. Cuidamos el recorrido completo para que puedas estar presente y confiar en el proceso.</p>
       </div>
+      <ol class="services-included__list">
+        <li><span>01</span><strong>Escucha y enfoque</strong><small>Entendemos intención, personas y uso final.</small></li>
+        <li><span>02</span><strong>Dirección sin rigidez</strong><small>Guiamos lo necesario y dejamos espacio a lo real.</small></li>
+        <li><span>03</span><strong>Color con intención</strong><small>Un acabado coherente con la atmósfera de la historia.</small></li>
+        <li><span>04</span><strong>Entrega preparada</strong><small>Archivos listos para conservar, compartir o publicar.</small></li>
+      </ol>
     </div>
   </section>
 
-  <section class="image-band" style={`background-image: url(${imageLibrary.weddingVeil});`}>
-    <div class="image-band__content">
-      <p class="eyebrow">Cobertura completa</p>
-      <h2>Una experiencia cuidada antes, durante y después de la fecha.</h2>
-      <p>La planificación, la dirección en sesión y la postproducción trabajan juntas para que el resultado se sienta coherente.</p>
-    </div>
-  </section>
-
-  <section class="section">
+  <section class="section services-process">
     <div class="container">
-      <SectionHeading eyebrow="Método" title="De la primera conversación a la entrega final." />
+      <div class="services-process__heading">
+        <SectionHeading eyebrow="Cómo trabajamos" title="Un proceso claro para que todo fluya." />
+        <p>Desde la primera conversación sabes qué ocurre, qué necesitamos de ti y cuál es el siguiente paso.</p>
+      </div>
       <div class="process-grid">
         {processSteps.map((step) => <article class="process-step"><h3>{step.title}</h3><p>{step.text}</p></article>)}
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container detail-grid">
+  <section class="section services-faq">
+    <div class="container services-faq__grid">
       <div>
         <SectionHeading
           eyebrow="Preguntas frecuentes"
           title="Lo esencial antes de reservar."
-          description="Resolvemos tiempos, entregables y forma de trabajo para que puedas decidir con tranquilidad."
+          description="Tiempos, entregables y forma de trabajo para decidir con tranquilidad."
         />
         <div class="faq-list">
           {
-            faqs.map((faq) => (
-              <details class="faq-item">
-                <summary>{faq.question}</summary>
+            faqs.map((faq, index) => (
+              <details class="faq-item" open={index === 0}>
+                <summary><span>{faq.question}</span><i aria-hidden="true">+</i></summary>
                 <p>{faq.answer}</p>
               </details>
             ))
           }
         </div>
       </div>
-      <div>
-        <SectionHeading eyebrow="Cotización" title="Cuéntanos qué estás imaginando." />
-        <ContactForm />
-      </div>
+
+      <aside class="services-final-cta">
+        <p class="eyebrow">Siguiente paso</p>
+        <h2>Tu proyecto no tiene que encajar en una casilla.</h2>
+        <p>Cuéntanos qué estás imaginando. Te responderemos con disponibilidad y una propuesta pensada para tu historia.</p>
+        <ul>
+          <li>{siteConfig.availability}</li>
+          <li>{siteConfig.responseTime}</li>
+        </ul>
+        <a class="button button--light" href="/contacto/#solicitud">Diseñar mi propuesta <span aria-hidden="true">↗</span></a>
+      </aside>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .services-hero {
+    overflow: hidden;
+    background: var(--color-ink);
+    color: white;
+  }
+
+  .services-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 0.9fr);
+    gap: clamp(2.5rem, 7vw, 7rem);
+    min-height: calc(100svh - 72px);
+    align-items: center;
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .services-hero__copy {
+    display: grid;
+    gap: 1.4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .services-hero__copy .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .services-hero h1 {
+    max-width: 760px;
+    color: white;
+    font-size: clamp(3.7rem, 6vw, 6.6rem);
+    letter-spacing: -0.045em;
+  }
+
+  .services-hero__copy > p:not(.eyebrow) {
+    max-width: 620px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.08rem;
+  }
+
+  .services-hero__signals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .services-hero__signals div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 1.1rem 1rem 0 0;
+  }
+
+  .services-hero__signals dt {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .services-hero__signals dd {
+    margin: 0;
+    color: white;
+    font-weight: 700;
+  }
+
+  .services-hero__visual {
+    position: relative;
+    min-height: min(690px, 72svh);
+  }
+
+  .services-hero__frame {
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .services-hero__frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .services-hero__frame--main {
+    inset: 0 0 4.5rem 4rem;
+  }
+
+  .services-hero__frame--main::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(22, 21, 19, 0.38), transparent 50%);
+  }
+
+  .services-hero__frame--detail {
+    bottom: 0;
+    left: 0;
+    width: 38%;
+    aspect-ratio: 4 / 5;
+    border: 8px solid var(--color-ink);
+  }
+
+  .services-hero__stamp {
+    position: absolute;
+    right: -1.5rem;
+    bottom: 1rem;
+    z-index: 1;
+    display: flex;
+    gap: 0.55rem;
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  .services-section-intro,
+  .services-package-heading,
+  .services-process__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(250px, 0.65fr);
+    gap: 2rem;
+    align-items: end;
+  }
+
+  .services-section-intro__note,
+  .services-package-heading > p,
+  .services-process__heading > p {
+    border-left: 1px solid var(--color-line);
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .services-tailored {
+    scroll-margin-top: 5rem;
+  }
+
+  .services-packages {
+    background: var(--color-cream);
+  }
+
+  .services-package-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .services-package {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto auto;
+    gap: 1.5rem;
+    min-height: 560px;
+    border: 1px solid var(--color-line);
+    padding: clamp(1.35rem, 3vw, 2rem);
+    background: var(--color-paper);
+  }
+
+  .services-package--featured {
+    transform: translateY(-1.5rem);
+    background: var(--color-ink);
+    color: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .services-package header {
+    display: flex;
+    justify-content: space-between;
+    min-height: 1.8rem;
+    color: var(--color-clay);
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+  }
+
+  .services-package header em {
+    border-radius: 999px;
+    padding: 0.3rem 0.65rem;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .services-package h3 {
+    margin: 0.25rem 0 0.75rem;
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+  }
+
+  .services-package__price {
+    color: var(--color-forest);
+    font-size: 0.76rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .services-package ul {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-line);
+    padding-top: 1.4rem;
+  }
+
+  .services-package li {
+    position: relative;
+    padding-left: 1.3rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .services-package li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-clay);
+    font-weight: 900;
+  }
+
+  .services-package__delivery {
+    display: grid;
+    gap: 0.15rem;
+    font-size: 0.88rem;
+  }
+
+  .services-package__delivery span {
+    font-size: 0.66rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .services-package .button {
+    width: 100%;
+  }
+
+  .services-package--featured h3,
+  .services-package--featured p,
+  .services-package--featured li,
+  .services-package--featured .services-package__price {
+    color: white;
+  }
+
+  .services-package--featured ul {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .services-package--featured li::before,
+  .services-package--featured header {
+    color: var(--color-gold);
+  }
+
+  .services-included {
+    position: relative;
+    min-height: 720px;
+    display: grid;
+    align-items: end;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .services-included > img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .services-included::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgba(22, 21, 19, 0.92) 0%, rgba(22, 21, 19, 0.7) 55%, rgba(22, 21, 19, 0.3) 100%);
+  }
+
+  .services-included__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(450px, 0.85fr);
+    gap: 4rem;
+    align-items: end;
+    padding-block: 6rem;
+  }
+
+  .services-included .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .services-included h2 {
+    max-width: 670px;
+    color: white;
+    font-size: clamp(3.1rem, 6vw, 5.8rem);
+  }
+
+  .services-included__content > div > p:last-child {
+    max-width: 570px;
+    margin-top: 1.2rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .services-included__list {
+    border-top: 1px solid rgba(255, 255, 255, 0.26);
+  }
+
+  .services-included__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.1rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+    padding: 1rem 0;
+    color: white;
+  }
+
+  .services-included__list span {
+    grid-row: 1 / span 2;
+    color: var(--color-gold);
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+  }
+
+  .services-included__list small {
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  .services-process .process-grid {
+    position: relative;
+    gap: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .services-process .process-step {
+    border: 0;
+    border-right: 1px solid var(--color-line);
+    border-radius: 0;
+    padding: 2rem 1.5rem 0 0;
+  }
+
+  .services-process .process-step + .process-step {
+    padding-left: 1.5rem;
+  }
+
+  .services-process .process-step:last-child {
+    border-right: 0;
+  }
+
+  .services-process .process-step::before {
+    display: inline-grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    margin: -3.4rem 0 1.8rem;
+    border-radius: 50%;
+    background: var(--color-paper);
+    color: var(--color-clay);
+  }
+
+  .services-faq {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .services-faq__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .services-faq .faq-list {
+    gap: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .services-faq .faq-item {
+    border: 0;
+    border-bottom: 1px solid var(--color-line);
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .services-faq .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    font-weight: 800;
+  }
+
+  .services-faq .faq-item summary::marker {
+    content: "";
+  }
+
+  .services-faq .faq-item summary i {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-style: normal;
+    transition: transform 180ms ease;
+  }
+
+  .services-faq .faq-item[open] summary i {
+    transform: rotate(45deg);
+  }
+
+  .services-faq .faq-item p {
+    max-width: 680px;
+    margin: 0;
+    padding: 0 2rem 1.3rem 0;
+  }
+
+  .services-final-cta {
+    position: sticky;
+    top: 6.5rem;
+    display: grid;
+    gap: 1.35rem;
+    overflow: hidden;
+    padding: clamp(1.6rem, 4vw, 2.6rem);
+    background: var(--color-forest);
+    color: white;
+  }
+
+  .services-final-cta::after {
+    content: "CM";
+    position: absolute;
+    right: -0.1em;
+    bottom: -0.3em;
+    color: rgba(255, 255, 255, 0.05);
+    font-family: var(--font-serif);
+    font-size: 10rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .services-final-cta .eyebrow {
+    color: var(--color-gold);
+  }
+
+  .services-final-cta h2 {
+    color: white;
+    font-size: clamp(2.4rem, 4vw, 3.5rem);
+  }
+
+  .services-final-cta > p:not(.eyebrow),
+  .services-final-cta li {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .services-final-cta ul {
+    display: grid;
+    gap: 0.7rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    padding-top: 1.2rem;
+  }
+
+  .services-final-cta li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.84rem;
+  }
+
+  .services-final-cta li::before {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--color-gold);
+  }
+
+  .services-final-cta .button {
+    position: relative;
+    z-index: 1;
+    justify-self: start;
+  }
+
+  @media (max-width: 980px) {
+    .services-hero__grid {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .services-hero__visual {
+      min-height: 620px;
+    }
+
+    .services-package-grid {
+      grid-template-columns: 1fr;
+      max-width: 760px;
+      margin-inline: auto;
+    }
+
+    .services-package,
+    .services-package--featured {
+      min-height: 0;
+      transform: none;
+    }
+
+    .services-included__content,
+    .services-faq__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .services-included__content {
+      gap: 2.5rem;
+    }
+
+    .services-final-cta {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .services-hero__grid {
+      gap: 3rem;
+      padding-top: 3.5rem;
+    }
+
+    .services-hero h1 {
+      font-size: clamp(3.15rem, 15vw, 4.4rem);
+    }
+
+    .services-hero__signals {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .services-hero__signals div {
+      grid-template-columns: 1fr 1.4fr;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 0.75rem 0;
+    }
+
+    .services-hero__visual {
+      min-height: 460px;
+    }
+
+    .services-hero__frame--main {
+      inset: 0 0 3.25rem 2.5rem;
+    }
+
+    .services-hero__frame--detail {
+      width: 42%;
+      border-width: 5px;
+    }
+
+    .services-hero__stamp {
+      right: -0.5rem;
+    }
+
+    .services-section-intro,
+    .services-package-heading,
+    .services-process__heading {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .services-section-intro__note,
+    .services-package-heading > p,
+    .services-process__heading > p {
+      margin-bottom: 2rem;
+    }
+
+    .services-package {
+      padding: 1.35rem;
+    }
+
+    .services-included {
+      min-height: 850px;
+    }
+
+    .services-included__content {
+      padding-block: 4rem;
+    }
+
+    .services-included h2 {
+      font-size: 3.15rem;
+    }
+
+    .services-process .process-grid {
+      border-top: 0;
+    }
+
+    .services-process .process-step,
+    .services-process .process-step + .process-step {
+      border-top: 1px solid var(--color-line);
+      border-right: 0;
+      padding: 1.5rem 0;
+    }
+
+    .services-process .process-step::before {
+      width: auto;
+      height: auto;
+      margin: 0 0 0.8rem;
+      background: transparent;
+    }
+
+    .services-final-cta .button {
+      width: 100%;
+    }
+  }
+</style>
