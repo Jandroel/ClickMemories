@@ -4,6 +4,22 @@ Todos los cambios relevantes de este proyecto se documentarán aquí.
 
 El formato sigue una lectura humana en español. Los commits del repositorio deben mantenerse en inglés con `Conventional Commits`.
 
+## [0.4.0] - 2026-07-14
+
+### Agregado
+
+- Selector interactivo y accesible para explorar seis servicios por resultado, entregables e inversión.
+- Navegación por teclado entre categorías de servicio.
+- Prueba end-to-end del recorrido comercial de la página Servicios.
+
+### Cambiado
+
+- Página Servicios rediseñada con portada editorial, comparativa de paquetes y proceso visual.
+- Bloque de contacto reemplazado por un cierre breve que conduce al formulario guiado.
+- Paquetes reorganizados para facilitar la comparación y destacar la opción más elegida.
+- Enlaces comerciales conectados directamente con la sección de solicitud en Contacto.
+- Dock demostrativo oculto en Servicios para evitar superposiciones y distracciones.
+
 ## [0.3.1] - 2026-07-14
 
 ### Agregado
