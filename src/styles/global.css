@@ -179,6 +179,22 @@ textarea {
   letter-spacing: -0.02em;
 }
 
+.footer-creator-link {
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+  padding-bottom: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.footer-bottom__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
 .brand-mark {
   display: grid;
   place-items: center;

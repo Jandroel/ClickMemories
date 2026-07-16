@@ -1,0 +1,225 @@
+<div class="live-preview" data-live-preview data-size="desktop">
+  <header class="live-preview__toolbar">
+    <div class="live-preview__status">
+      <i aria-hidden="true"></i>
+      <span>Vista en vivo</span>
+    </div>
+
+    <div class="live-preview__controls" role="group" aria-label="Cambiar tamaño de la vista previa">
+      <button type="button" data-preview-size="desktop" aria-pressed="true">Escritorio</button>
+      <button type="button" data-preview-size="tablet" aria-pressed="false">Tablet</button>
+      <button type="button" data-preview-size="mobile" aria-pressed="false">Móvil</button>
+    </div>
+
+    <a href="/" target="_blank" rel="noreferrer">Abrir sitio <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <div class="live-preview__stage">
+    <div class="live-preview__device">
+      <div class="live-preview__browser" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <small>clickmemories.local</small>
+      </div>
+      <iframe src="/" title="Vista responsive de la página de inicio de ClickMemories" loading="lazy" tabindex="-1"></iframe>
+    </div>
+  </div>
+
+  <p class="live-preview__announcement" aria-live="polite">Vista de escritorio seleccionada.</p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-live-preview]").forEach((preview) => {
+    const buttons = Array.from(preview.querySelectorAll<HTMLButtonElement>("[data-preview-size]"));
+    const announcement = preview.querySelector<HTMLElement>(".live-preview__announcement");
+    const labels: Record<string, string> = {
+      desktop: "escritorio",
+      tablet: "tablet",
+      mobile: "móvil"
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const size = button.dataset.previewSize ?? "desktop";
+        preview.dataset.size = size;
+        buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+        if (announcement) announcement.textContent = `Vista de ${labels[size]} seleccionada.`;
+      });
+    });
+  });
+</script>
+
+<style>
+  .live-preview {
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-surface);
+  }
+
+  .live-preview__toolbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    min-height: 64px;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0.65rem 1rem;
+  }
+
+  .live-preview__status {
+    display: flex;
+    gap: 0.55rem;
+    align-items: center;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .live-preview__status i {
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: var(--radius-round);
+    background: #3f876f;
+    box-shadow: 0 0 0 4px rgba(63, 135, 111, 0.13);
+  }
+
+  .live-preview__controls {
+    display: inline-flex;
+    gap: 0.25rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem;
+    background: var(--color-field);
+  }
+
+  .live-preview__controls button {
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: 0.55rem 0.8rem;
+    background: transparent;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 750;
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .live-preview__controls button[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: white;
+  }
+
+  .live-preview__toolbar > a {
+    justify-self: end;
+    font-size: 0.76rem;
+    font-weight: 800;
+  }
+
+  .live-preview__stage {
+    display: grid;
+    min-height: 760px;
+    place-items: start center;
+    overflow: hidden;
+    padding: clamp(1rem, 4vw, 3.5rem);
+    background:
+      linear-gradient(var(--color-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px),
+      var(--color-cream);
+    background-size: 40px 40px;
+  }
+
+  .live-preview__device {
+    width: 100%;
+    max-width: 1120px;
+    overflow: hidden;
+    border: 1px solid rgba(22, 21, 19, 0.24);
+    border-radius: var(--radius-panel);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lift);
+    transition: max-width var(--duration-narrative) var(--ease-out);
+  }
+
+  .live-preview[data-size="tablet"] .live-preview__device {
+    max-width: 760px;
+  }
+
+  .live-preview[data-size="mobile"] .live-preview__device {
+    max-width: 390px;
+  }
+
+  .live-preview__browser {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    height: 38px;
+    border-bottom: 1px solid var(--color-line);
+    padding-inline: 0.8rem;
+    background: var(--color-field);
+  }
+
+  .live-preview__browser > span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: var(--radius-round);
+    background: rgba(22, 21, 19, 0.2);
+  }
+
+  .live-preview__browser small {
+    margin-inline: auto;
+    color: var(--color-muted);
+    font-size: 0.64rem;
+  }
+
+  .live-preview iframe {
+    display: block;
+    width: 100%;
+    height: 680px;
+    border: 0;
+    background: var(--color-paper);
+    pointer-events: none;
+  }
+
+  .live-preview__announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .live-preview__toolbar {
+      grid-template-columns: 1fr auto;
+    }
+
+    .live-preview__controls {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-content: center;
+    }
+
+    .live-preview__toolbar > a {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .live-preview__stage {
+      min-height: 640px;
+      padding: 1rem;
+    }
+
+    .live-preview iframe {
+      height: 590px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-preview__device {
+      transition: none;
+    }
+  }
+</style>

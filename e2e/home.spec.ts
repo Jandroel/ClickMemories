@@ -128,11 +128,31 @@ test("work detail opens gallery lightbox", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Cerrar imagen" })).toBeVisible();
 });
 
-test("homepage exposes a creator CTA without interrupting the experience", async ({ page }) => {
+test("homepage exposes the commercial case study without interrupting the experience", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByText("¿Quieres una experiencia digital con este nivel de detalle?")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Hablemos de tu web/ })).toHaveAttribute("href", /github\.com\/Jandroel/);
+  await expect(page.getByRole("link", { name: /Ver cómo fue creada/ })).toHaveAttribute("href", "/quiero-una-web/");
+});
+
+test("commercial case study demonstrates responsive delivery", async ({ page }) => {
+  await page.goto("/quiero-una-web/");
+
+  await expect(page.getByRole("heading", { name: "Una web debería hacer más claro por qué elegirte." })).toBeVisible();
+  const preview = page.locator("[data-live-preview]");
+  await preview.getByRole("button", { name: "Móvil" }).click();
+  await expect(preview).toHaveAttribute("data-size", "mobile");
+  await expect(preview.getByRole("button", { name: "Móvil" })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toHaveAttribute("href", /github\.com\/Jandroel/);
+});
+
+test("commercial case study remains responsive on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/quiero-una-web/");
+
+  const horizontalOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(horizontalOverflow).toBe(0);
+  await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toBeVisible();
 });
 
 test("image comparison responds to keyboard input", async ({ page }) => {

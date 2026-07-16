@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import BeforeAfter from "@components/BeforeAfter.astro";
 import HomeServicePaths from "@components/HomeServicePaths.astro";
-import { demoConfig, imageLibrary, siteConfig, stats, testimonials } from "@data/site";
+import { imageLibrary, siteConfig, stats, testimonials } from "@data/site";
 
 const projects = await getCollection("trabajos");
 const featuredCase = projects.find((project) => project.id === "velo-y-memoria") ?? projects[0];
@@ -203,7 +203,7 @@ const processPhases = [
           <strong>¿Quieres una experiencia digital con este nivel de detalle?</strong>
         </div>
         <p>Este concepto demuestra cómo una marca visual puede convertirse en una web memorable, responsive y preparada para presentar servicios.</p>
-        <a class="button button--light" href={demoConfig.contactUrl} target="_blank" rel="noreferrer">Hablemos de tu web <span aria-hidden="true">↗</span></a>
+        <a class="button button--light" href="/quiero-una-web/">Ver cómo fue creada <span aria-hidden="true">↗</span></a>
       </aside>
     </div>
   </section>
