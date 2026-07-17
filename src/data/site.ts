@@ -1,21 +1,41 @@
+const configuredSiteUrl = (import.meta.env.PUBLIC_SITE_URL || "https://clickmemories.example.com").replace(/\/$/, "");
+const configuredEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || "hola@clickmemories.pe";
+const configuredPhone = import.meta.env.PUBLIC_CONTACT_PHONE || "+51 999 888 777";
+const configuredWhatsapp = (import.meta.env.PUBLIC_CONTACT_WHATSAPP || "51999888777").replace(/\D/g, "");
+const developerEmail = import.meta.env.PUBLIC_DEVELOPER_EMAIL || configuredEmail;
+const developerWhatsapp = (import.meta.env.PUBLIC_DEVELOPER_WHATSAPP || configuredWhatsapp).replace(/\D/g, "");
+
 export const siteConfig = {
   name: "ClickMemories",
   tagline: "Historias reales, recuerdos que permanecen.",
   description:
     "Fotografía y video con mirada cinematográfica para bodas, eventos, marcas y personas que quieren recordar cada detalle con intención.",
-  url: "https://clickmemories.example.com",
-  email: "hola@clickmemories.pe",
-  phone: "+51 999 888 777",
-  whatsapp: "51999888777",
+  url: configuredSiteUrl,
+  email: configuredEmail,
+  phone: configuredPhone,
+  whatsapp: configuredWhatsapp,
+  defaultSocialImage: "/images/projects/velo-y-memoria.webp",
+  analyticsDomain: import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || "",
   responseTime: "Respondemos en menos de 24 horas hábiles.",
   availability: "Agenda 2026 abierta para bodas, marcas y sesiones editoriales.",
   location: "Lima, Perú"
 };
 
-export const demoConfig = {
-  creator: "Jandroel",
-  contactUrl: "https://github.com/Jandroel",
-  sourceUrl: "https://github.com/Jandroel/ClickMemories"
+export const developerProfile = {
+  name: import.meta.env.PUBLIC_DEVELOPER_NAME || "Jandroel",
+  role: "Diseñador y desarrollador web",
+  location: import.meta.env.PUBLIC_DEVELOPER_LOCATION || "Lima, Perú",
+  email: developerEmail,
+  whatsapp: developerWhatsapp,
+  githubUrl: "https://github.com/Jandroel",
+  sourceUrl: "https://github.com/Jandroel/ClickMemories",
+  bio:
+    "Diseño y desarrollo sitios web que combinan una identidad visual propia con objetivos comerciales claros. Trabajo desde la estrategia y el contenido hasta el código responsive, las pruebas y la entrega.",
+  strengths: [
+    "Dirección visual y sistemas de diseño",
+    "Desarrollo frontend responsive",
+    "SEO técnico, accesibilidad y rendimiento"
+  ]
 };
 
 export const navItems = [
@@ -27,20 +47,13 @@ export const navItems = [
 ];
 
 export const imageLibrary = {
-  wedding:
-    "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1800&q=82",
-  weddingVeil:
-    "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=1800&q=82",
-  portrait:
-    "https://images.unsplash.com/photo-1635713150362-ed0cd425e697?auto=format&fit=crop&w=1600&q=82",
-  coffeeCup:
-    "https://images.unsplash.com/photo-1544931733-7ee200c8ca3c?auto=format&fit=crop&w=1600&q=82",
-  coffeeBeans:
-    "https://images.unsplash.com/photo-1504538292323-20e79775474d?auto=format&fit=crop&w=1600&q=82",
-  production:
-    "https://images.unsplash.com/photo-1594872669068-6f682aaee1f0?auto=format&fit=crop&w=1800&q=82",
-  studio:
-    "https://images.unsplash.com/photo-1595292340185-f8a3c5e8b593?auto=format&fit=crop&w=1600&q=82"
+  wedding: "/images/library/wedding.webp",
+  weddingVeil: "/images/library/wedding-veil.webp",
+  portrait: "/images/library/portrait.webp",
+  coffeeCup: "/images/library/coffee-cup.webp",
+  coffeeBeans: "/images/library/coffee-beans.webp",
+  production: "/images/library/production.webp",
+  studio: "/images/library/studio.webp"
 };
 
 export const stats = [
@@ -52,27 +65,27 @@ export const stats = [
 
 export const showreelFrames = [
   {
-    src: "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=900&q=82",
+    src: imageLibrary.wedding,
     alt: "Novios abrazados con luz cálida.",
     label: "Bodas"
   },
   {
-    src: "https://images.unsplash.com/photo-1544931733-7ee200c8ca3c?auto=format&fit=crop&w=900&q=82",
+    src: imageLibrary.coffeeCup,
     alt: "Manos sosteniendo una taza de café.",
     label: "Marca"
   },
   {
-    src: "https://images.unsplash.com/photo-1635713150362-ed0cd425e697?auto=format&fit=crop&w=900&q=82",
+    src: imageLibrary.portrait,
     alt: "Retrato con luz natural.",
     label: "Retrato"
   },
   {
-    src: "https://images.unsplash.com/photo-1594872669068-6f682aaee1f0?auto=format&fit=crop&w=900&q=82",
+    src: imageLibrary.production,
     alt: "Cámara profesional grabando contenido.",
     label: "Video"
   },
   {
-    src: "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=900&q=82",
+    src: imageLibrary.weddingVeil,
     alt: "Pareja bajo un velo blanco.",
     label: "Editorial"
   }

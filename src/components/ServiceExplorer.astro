@@ -72,7 +72,9 @@ const { offers } = Astro.props;
               </div>
             </div>
 
-            <a class="button button--primary" href="/contacto/#solicitud">Consultar este servicio <span aria-hidden="true">↗</span></a>
+            <a class="button button--primary" href={`/contacto/?servicio=${encodeURIComponent(offer.title)}#solicitud`}>
+              Consultar este servicio <span aria-hidden="true">↗</span>
+            </a>
           </div>
         </article>
       ))

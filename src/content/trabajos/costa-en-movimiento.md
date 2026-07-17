@@ -7,7 +7,7 @@ excerpt: "Una campaña de movimiento y bienestar con energía real, paisaje reco
 cover: "/images/projects/costa-en-movimiento.webp"
 coverAlt: "Corredora avanzando por el malecón de la Costa Verde al amanecer."
 featured: false
-projectType: "Concepto demostrativo"
+projectType: "Proyecto conceptual"
 services: ["Reels para redes sociales", "Fotografía de campaña"]
 duration: "1 jornada"
 mood: ["Dinámico", "Natural", "Costero"]

@@ -13,7 +13,7 @@ const trabajos = defineCollection({
     cover: z.string().min(1),
     coverAlt: z.string(),
     featured: z.boolean().default(false),
-    projectType: z.enum(["Caso completo", "Concepto demostrativo"]).default("Caso completo"),
+    projectType: z.enum(["Caso completo", "Proyecto conceptual"]).default("Caso completo"),
     services: z.array(z.string()),
     duration: z.string(),
     mood: z.array(z.string()),

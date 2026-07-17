@@ -7,7 +7,7 @@ excerpt: "Una dirección visual para una casa de hospitalidad que convierte arqu
 cover: "/images/projects/casa-nativa.webp"
 coverAlt: "Anfitriona preparando una mesa en una casa de adobe contemporánea."
 featured: false
-projectType: "Concepto demostrativo"
+projectType: "Proyecto conceptual"
 services: ["Video para marcas", "Fotografía de espacios"]
 duration: "2 jornadas"
 mood: ["Táctil", "Sereno", "Terrenal"]

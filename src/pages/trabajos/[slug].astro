@@ -4,6 +4,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import WorkGallery from "@components/WorkGallery.astro";
 import SectionHeading from "@components/SectionHeading.astro";
+import { siteConfig } from "@data/site";
 
 export async function getStaticPaths() {
   const projects = await getCollection("trabajos");
@@ -18,9 +19,27 @@ const { Content } = await render(project);
 const related = (await getCollection("trabajos"))
   .filter((item) => item.id !== project.id)
   .slice(0, 3);
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: project.data.title,
+  description: project.data.excerpt,
+  image: new URL(project.data.cover, siteConfig.url).toString(),
+  dateCreated: project.data.date.toISOString(),
+  genre: project.data.category,
+  keywords: [...project.data.mood, ...project.data.services].join(", "),
+  contentLocation: project.data.location,
+  creator: { "@id": `${siteConfig.url}/#organization` }
+};
 ---
 
-<BaseLayout title={project.data.title} description={project.data.excerpt} image={project.data.cover}>
+<BaseLayout
+  title={project.data.title}
+  description={project.data.excerpt}
+  image={project.data.cover}
+  type="article"
+  structuredData={projectSchema}
+>
   <article>
     <header class="detail-hero">
       <img
@@ -88,7 +107,7 @@ const related = (await getCollection("trabajos"))
               </figure>
             ) : (
               <div>
-                <p class="eyebrow">Concepto demostrativo</p>
+                <p class="eyebrow">Proyecto conceptual</p>
                 <p>Esta dirección visual muestra una posibilidad creativa y su alcance sin atribuir resultados ni comentarios a un cliente real.</p>
               </div>
             )

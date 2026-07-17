@@ -1,5 +1,5 @@
 ---
-import { demoConfig, navItems, siteConfig } from "@data/site";
+import { developerProfile, navItems, siteConfig } from "@data/site";
 import BrandLogo from "@components/BrandLogo.astro";
 const year = new Date().getFullYear();
 ---
@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
       <a class="footer-brand" href="/" aria-label="Ir al inicio de ClickMemories"><BrandLogo variant="inverse" /></a>
       <p>{siteConfig.tagline}</p>
       <p>Fotografía y video con mirada cinematográfica desde {siteConfig.location}.</p>
-      <a class="footer-creator-link" href="/quiero-una-web/">Diseño y desarrollo por {demoConfig.creator} <span aria-hidden="true">↗</span></a>
+      <a class="footer-creator-link" href="/quiero-una-web/">Diseño y desarrollo por {developerProfile.name} <span aria-hidden="true">↗</span></a>
     </div>
     <div>
       <h2>Explorar</h2>
@@ -30,6 +30,7 @@ const year = new Date().getFullYear();
   <div class="footer-bottom">
     <span>© {year} {siteConfig.name}. Todos los derechos reservados.</span>
     <div class="footer-bottom__links">
+      <a href="/privacidad/">Privacidad</a>
       <a href="/quiero-una-web/">¿Quieres una web así?</a>
       <a href="/contacto/">Ver disponibilidad</a>
     </div>

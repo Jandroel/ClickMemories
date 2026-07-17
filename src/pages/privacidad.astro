@@ -1,0 +1,187 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { siteConfig } from "@data/site";
+
+const updatedAt = new Intl.DateTimeFormat("es-PE", {
+  day: "numeric",
+  month: "long",
+  year: "numeric"
+}).format(new Date("2026-07-17T12:00:00"));
+---
+
+<BaseLayout
+  title="Privacidad"
+  description="Cómo ClickMemories trata la información enviada desde su sitio web y sus canales de contacto."
+>
+  <section class="page-hero privacy-hero">
+    <div class="container page-intro">
+      <p class="eyebrow">Privacidad</p>
+      <h1>Tu información, explicada con claridad.</h1>
+      <p>Esta página resume qué datos intervienen al contactarnos, para qué se usan y qué control tienes sobre ellos.</p>
+      <span class="privacy-updated">Actualizada el {updatedAt}</span>
+    </div>
+  </section>
+
+  <section class="section privacy-section">
+    <div class="container privacy-layout">
+      <aside class="privacy-summary">
+        <p class="eyebrow">En breve</p>
+        <h2>No vendemos datos ni usamos el formulario para crear perfiles publicitarios.</h2>
+        <p>La solicitud se prepara en tu navegador y solo sale del sitio cuando eliges enviarla por WhatsApp o correo.</p>
+        <a class="button button--primary" href={`mailto:${siteConfig.email}`}>Consultar sobre mis datos</a>
+      </aside>
+
+      <div class="privacy-content">
+        <article>
+          <span>01</span>
+          <div>
+            <h2>Responsable y finalidad</h2>
+            <p><strong>{siteConfig.name}</strong>, con atención en {siteConfig.location}, usa los datos que compartes —nombre, correo y detalles del proyecto— únicamente para responder tu consulta, preparar una propuesta y gestionar una eventual relación de servicio.</p>
+          </div>
+        </article>
+
+        <article>
+          <span>02</span>
+          <div>
+            <h2>Cómo funciona el formulario</h2>
+            <p>El formulario no envía ni almacena información en un servidor propio. Al finalizar, genera un mensaje en tu dispositivo. Tú decides si abrirlo en WhatsApp o en tu aplicación de correo, donde puedes revisarlo antes de enviarlo.</p>
+          </div>
+        </article>
+
+        <article>
+          <span>03</span>
+          <div>
+            <h2>Proveedores externos</h2>
+            <p>Cuando utilizas WhatsApp o correo, el tratamiento también queda sujeto a las condiciones del proveedor que elijas. No compartimos tu información con otros terceros salvo que sea necesario para prestar el servicio o cumplir una obligación legal.</p>
+          </div>
+        </article>
+
+        <article>
+          <span>04</span>
+          <div>
+            <h2>Analítica y cookies</h2>
+            {
+              siteConfig.analyticsDomain ? (
+                <p>Usamos Plausible para conocer, de forma agregada y sin cookies publicitarias, qué páginas y acciones ayudan a mejorar el sitio. No enviamos nombres, correos ni el contenido de las solicitudes a la analítica.</p>
+              ) : (
+                <p>La analítica está desactivada actualmente. El sitio no instala cookies de seguimiento ni carga una plataforma de medición externa.</p>
+              )
+            }
+          </div>
+        </article>
+
+        <article>
+          <span>05</span>
+          <div>
+            <h2>Conservación y tus derechos</h2>
+            <p>Si envías una consulta, conservaremos la conversación solo durante el tiempo necesario para atenderla, preparar el servicio y cumplir obligaciones aplicables. Puedes solicitar acceso, corrección o eliminación escribiendo a <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .privacy-hero {
+    background:
+      radial-gradient(circle at 84% 20%, rgba(217, 164, 65, 0.16), transparent 30%),
+      var(--color-cream);
+  }
+
+  .privacy-updated {
+    display: inline-flex;
+    justify-self: start;
+    margin-top: 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    padding: 0.45rem 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .privacy-section {
+    background: var(--color-paper);
+  }
+
+  .privacy-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .privacy-summary {
+    position: sticky;
+    top: 7rem;
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .privacy-summary h2 {
+    font-size: clamp(2.6rem, 4.5vw, 4.4rem);
+  }
+
+  .privacy-summary .button {
+    justify-self: start;
+    margin-top: 0.6rem;
+  }
+
+  .privacy-content {
+    border-top: 1px solid var(--color-line-strong);
+  }
+
+  .privacy-content article {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 1.2rem;
+    border-bottom: 1px solid var(--color-line);
+    padding: 2rem 0;
+  }
+
+  .privacy-content article > span {
+    color: var(--color-clay);
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+  }
+
+  .privacy-content article div {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .privacy-content h2 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+  }
+
+  .privacy-content a {
+    color: var(--color-ink);
+    font-weight: 800;
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  @media (max-width: 900px) {
+    .privacy-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .privacy-summary {
+      position: static;
+      max-width: 720px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .privacy-content article {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      gap: 0.7rem;
+    }
+
+    .privacy-summary .button {
+      width: 100%;
+    }
+  }
+</style>

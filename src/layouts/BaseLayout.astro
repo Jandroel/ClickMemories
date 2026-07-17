@@ -1,6 +1,7 @@
 ---
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import Analytics from "@components/Analytics.astro";
 import { siteConfig } from "@data/site";
 import "@fontsource/instrument-serif/latin-400.css";
 import "@fontsource/instrument-serif/latin-400-italic.css";
@@ -11,12 +12,54 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  type?: "website" | "article";
+  noIndex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description = siteConfig.description, image } = Astro.props;
+const {
+  title,
+  description = siteConfig.description,
+  image = siteConfig.defaultSocialImage,
+  type = "website",
+  noIndex = false,
+  structuredData
+} = Astro.props;
 const pageTitle = title ? `${title} | ${siteConfig.name}` : `${siteConfig.name} | ${siteConfig.tagline}`;
 const canonical = new URL(Astro.url.pathname, siteConfig.url).toString();
-const socialImage = image ? new URL(image, siteConfig.url).toString() : undefined;
+const socialImage = new URL(image, siteConfig.url).toString();
+const baseStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+      image: socialImage,
+      description: siteConfig.description,
+      email: siteConfig.email,
+      telephone: siteConfig.phone,
+      areaServed: "Perú",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Lima",
+        addressCountry: "PE"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      description: siteConfig.description,
+      inLanguage: "es-PE",
+      publisher: { "@id": `${siteConfig.url}/#organization` }
+    }
+  ]
+};
+const schemas = [baseStructuredData, ...(Array.isArray(structuredData) ? structuredData : structuredData ? [structuredData] : [])];
+const serializedSchemas = JSON.stringify(schemas).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -26,19 +69,27 @@ const socialImage = image ? new URL(image, siteConfig.url).toString() : undefine
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow, max-image-preview:large"} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap.xml" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:locale" content="es_PE" />
     <meta property="og:site_name" content={siteConfig.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {socialImage && <meta property="og:image" content={socialImage} />}
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={`${siteConfig.name} — ${title ?? siteConfig.tagline}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <meta name="theme-color" content="#161513" />
+    <script is:inline type="application/ld+json" set:html={serializedSchemas}></script>
+    <Analytics />
     <script is:inline>document.documentElement.classList.add("has-js");</script>
   </head>
   <body>

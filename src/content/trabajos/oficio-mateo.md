@@ -7,7 +7,7 @@ excerpt: "Un retrato ambiental que presenta al creador, su proceso y la calidad 
 cover: "/images/projects/oficio-mateo.webp"
 coverAlt: "Maestro carpintero junto a una silla terminada en su taller."
 featured: false
-projectType: "Concepto demostrativo"
+projectType: "Proyecto conceptual"
 services: ["Sesión de retrato", "Video para marcas"]
 duration: "4 horas"
 mood: ["Honesto", "Textural", "Preciso"]

@@ -1,0 +1,48 @@
+---
+import { siteConfig } from "@data/site";
+
+const analyticsEnabled = Boolean(siteConfig.analyticsDomain.trim());
+---
+
+{
+  analyticsEnabled && (
+    <script
+      is:inline
+      defer
+      data-domain={siteConfig.analyticsDomain}
+      src="https://plausible.io/js/script.js"
+    ></script>
+  )
+}
+
+<script is:inline define:vars={{ analyticsEnabled }}>
+  window.addEventListener("cm:analytics", (event) => {
+    if (!analyticsEnabled || typeof window.plausible !== "function") return;
+    const detail = event.detail || {};
+    if (!detail.name) return;
+    window.plausible(detail.name, { props: detail.props || {} });
+  });
+
+  document.addEventListener("click", (event) => {
+    const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+    if (!(link instanceof HTMLAnchorElement)) return;
+
+    const url = new URL(link.href, window.location.href);
+    let name = link.dataset.analytics || "";
+    const props = {
+      label: (link.textContent || "").trim().replace(/\s+/g, " ").slice(0, 80),
+      path: window.location.pathname
+    };
+
+    if (!name && url.hostname === "wa.me") name = "whatsapp_opened";
+    if (!name && url.protocol === "mailto:") name = "email_opened";
+    if (!name && url.protocol === "tel:") name = "phone_opened";
+    if (!name && url.origin === window.location.origin && url.pathname.startsWith("/trabajos/") && url.pathname !== "/trabajos/") {
+      name = "project_opened";
+      props.project = url.pathname.split("/").filter(Boolean).at(-1) || "";
+    }
+    if (!name && url.origin === window.location.origin && url.pathname === "/contacto/") name = "contact_cta_opened";
+
+    if (name) window.dispatchEvent(new CustomEvent("cm:analytics", { detail: { name, props } }));
+  });
+</script>
