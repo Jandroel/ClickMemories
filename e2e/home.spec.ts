@@ -71,7 +71,7 @@ test("contact page guides the visitor through a tailored request", async ({ page
   await expect(page.getByText(/Comparte objetivo de campaña/)).toBeVisible();
   await page.getByRole("button", { name: "Continuar" }).click();
   await expect(page.getByLabel("¿Qué debería lograr o hacer sentir?")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Solicitar una propuesta" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Preparar mi solicitud" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Escribir por WhatsApp" })).toBeVisible();
 });
 
@@ -84,9 +84,13 @@ test("contact form validates and completes the guided request flow", async ({ pa
   await page.getByRole("radio", { name: "Film de boda" }).check();
   await page.getByRole("button", { name: "Continuar" }).click();
   await page.getByLabel("¿Qué debería lograr o hacer sentir?").fill("Una boda íntima al atardecer en Lima.");
-  await page.getByRole("button", { name: "Solicitar una propuesta" }).click();
+  await page.getByRole("checkbox", { name: /Acepto que mis datos/ }).check();
+  await page.getByRole("button", { name: "Preparar mi solicitud" }).click();
 
-  await expect(page.getByText(/Todo listo/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ya puedes enviarla." })).toBeVisible();
+  await expect(page.locator("[data-review-service]")).toHaveText("Film de boda");
+  await expect(page.getByRole("link", { name: /Enviar por WhatsApp/ })).toHaveAttribute("href", /wa\.me\/51999888777/);
+  await expect(page.getByRole("link", { name: /Enviar por correo/ })).toHaveAttribute("href", /^mailto:/);
 });
 
 test("work portfolio presents an editorial selection and grouped filters", async ({ page }) => {
@@ -113,6 +117,7 @@ test("services page guides visitors through offers and packages", async ({ page 
   await page.getByRole("tab", { name: /Video para marcas/ }).click();
   await expect(page.locator("[role='tabpanel']:visible").getByRole("heading", { name: /Convertir una idea de marca/ })).toBeVisible();
   await expect(page.getByText("Desde S/ 2,400")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Consultar este servicio/ })).toHaveAttribute("href", /servicio=Video%20para%20marcas/);
   await expect(page.getByText("Más elegido")).toBeVisible();
   await expect(page.getByRole("link", { name: /Diseñar mi propuesta/ })).toHaveAttribute("href", "/contacto/#solicitud");
 });
@@ -150,7 +155,8 @@ test("commercial case study demonstrates responsive delivery", async ({ page }) 
   await preview.getByRole("button", { name: "Móvil" }).click();
   await expect(preview).toHaveAttribute("data-size", "mobile");
   await expect(preview.getByRole("button", { name: "Móvil" })).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toHaveAttribute("href", /github\.com\/Jandroel/);
+  await expect(page.getByRole("link", { name: /Hablemos de tu proyecto/ }).first()).toHaveAttribute("href", /wa\.me\/51999888777/);
+  await expect(page.getByRole("heading", { name: /Hola, soy Jandroel/ })).toBeVisible();
 });
 
 test("commercial case study remains responsive on mobile", async ({ page }) => {
@@ -169,4 +175,21 @@ test("image comparison responds to keyboard input", async ({ page }) => {
   await comparison.focus();
   await comparison.press("ArrowRight");
   await expect(comparison).toHaveValue("53");
+});
+
+test("privacy page explains the static contact flow", async ({ page }) => {
+  await page.goto("/privacidad/");
+
+  await expect(page.getByRole("heading", { name: "Tu información, explicada con claridad." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Cómo funciona el formulario" })).toBeVisible();
+  await expect(page.getByText(/no envía ni almacena información en un servidor propio/i)).toBeVisible();
+  await expect(page.getByText(/La analítica está desactivada actualmente/i)).toBeVisible();
+});
+
+test("editorial imagery is served locally", async ({ page }) => {
+  await page.goto("/trabajos/luz-de-abril/");
+
+  const remoteImages = await page.locator('img[src^="http"]').count();
+  expect(remoteImages).toBe(0);
+  await expect(page.locator('img[src="/images/library/wedding-veil.webp"]')).toBeVisible();
 });
