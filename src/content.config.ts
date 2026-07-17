@@ -10,27 +10,28 @@ const trabajos = defineCollection({
     location: z.string(),
     date: z.coerce.date(),
     excerpt: z.string(),
-    cover: z.url(),
+    cover: z.string().min(1),
     coverAlt: z.string(),
     featured: z.boolean().default(false),
+    projectType: z.enum(["Caso completo", "Concepto demostrativo"]).default("Caso completo"),
     services: z.array(z.string()),
     duration: z.string(),
     mood: z.array(z.string()),
     gallery: z
       .array(
         z.object({
-          src: z.url(),
+          src: z.string().min(1),
           alt: z.string(),
           caption: z.string(),
           orientation: z.enum(["vertical", "horizontal", "square"]).default("vertical")
         })
       )
-      .min(3),
+      .min(1),
     video: z
       .object({
         title: z.string(),
         description: z.string(),
-        poster: z.url(),
+        poster: z.string().min(1),
         duration: z.string()
       })
       .optional(),

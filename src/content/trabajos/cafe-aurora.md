@@ -4,14 +4,14 @@ category: "Historias de marca"
 location: "Barranco, Lima"
 date: 2025-07-09
 excerpt: "Contenido visual para una marca de café de especialidad que necesitaba mostrar oficio, textura y cercanía."
-cover: "https://images.unsplash.com/photo-1544931733-7ee200c8ca3c?auto=format&fit=crop&w=1600&q=82"
+cover: "/images/projects/cafe-aurora.webp"
 coverAlt: "Manos sosteniendo una taza de café con arte latte."
 featured: true
 services: ["Video para marcas", "Reels para redes sociales"]
 duration: "2 jornadas"
 mood: ["Artesanal", "Cercano", "Sensorial"]
 gallery:
-  - src: "https://images.unsplash.com/photo-1544931733-7ee200c8ca3c?auto=format&fit=crop&w=1600&q=82"
+  - src: "/images/projects/cafe-aurora.webp"
     alt: "Manos sosteniendo una taza de café con arte latte."
     caption: "Producto y gesto humano dentro de una misma imagen."
     orientation: "square"
@@ -34,7 +34,7 @@ gallery:
 video:
   title: "Manos de Aurora"
   description: "Pieza breve para mostrar proceso, textura y cercanía de marca."
-  poster: "https://images.unsplash.com/photo-1544931733-7ee200c8ca3c?auto=format&fit=crop&w=1600&q=82"
+  poster: "/images/projects/cafe-aurora.webp"
   duration: "00:45"
 testimonial:
   quote: "El contenido se sintió artesanal y actual, justo como queríamos que la marca empezara a verse."

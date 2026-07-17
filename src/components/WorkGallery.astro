@@ -22,6 +22,7 @@ interface Props {
 const { title, items, video } = Astro.props;
 const galleryId = `galeria-${title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}`;
 const firstItem = items[0];
+const hasMultipleImages = items.length > 1;
 ---
 
 <section class="section section--gallery" id="galeria">
@@ -29,8 +30,12 @@ const firstItem = items[0];
     <div class="gallery-layout">
       <div class="section-heading">
         <p class="eyebrow">Galería</p>
-        <h2>Más que una portada: una historia completa.</h2>
-        <p>Recorre una selección de frames, detalles y momentos clave. Puedes abrir cada imagen en pantalla completa.</p>
+        <h2>{hasMultipleImages ? "Más que una portada: una historia completa." : "Una dirección visual con intención."}</h2>
+        <p>
+          {hasMultipleImages
+            ? "Recorre una selección de frames, detalles y momentos clave. Puedes abrir cada imagen en pantalla completa."
+            : "Este concepto concentra la atmósfera, el enfoque y el tipo de historia que podría desarrollarse en una producción completa."}
+        </p>
       </div>
 
       {video && (
@@ -50,16 +55,16 @@ const firstItem = items[0];
 
     <div class="work-gallery" data-gallery id={galleryId}>
       <div class="gallery-stage">
-        <button class="gallery-nav gallery-nav--prev" type="button" data-gallery-prev aria-label="Imagen anterior">‹</button>
+        {hasMultipleImages && <button class="gallery-nav gallery-nav--prev" type="button" data-gallery-prev aria-label="Imagen anterior">‹</button>}
         <button class="gallery-stage__button" type="button" data-lightbox-open aria-label={`Abrir imagen de ${title} en pantalla completa`}>
           <img data-gallery-main src={firstItem.src} alt={firstItem.alt} loading="eager" />
         </button>
-        <button class="gallery-nav gallery-nav--next" type="button" data-gallery-next aria-label="Imagen siguiente">›</button>
+        {hasMultipleImages && <button class="gallery-nav gallery-nav--next" type="button" data-gallery-next aria-label="Imagen siguiente">›</button>}
       </div>
 
       <div class="gallery-caption" data-gallery-caption>{firstItem.caption}</div>
 
-      <div class="gallery-thumbs" aria-label={`Miniaturas de ${title}`}>
+      {hasMultipleImages && <div class="gallery-thumbs" aria-label={`Miniaturas de ${title}`}>
         {
           items.map((item, index) => (
             <button
@@ -76,18 +81,18 @@ const firstItem = items[0];
             </button>
           ))
         }
-      </div>
+      </div>}
     </div>
   </div>
 
   <dialog class="lightbox" data-lightbox={galleryId} aria-label={`Galería ampliada de ${title}`}>
     <button class="lightbox__close" type="button" data-lightbox-close aria-label="Cerrar imagen">×</button>
-    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Imagen anterior">‹</button>
+    {hasMultipleImages && <button class="lightbox__nav lightbox__nav--prev" type="button" data-lightbox-prev aria-label="Imagen anterior">‹</button>}
     <figure>
       <img data-lightbox-image src={firstItem.src} alt={firstItem.alt} />
       <figcaption data-lightbox-caption>{firstItem.caption}</figcaption>
     </figure>
-    <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Imagen siguiente">›</button>
+    {hasMultipleImages && <button class="lightbox__nav lightbox__nav--next" type="button" data-lightbox-next aria-label="Imagen siguiente">›</button>}
   </dialog>
 </section>
 

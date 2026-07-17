@@ -32,6 +32,7 @@ const related = (await getCollection("trabajos"))
       />
       <div class="detail-hero__content">
         <div class="detail-meta">
+          <span>{project.data.projectType}</span>
           <span>{project.data.category}</span>
           <span>{project.data.location}</span>
           <span>{project.data.duration}</span>
@@ -86,7 +87,10 @@ const related = (await getCollection("trabajos"))
                 </figcaption>
               </figure>
             ) : (
-              <p>Este proyecto está listo para sumar un testimonio real del cliente.</p>
+              <div>
+                <p class="eyebrow">Concepto demostrativo</p>
+                <p>Esta dirección visual muestra una posibilidad creativa y su alcance sin atribuir resultados ni comentarios a un cliente real.</p>
+              </div>
             )
           }
         </aside>

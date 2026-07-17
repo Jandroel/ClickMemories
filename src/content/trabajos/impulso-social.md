@@ -4,16 +4,16 @@ category: "Reels y contenido social"
 location: "San Isidro, Lima"
 date: 2025-10-03
 excerpt: "Piezas verticales para una campaña de lanzamiento con ritmo ágil, dirección clara y acabado cinematográfico."
-cover: "https://images.unsplash.com/photo-1594872669068-6f682aaee1f0?auto=format&fit=crop&w=1800&q=82"
-coverAlt: "Cámara profesional grabando una escena durante una producción."
+cover: "/images/projects/impulso-social.webp"
+coverAlt: "Ceramista preparando una pieza escultórica para una campaña de lanzamiento."
 featured: false
 services: ["Reels para redes sociales", "Video para marcas"]
 duration: "1 jornada"
 mood: ["Dinámico", "Preciso", "Contemporáneo"]
 gallery:
-  - src: "https://images.unsplash.com/photo-1594872669068-6f682aaee1f0?auto=format&fit=crop&w=1800&q=82"
-    alt: "Cámara profesional grabando una escena durante una producción."
-    caption: "Cámara en set durante la jornada de contenido."
+  - src: "/images/projects/impulso-social.webp"
+    alt: "Ceramista preparando una pieza escultórica para una campaña de lanzamiento."
+    caption: "El gesto del oficio como centro de la campaña."
     orientation: "square"
   - src: "https://images.unsplash.com/photo-1595292340185-f8a3c5e8b593?auto=format&fit=crop&w=1600&q=82"
     alt: "Videógrafo ajustando una cámara en trípode dentro de estudio."
@@ -34,7 +34,7 @@ gallery:
 video:
   title: "Pack de reels Impulso"
   description: "Ocho piezas verticales para lanzamiento, pauta y contenido orgánico."
-  poster: "https://images.unsplash.com/photo-1594872669068-6f682aaee1f0?auto=format&fit=crop&w=1800&q=82"
+  poster: "/images/projects/impulso-social.webp"
   duration: "00:20"
 testimonial:
   quote: "Lograron que el contenido fuera rápido para redes, pero sin perder una imagen cuidada."

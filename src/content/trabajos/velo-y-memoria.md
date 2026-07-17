@@ -4,15 +4,15 @@ category: "Editorial"
 location: "Valle Sagrado, Cusco"
 date: 2026-02-14
 excerpt: "Una pieza editorial inspirada en textura, movimiento y silencio para explorar una narrativa nupcial más íntima."
-cover: "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=1800&q=82"
-coverAlt: "Pareja cubierta por un velo blanco durante una sesión editorial."
+cover: "/images/projects/velo-y-memoria.webp"
+coverAlt: "Pareja de recién casados cubierta por un velo en el Valle Sagrado."
 featured: false
 services: ["Sesión de retrato", "Edición y postproducción"]
 duration: "6 horas"
 mood: ["Poético", "Textural", "Cinematográfico"]
 gallery:
-  - src: "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=1800&q=82"
-    alt: "Pareja cubierta por un velo blanco durante una sesión editorial."
+  - src: "/images/projects/velo-y-memoria.webp"
+    alt: "Pareja de recién casados cubierta por un velo en el Valle Sagrado."
     caption: "Imagen central de la serie editorial."
     orientation: "square"
   - src: "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1800&q=82"
@@ -34,7 +34,7 @@ gallery:
 video:
   title: "Editorial en movimiento"
   description: "Teaser vertical con velo, textura y contraluces suaves."
-  poster: "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=1800&q=82"
+  poster: "/images/projects/velo-y-memoria.webp"
   duration: "00:30"
 testimonial:
   quote: "La serie tiene una calma preciosa. Se siente editorial, pero no fría."

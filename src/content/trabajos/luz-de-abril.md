@@ -4,16 +4,16 @@ category: "Bodas"
 location: "Pachacámac, Lima"
 date: 2025-04-18
 excerpt: "Una boda íntima en exteriores, narrada desde gestos pequeños, luz dorada y una fiesta familiar sin poses rígidas."
-cover: "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1800&q=82"
-coverAlt: "Pareja de novios abrazada durante una sesión de boda con luz cálida."
+cover: "/images/projects/luz-de-abril.webp"
+coverAlt: "Pareja de recién casados caminando entre sus invitados después de la ceremonia."
 featured: true
 services: ["Film de boda", "Cobertura completa"]
 duration: "12 horas"
 mood: ["Luz natural", "Tono documental", "Ritmo íntimo"]
 gallery:
-  - src: "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1800&q=82"
-    alt: "Pareja de novios abrazada con ramo de flores y luz cálida."
-    caption: "Retrato principal al final de la ceremonia civil."
+  - src: "/images/projects/luz-de-abril.webp"
+    alt: "Pareja de recién casados caminando entre sus invitados después de la ceremonia."
+    caption: "La salida de la ceremonia, fotografiada sin interrumpir el momento."
     orientation: "vertical"
   - src: "https://images.unsplash.com/photo-1600283867435-7f11350c250e?auto=format&fit=crop&w=1800&q=82"
     alt: "Novios cubiertos por un velo blanco en una escena íntima."
@@ -34,7 +34,7 @@ gallery:
 video:
   title: "Trailer Luz de abril"
   description: "Un teaser de 60 segundos con votos, luz dorada y fiesta familiar."
-  poster: "https://images.unsplash.com/photo-1591604442449-ecc9943efabf?auto=format&fit=crop&w=1800&q=82"
+  poster: "/images/projects/luz-de-abril.webp"
   duration: "01:00"
 testimonial:
   quote: "Nos reconocimos en cada plano. No fue solo un video bonito, fue nuestra boda con toda su emoción."

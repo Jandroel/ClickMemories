@@ -4,15 +4,15 @@ category: "Retratos"
 location: "Miraflores, Lima"
 date: 2025-08-21
 excerpt: "Una sesión editorial de retrato con dirección suave, luz natural y una búsqueda honesta de presencia."
-cover: "https://images.unsplash.com/photo-1635713150362-ed0cd425e697?auto=format&fit=crop&w=1600&q=82"
-coverAlt: "Retrato de una mujer con luz natural en exteriores."
+cover: "/images/projects/retrato-alba.webp"
+coverAlt: "Retrato editorial de una profesional creativa frente a arquitectura contemporánea."
 featured: true
 services: ["Sesión de retrato", "Edición y postproducción"]
 duration: "3 horas"
 mood: ["Editorial", "Natural", "Sereno"]
 gallery:
-  - src: "https://images.unsplash.com/photo-1635713150362-ed0cd425e697?auto=format&fit=crop&w=1600&q=82"
-    alt: "Retrato de una mujer con luz natural en exteriores."
+  - src: "/images/projects/retrato-alba.webp"
+    alt: "Retrato editorial de una profesional creativa frente a arquitectura contemporánea."
     caption: "Retrato principal con dirección mínima."
     orientation: "vertical"
   - src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1600&q=82"
@@ -34,7 +34,7 @@ gallery:
 video:
   title: "Retrato en movimiento"
   description: "Clip vertical de presencia personal para redes y prensa."
-  poster: "https://images.unsplash.com/photo-1635713150362-ed0cd425e697?auto=format&fit=crop&w=1600&q=82"
+  poster: "/images/projects/retrato-alba.webp"
   duration: "00:30"
 testimonial:
   quote: "La sesión fue tranquila, cuidada y cero forzada. Por primera vez me reconocí en mis retratos."
