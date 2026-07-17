@@ -34,13 +34,15 @@ Demo pendiente: `https://clickmemories.example.com`
 - Contenido público completamente en español.
 - Página de inicio con hero visual, trabajos destacados, servicios, proceso, testimonios y CTA final.
 - Comparador interactivo de dirección de color operable con puntero, táctil y teclado.
-- Capa comercial que identifica el sitio como demo y conecta con su creador.
+- Caso comercial con perfil profesional, proceso y canales directos del desarrollador.
 - Portafolio con colección tipada de proyectos en `src/content/trabajos`.
 - Portafolio editorial con proyecto destacado, filtros agrupados y composición asimétrica responsive.
 - Páginas de detalle con transición visual compartida, galería, carrusel, miniaturas, lightbox accesible, teaser visual y testimonio.
 - Servicios con paquetes, método de trabajo, FAQ y formulario de contacto.
-- Contacto con WhatsApp, señales de disponibilidad y guía dinámica según servicio.
-- Metadatos SEO, Open Graph, `robots.txt` y `sitemap.xml`.
+- Contacto guiado con revisión y envío real por WhatsApp o correo, sin almacenar datos en el sitio.
+- Política de privacidad y analítica opcional sin cookies mediante Plausible.
+- Metadatos SEO, Open Graph, JSON-LD, `robots.txt` y `sitemap.xml` dinámicos.
+- Biblioteca visual local en WebP para evitar dependencias de carga externas.
 - Diseño responsive, accesible y enfocado en lectura visual.
 - Seis pruebas end-to-end con Playwright.
 - Documentación técnica y de producto en `docs/`.
@@ -67,7 +69,10 @@ La experiencia evita una estética de landing genérica: el primer viewport mues
 - `/servicios/` Servicios y FAQ.
 - `/sobre-mi/` Filosofía y forma de trabajo.
 - `/contacto/` Formulario y canales directos.
+- `/quiero-una-web/` Caso comercial y perfil del desarrollador.
+- `/privacidad/` Tratamiento de datos y analítica.
 - `/404/` Página no encontrada.
+- `/robots.txt` Directivas para buscadores.
 - `/sitemap.xml` Sitemap generado.
 
 ## Arquitectura general
@@ -111,6 +116,24 @@ npm run dev
 
 El sitio se abrirá por defecto en `http://localhost:4321`.
 
+### Datos de producción
+
+Copia `.env.example` como `.env` y reemplaza los valores provisionales antes de publicar:
+
+```bash
+PUBLIC_SITE_URL=https://tu-dominio.com
+PUBLIC_CONTACT_EMAIL=hola@tu-dominio.com
+PUBLIC_CONTACT_PHONE=+51 999 999 999
+PUBLIC_CONTACT_WHATSAPP=51999999999
+
+PUBLIC_DEVELOPER_NAME=Tu nombre
+PUBLIC_DEVELOPER_EMAIL=tu-correo@dominio.com
+PUBLIC_DEVELOPER_WHATSAPP=51999999999
+PUBLIC_DEVELOPER_LOCATION=Lima, Perú
+```
+
+`PUBLIC_PLAUSIBLE_DOMAIN` es opcional. Si queda vacío, el sitio no carga analítica externa.
+
 ## Scripts disponibles
 
 ```bash
@@ -124,7 +147,7 @@ npm run test      # Pruebas e2e
 
 ## Testing
 
-Las pruebas en `e2e/home.spec.ts` verifican la carga de la página de inicio, el formulario en español, los filtros del portafolio, el diálogo de galería, la capa comercial de demo y la interacción por teclado del comparador visual.
+Las pruebas en `e2e/home.spec.ts` verifican la página de inicio, el flujo real de contacto, los filtros del portafolio, el diálogo de galería, el caso comercial, la política de privacidad y las interacciones por teclado.
 
 Para ejecutar:
 
@@ -140,7 +163,7 @@ npm run test:e2e
 - Los formularios usan labels visibles y mensajes de validación en español.
 - Los movimientos respetan `prefers-reduced-motion`.
 - El lightbox usa un diálogo modal nativo con control de foco.
-- Las imágenes de cards usan `loading="lazy"`.
+- Las imágenes de cards usan `loading="lazy"` y los assets editoriales se sirven localmente en WebP.
 - El sitio está preparado para salida estática y despliegue en CDN.
 
 ## Flujo Git
@@ -170,13 +193,11 @@ El build genera archivos estáticos en `dist/`, aptos para Vercel, Netlify, Clou
 npm run build
 ```
 
-Antes de producción, actualizar `site` en `astro.config.mjs`, `siteConfig.url` en `src/data/site.ts` y la URL de `public/robots.txt`.
+Antes de producción, configura las variables de `.env`, ejecuta las validaciones y aplica los encabezados recomendados en `docs/PRODUCTION.md`.
 
 ## Roadmap
 
-- Reemplazar imágenes placeholder por material propio de ClickMemories.
-- Añadir integración real de formulario.
-- Incorporar optimización avanzada de imágenes locales.
+- Reemplazar las fotografías editoriales de referencia por material propio de ClickMemories.
 - Añadir integración real de video o showreel hospedado.
 - Añadir más pruebas visuales y de accesibilidad.
 
@@ -186,4 +207,4 @@ Este proyecto está preparado con licencia MIT. Revisa `LICENSE` para el texto l
 
 ## Créditos y atribución de assets
 
-Las fotografías remotas usadas como placeholders provienen de Unsplash y están documentadas en `ASSETS_ATTRIBUTIONS.md`. Deben reemplazarse por material propio antes del lanzamiento final si el sitio representa un portfolio real.
+Las fotografías editoriales de referencia provienen de Unsplash, se sirven localmente y están documentadas en `ASSETS_ATTRIBUTIONS.md`. Deben reemplazarse por material propio antes del lanzamiento final si el sitio representa un portafolio real.

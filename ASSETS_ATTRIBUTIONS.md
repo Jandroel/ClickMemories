@@ -14,8 +14,8 @@ Las imágenes actuales funcionan como placeholders para dar dirección visual al
 | Producción y proyecto “Impulso social” | Kyle Loftus | https://unsplash.com/photos/person-holding-black-dslr-camera-taking-photo-of-people-during-daytime-0SD23QoYRSo | `photo-1594872669068-6f682aaee1f0` |
 | Página “Sobre mí” | Kyle Loftus | https://unsplash.com/photos/woman-in-black-tank-top-holding-black-dslr-camera-96aWzXa6e10 | `photo-1595292340185-f8a3c5e8b593` |
 
-Las fotografías se usan desde URLs remotas de `images.unsplash.com` con parámetros de tamaño y compresión. Revisar la licencia vigente de Unsplash antes de producción.
+Las fotografías se conservan localmente en `public/images/library/` en formato WebP para evitar dependencias de carga externas. Revisar la licencia vigente de Unsplash antes de producción.
 
 ## Galerías extendidas
 
-Las galerías de los proyectos usan imágenes adicionales de Unsplash como placeholders editoriales para simular variedad visual. Estas imágenes deben auditarse y reemplazarse por material propio antes de publicar el sitio como portfolio real. El contenido definitivo debe mantener autoría, licencia y consentimiento de uso documentados por proyecto.
+Las galerías de los proyectos usan imágenes adicionales de Unsplash, almacenadas en `public/images/library/`, como referencias editoriales para simular variedad visual. Estas imágenes deben auditarse y reemplazarse por material propio antes de publicar el sitio como portafolio real. El contenido definitivo debe mantener autoría, licencia y consentimiento de uso documentados por proyecto.
