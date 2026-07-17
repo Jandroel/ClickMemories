@@ -174,9 +174,6 @@ textarea {
 .footer-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-weight: 780;
-  letter-spacing: -0.02em;
 }
 
 .footer-creator-link {
@@ -193,18 +190,6 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem;
-}
-
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-round);
-  background: var(--color-ink);
-  color: var(--color-gold);
-  font-size: 0.8rem;
 }
 
 .nav-links {
@@ -2221,7 +2206,6 @@ textarea {
 .footer-brand {
   margin-bottom: 0.8rem;
   color: white;
-  font-size: 1.2rem;
 }
 
 .footer-bottom {

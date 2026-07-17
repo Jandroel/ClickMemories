@@ -7,6 +7,9 @@ test("homepage shows Spanish brand copy and navigation", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Explorar historias" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Contar mi proyecto/ })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Navegación principal" })).toBeVisible();
+  const brand = page.getByRole("link", { name: "Ir al inicio de ClickMemories" }).first();
+  await expect(brand.locator("[data-brand-symbol]")).toBeVisible();
+  await expect(brand).toContainText("ClickMemories");
 });
 
 test("visual system loads the local brand fonts and shared tokens", async ({ page }) => {

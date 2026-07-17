@@ -1,13 +1,13 @@
 ---
-import { navItems, siteConfig } from "@data/site";
+import { navItems } from "@data/site";
+import BrandLogo from "@components/BrandLogo.astro";
 const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
   <nav class="nav-shell" aria-label="Navegación principal">
     <a class="brand" href="/" aria-label="Ir al inicio de ClickMemories">
-      <span class="brand-mark" aria-hidden="true">CM</span>
-      <span>{siteConfig.name}</span>
+      <BrandLogo />
     </a>
 
     <div class="nav-links" aria-label="Secciones principales">
@@ -40,4 +40,3 @@ const currentPath = Astro.url.pathname;
     </details>
   </nav>
 </header>
-

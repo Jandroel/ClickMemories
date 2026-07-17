@@ -1,0 +1,118 @@
+---
+interface Props {
+  variant?: "default" | "inverse";
+}
+
+const { variant = "default" } = Astro.props;
+---
+
+<span class:list={["brand-lockup", variant === "inverse" && "brand-lockup--inverse"]}>
+  <svg
+    class="brand-symbol"
+    data-brand-symbol
+    viewBox="0 0 64 64"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path class="brand-symbol__frame" d="M42 10H23C15.82 10 10 15.82 10 23v18c0 7.18 5.82 13 13 13h19" />
+    <path class="brand-symbol__memory" d="M26 42V24l10 10 10-10v18" />
+    <path class="brand-symbol__fold" d="M40 10h4c5.52 0 10 4.48 10 10v4L40 10Z" />
+  </svg>
+
+  <span class="brand-wordmark" aria-hidden="true">
+    <strong>Click</strong><em>Memories</em>
+  </span>
+</span>
+
+<style>
+  .brand-lockup {
+    display: inline-flex;
+    gap: 0.58rem;
+    align-items: center;
+    color: var(--color-ink);
+  }
+
+  .brand-lockup--inverse {
+    color: var(--color-paper);
+  }
+
+  .brand-symbol {
+    width: 2.7rem;
+    height: 2.7rem;
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .brand-symbol__frame,
+  .brand-symbol__memory {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .brand-symbol__frame {
+    stroke-width: 7;
+  }
+
+  .brand-symbol__memory {
+    stroke-width: 5.5;
+  }
+
+  .brand-symbol__fold {
+    fill: var(--color-gold);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .brand-wordmark {
+    display: inline-flex;
+    align-items: baseline;
+    white-space: nowrap;
+  }
+
+  .brand-wordmark strong {
+    font-family: var(--font-sans);
+    font-size: 0.91rem;
+    font-weight: 820;
+    letter-spacing: -0.045em;
+  }
+
+  .brand-wordmark em {
+    margin-left: 0.12rem;
+    font-family: var(--font-serif);
+    font-size: 1.18rem;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.045em;
+  }
+
+  :global(.brand:hover) .brand-symbol__fold,
+  :global(.brand:focus-visible) .brand-symbol__fold,
+  :global(.footer-brand:hover) .brand-symbol__fold,
+  :global(.footer-brand:focus-visible) .brand-symbol__fold {
+    transform: translate(1px, -1px) rotate(3deg);
+  }
+
+  @media (max-width: 380px) {
+    .brand-symbol {
+      width: 2.45rem;
+      height: 2.45rem;
+    }
+
+    .brand-wordmark strong {
+      font-size: 0.84rem;
+    }
+
+    .brand-wordmark em {
+      font-size: 1.08rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-symbol__fold {
+      transition: none;
+    }
+  }
+</style>

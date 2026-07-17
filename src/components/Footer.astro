@@ -1,12 +1,13 @@
 ---
 import { demoConfig, navItems, siteConfig } from "@data/site";
+import BrandLogo from "@components/BrandLogo.astro";
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="footer-grid">
     <div>
-      <a class="footer-brand" href="/">{siteConfig.name}</a>
+      <a class="footer-brand" href="/" aria-label="Ir al inicio de ClickMemories"><BrandLogo variant="inverse" /></a>
       <p>{siteConfig.tagline}</p>
       <p>Fotografía y video con mirada cinematográfica desde {siteConfig.location}.</p>
       <a class="footer-creator-link" href="/quiero-una-web/">Diseño y desarrollo por {demoConfig.creator} <span aria-hidden="true">↗</span></a>
