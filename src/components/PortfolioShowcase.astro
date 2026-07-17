@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import ProjectCard from "@components/ProjectCard.astro";
 
 interface Props {
   projects: CollectionEntry<"trabajos">[];
@@ -8,6 +7,7 @@ interface Props {
 }
 
 const { projects, headingId = "portfolio-heading" } = Astro.props;
+const initialProject = projects[0];
 
 const categoryGroup = (category: string) => {
   if (["Bodas", "Editorial"].includes(category)) return "historias";
@@ -30,7 +30,7 @@ const projectCount = (filter: string) =>
   <header class="portfolio-header" data-reveal>
     <div>
       <p class="eyebrow">Colección seleccionada</p>
-      <h2 id={headingId}>Una mirada distinta para cada historia.</h2>
+      <h2 id={headingId}>Explora cada proyecto desde dentro.</h2>
     </div>
     <p class="portfolio-count" aria-live="polite">
       <strong data-result-count>{projects.length}</strong>
@@ -57,40 +57,170 @@ const projectCount = (filter: string) =>
     <p class="filter-status" data-filter-status aria-live="polite">Mostrando la colección completa.</p>
   </div>
 
-  <div class="portfolio-editorial-grid" data-project-list>
-    {
-      projects.map((project, index) => (
-        <div
-          class:list={["portfolio-item", `portfolio-item--${(index % 4) + 1}`]}
-          data-project
-          data-group={categoryGroup(project.data.category)}
-          data-reveal
-        >
-          <ProjectCard project={project} index={index} />
+  <div class="portfolio-explorer" data-reveal>
+    <article class="portfolio-spotlight" data-project-stage>
+      <a
+        class="portfolio-spotlight__link"
+        href={`/trabajos/${initialProject.id}/`}
+        data-stage-link
+        aria-label={`Explorar el caso ${initialProject.data.title}`}
+      >
+        <img
+          src={initialProject.data.cover}
+          alt={initialProject.data.coverAlt}
+          width="1536"
+          height="1024"
+          loading="eager"
+          data-stage-image
+        />
+        <span class="portfolio-spotlight__veil" aria-hidden="true"></span>
+
+        <div class="portfolio-spotlight__topline">
+          <span data-stage-type>{initialProject.data.projectType}</span>
+          <span data-stage-number>01 / {String(projects.length).padStart(2, "0")}</span>
         </div>
-      ))
-    }
+
+        <div class="portfolio-spotlight__content">
+          <p class="portfolio-spotlight__category" data-stage-category>{initialProject.data.category}</p>
+          <h3 data-stage-title>{initialProject.data.title}</h3>
+          <p class="portfolio-spotlight__excerpt" data-stage-excerpt>{initialProject.data.excerpt}</p>
+          <div class="portfolio-spotlight__proof">
+            <span data-stage-meta>{initialProject.data.location} · {initialProject.data.duration}</span>
+            <span data-stage-services>{initialProject.data.services.slice(0, 2).join(" · ")}</span>
+          </div>
+          <span class="portfolio-spotlight__action">Abrir caso completo <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
+    </article>
+
+    <div class="portfolio-index" data-project-list aria-label="Índice interactivo de proyectos">
+      {
+        projects.map((project, index) => {
+          const number = String(index + 1).padStart(2, "0");
+          return (
+            <div class="portfolio-index__entry" data-project-entry data-group={categoryGroup(project.data.category)}>
+              <button
+                class:list={["portfolio-index__trigger", index === 0 && "is-active"]}
+                type="button"
+                data-project-trigger
+                data-url={`/trabajos/${project.id}/`}
+                data-image={project.data.cover}
+                data-alt={project.data.coverAlt}
+                data-title={project.data.title}
+                data-category={project.data.category}
+                data-excerpt={project.data.excerpt}
+                data-meta={`${project.data.location} · ${project.data.duration}`}
+                data-services={project.data.services.slice(0, 2).join(" · ")}
+                data-type={project.data.projectType}
+                data-number={`${number} / ${String(projects.length).padStart(2, "0")}`}
+                aria-pressed={index === 0 ? "true" : "false"}
+                aria-label={`Previsualizar ${project.data.title}`}
+              >
+                <span class="portfolio-index__number" aria-hidden="true">{number}</span>
+                <span class="portfolio-index__name">
+                  <small>{project.data.category}</small>
+                  <strong>{project.data.title}</strong>
+                </span>
+                <span class="portfolio-index__year">{project.data.date.getFullYear()}</span>
+                <span class="portfolio-index__arrow" aria-hidden="true">↗</span>
+              </button>
+            </div>
+          );
+        })
+      }
+    </div>
   </div>
 
+  <p class="portfolio-selection-status" data-selection-status aria-live="polite">
+    {initialProject.data.title} seleccionado.
+  </p>
   <p class="portfolio-empty" data-portfolio-empty hidden>No hay trabajos en esta categoría todavía.</p>
+
+  <aside class="portfolio-disclosure" aria-label="Transparencia del portafolio" data-reveal>
+    <span>Nota de proyecto</span>
+    <p>
+      ClickMemories es una demostración de diseño. Los conceptos identificados como demostrativos muestran cómo puede
+      construirse una dirección visual y presentarse su alcance sin atribuir resultados a clientes reales.
+    </p>
+  </aside>
 </div>
 
 <script>
   document.querySelectorAll<HTMLElement>("[data-portfolio]").forEach((portfolio) => {
     const chips = Array.from(portfolio.querySelectorAll<HTMLButtonElement>("[data-filter]"));
-    const projects = Array.from(portfolio.querySelectorAll<HTMLElement>("[data-project]"));
-    const list = portfolio.querySelector<HTMLElement>("[data-project-list]");
+    const entries = Array.from(portfolio.querySelectorAll<HTMLElement>("[data-project-entry]"));
+    const triggers = Array.from(portfolio.querySelectorAll<HTMLButtonElement>("[data-project-trigger]"));
+    const stage = portfolio.querySelector<HTMLElement>("[data-project-stage]");
+    const stageLink = portfolio.querySelector<HTMLAnchorElement>("[data-stage-link]");
+    const stageImage = portfolio.querySelector<HTMLImageElement>("[data-stage-image]");
+    const stageTitle = portfolio.querySelector<HTMLElement>("[data-stage-title]");
+    const stageCategory = portfolio.querySelector<HTMLElement>("[data-stage-category]");
+    const stageExcerpt = portfolio.querySelector<HTMLElement>("[data-stage-excerpt]");
+    const stageMeta = portfolio.querySelector<HTMLElement>("[data-stage-meta]");
+    const stageServices = portfolio.querySelector<HTMLElement>("[data-stage-services]");
+    const stageType = portfolio.querySelector<HTMLElement>("[data-stage-type]");
+    const stageNumber = portfolio.querySelector<HTMLElement>("[data-stage-number]");
     const empty = portfolio.querySelector<HTMLElement>("[data-portfolio-empty]");
     const resultCount = portfolio.querySelector<HTMLElement>("[data-result-count]");
     const resultLabel = portfolio.querySelector<HTMLElement>("[data-result-label]");
-    const status = portfolio.querySelector<HTMLElement>("[data-filter-status]");
+    const filterStatus = portfolio.querySelector<HTMLElement>("[data-filter-status]");
+    const selectionStatus = portfolio.querySelector<HTMLElement>("[data-selection-status]");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const selectProject = (trigger: HTMLButtonElement, announce = true) => {
+      triggers.forEach((item) => {
+        const isActive = item === trigger;
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      if (stageLink) {
+        stageLink.href = trigger.dataset.url ?? "#";
+        stageLink.setAttribute("aria-label", `Explorar el caso ${trigger.dataset.title ?? "seleccionado"}`);
+      }
+      if (stageImage) {
+        stageImage.src = trigger.dataset.image ?? "";
+        stageImage.alt = trigger.dataset.alt ?? "";
+      }
+      if (stageTitle) stageTitle.textContent = trigger.dataset.title ?? "";
+      if (stageCategory) stageCategory.textContent = trigger.dataset.category ?? "";
+      if (stageExcerpt) stageExcerpt.textContent = trigger.dataset.excerpt ?? "";
+      if (stageMeta) stageMeta.textContent = trigger.dataset.meta ?? "";
+      if (stageServices) stageServices.textContent = trigger.dataset.services ?? "";
+      if (stageType) stageType.textContent = trigger.dataset.type ?? "";
+      if (stageNumber) stageNumber.textContent = trigger.dataset.number ?? "";
+      if (announce && selectionStatus) selectionStatus.textContent = `${trigger.dataset.title ?? "Proyecto"} seleccionado.`;
+
+      if (!reduceMotion && stage) {
+        stage.animate(
+          [
+            { opacity: 0.82, transform: "translateY(6px)" },
+            { opacity: 1, transform: "translateY(0)" }
+          ],
+          { duration: 280, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+        );
+      }
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", () => selectProject(trigger));
+      trigger.addEventListener("focus", () => selectProject(trigger, false));
+      trigger.addEventListener("pointerenter", () => selectProject(trigger, false));
+      trigger.addEventListener("keydown", (event) => {
+        if (!['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) return;
+        const visible = triggers.filter((item) => !item.closest<HTMLElement>("[data-project-entry]")?.hidden);
+        const currentIndex = visible.indexOf(trigger);
+        const direction = ['ArrowDown', 'ArrowRight'].includes(event.key) ? 1 : -1;
+        const next = visible[(currentIndex + direction + visible.length) % visible.length];
+        event.preventDefault();
+        next?.focus();
+      });
+    });
 
     chips.forEach((chip) => {
       chip.addEventListener("click", () => {
         const selected = chip.dataset.filter ?? "Todos";
         const selectedLabel = chip.dataset.filterLabel ?? "Todos";
-        const visibleProjects: HTMLElement[] = [];
 
         chips.forEach((item) => {
           const isActive = item === chip;
@@ -98,34 +228,347 @@ const projectCount = (filter: string) =>
           item.setAttribute("aria-pressed", String(isActive));
         });
 
-        projects.forEach((project) => {
-          const shouldShow = selected === "Todos" || project.dataset.group === selected;
-          project.hidden = !shouldShow;
-          if (shouldShow) visibleProjects.push(project);
+        const visibleEntries = entries.filter((entry) => {
+          const shouldShow = selected === "Todos" || entry.dataset.group === selected;
+          entry.hidden = !shouldShow;
+          return shouldShow;
         });
+        const firstVisibleTrigger = visibleEntries[0]?.querySelector<HTMLButtonElement>("[data-project-trigger]");
+        if (firstVisibleTrigger) selectProject(firstVisibleTrigger, false);
 
-        list?.classList.toggle("is-filtered", selected !== "Todos");
-        if (empty) empty.hidden = visibleProjects.length > 0;
-        if (resultCount) resultCount.textContent = String(visibleProjects.length);
-        if (resultLabel) resultLabel.textContent = visibleProjects.length === 1 ? "proyecto seleccionado" : "proyectos seleccionados";
-        if (status) {
-          status.textContent = selected === "Todos"
+        if (empty) empty.hidden = visibleEntries.length > 0;
+        if (resultCount) resultCount.textContent = String(visibleEntries.length);
+        if (resultLabel) resultLabel.textContent = visibleEntries.length === 1 ? "proyecto seleccionado" : "proyectos seleccionados";
+        if (filterStatus) {
+          filterStatus.textContent = selected === "Todos"
             ? "Mostrando la colección completa."
-            : `Mostrando ${visibleProjects.length} ${visibleProjects.length === 1 ? "proyecto" : "proyectos"} en ${selectedLabel}.`;
-        }
-
-        if (!reduceMotion) {
-          visibleProjects.forEach((project, index) => {
-            project.animate(
-              [
-                { opacity: 0, transform: "translateY(14px)" },
-                { opacity: 1, transform: "translateY(0)" }
-              ],
-              { duration: 320, delay: index * 55, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
-            );
-          });
+            : `Mostrando ${visibleEntries.length} ${visibleEntries.length === 1 ? "proyecto" : "proyectos"} en ${selectedLabel}.`;
         }
       });
     });
   });
 </script>
+
+<style>
+  .portfolio-explorer {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(310px, 0.72fr);
+    min-height: 720px;
+    overflow: hidden;
+    border: 1px solid rgba(22, 21, 19, 0.2);
+    border-radius: var(--radius-panel);
+    background: var(--color-ink);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .portfolio-spotlight,
+  .portfolio-spotlight__link {
+    position: relative;
+    min-width: 0;
+    min-height: 720px;
+  }
+
+  .portfolio-spotlight__link {
+    display: block;
+    overflow: hidden;
+    color: white;
+  }
+
+  .portfolio-spotlight img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-narrative) var(--ease-out);
+  }
+
+  .portfolio-spotlight__link:hover img,
+  .portfolio-spotlight__link:focus-visible img {
+    transform: scale(1.035);
+  }
+
+  .portfolio-spotlight__veil {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(12, 12, 11, 0.35), transparent 35%),
+      linear-gradient(0deg, rgba(12, 12, 11, 0.94) 0%, rgba(12, 12, 11, 0.28) 58%, transparent 78%);
+  }
+
+  .portfolio-spotlight__topline {
+    position: absolute;
+    inset: 1.25rem 1.25rem auto;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 0.67rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-spotlight__topline span:first-child {
+    border: 1px solid rgba(255, 255, 255, 0.34);
+    border-radius: var(--radius-pill);
+    padding: 0.45rem 0.7rem;
+    backdrop-filter: blur(12px);
+    background: rgba(12, 12, 11, 0.18);
+  }
+
+  .portfolio-spotlight__content {
+    position: absolute;
+    inset: auto clamp(1.25rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3.2rem);
+    z-index: 1;
+    max-width: 720px;
+  }
+
+  .portfolio-spotlight__category {
+    margin-bottom: 0.55rem;
+    color: var(--color-gold);
+    font-size: 0.7rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-spotlight h3 {
+    max-width: 650px;
+    color: white;
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 7vw, 6.8rem);
+    font-weight: 400;
+    line-height: 0.88;
+    text-wrap: balance;
+  }
+
+  .portfolio-spotlight__excerpt {
+    max-width: 620px;
+    margin-top: 1.1rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(0.9rem, 1.2vw, 1.04rem);
+  }
+
+  .portfolio-spotlight__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 1.5rem;
+    margin-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    padding-top: 1rem;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .portfolio-spotlight__action {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    margin-top: 1.35rem;
+    border-radius: var(--radius-pill);
+    padding: 0.75rem 1rem;
+    background: white;
+    color: var(--color-ink);
+    font-size: 0.78rem;
+    font-weight: 850;
+  }
+
+  .portfolio-index {
+    max-height: 720px;
+    overflow-y: auto;
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+    scrollbar-width: thin;
+  }
+
+  .portfolio-index__entry {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .portfolio-index__trigger {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    width: 100%;
+    gap: 0.9rem;
+    align-items: center;
+    border: 0;
+    padding: 1.15rem 1.05rem;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.62);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+  }
+
+  .portfolio-index__trigger:hover,
+  .portfolio-index__trigger:focus-visible,
+  .portfolio-index__trigger.is-active {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+  }
+
+  .portfolio-index__trigger:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -3px;
+  }
+
+  .portfolio-index__number,
+  .portfolio-index__year {
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+  }
+
+  .portfolio-index__name {
+    display: grid;
+    min-width: 0;
+    gap: 0.22rem;
+  }
+
+  .portfolio-index__name small {
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .portfolio-index__name strong {
+    overflow: hidden;
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+    font-weight: 400;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .portfolio-index__arrow {
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .portfolio-index__trigger.is-active .portfolio-index__arrow,
+  .portfolio-index__trigger:hover .portfolio-index__arrow,
+  .portfolio-index__trigger:focus-visible .portfolio-index__arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .portfolio-index__trigger.is-active .portfolio-index__number {
+    color: var(--color-gold);
+  }
+
+  .portfolio-selection-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .portfolio-disclosure {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+    border-top: 1px solid var(--color-line);
+    padding-top: 1.2rem;
+  }
+
+  .portfolio-disclosure span {
+    color: var(--color-clay);
+    font-size: 0.67rem;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-disclosure p {
+    max-width: 760px;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 900px) {
+    .portfolio-explorer {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .portfolio-spotlight,
+    .portfolio-spotlight__link {
+      min-height: 620px;
+    }
+
+    .portfolio-index {
+      display: flex;
+      max-height: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      border-left: 0;
+      scroll-snap-type: x mandatory;
+    }
+
+    .portfolio-index__entry {
+      flex: 0 0 min(78vw, 420px);
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 0;
+      scroll-snap-align: start;
+    }
+
+    .portfolio-index__trigger {
+      min-height: 98px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .portfolio-spotlight,
+    .portfolio-spotlight__link {
+      min-height: 570px;
+    }
+
+    .portfolio-spotlight h3 {
+      font-size: clamp(3.2rem, 17vw, 4.8rem);
+    }
+
+    .portfolio-spotlight__content {
+      right: 1.1rem;
+      left: 1.1rem;
+    }
+
+    .portfolio-spotlight__excerpt {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+
+    .portfolio-spotlight__proof {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .portfolio-disclosure {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-spotlight img,
+    .portfolio-index__trigger,
+    .portfolio-index__arrow {
+      transition: none;
+    }
+  }
+</style>

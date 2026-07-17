@@ -622,6 +622,63 @@ textarea {
     var(--color-paper);
 }
 
+.works-proof {
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.works-proof__grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.7fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.works-proof__grid > p {
+  max-width: 420px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.works-proof__grid > p span {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--color-clay);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.works-proof dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.works-proof dl > div {
+  min-width: 0;
+  border-left: 1px solid var(--color-line);
+  padding-left: clamp(0.8rem, 2vw, 1.5rem);
+}
+
+.works-proof dt {
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: clamp(1.45rem, 3vw, 2.25rem);
+  line-height: 1;
+}
+
+.works-proof dd {
+  margin: 0.4rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .portfolio-showcase {
   display: grid;
   min-width: 0;
@@ -2245,6 +2302,10 @@ textarea {
     align-items: flex-start;
   }
 
+  .works-proof__grid {
+    grid-template-columns: 1fr;
+  }
+
   .portfolio-editorial-grid,
   .portfolio-editorial-grid.is-filtered {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2273,6 +2334,11 @@ textarea {
 }
 
 @media (max-width: 680px) {
+  .works-proof dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 0;
+  }
+
   .hero {
     min-height: 82svh;
   }

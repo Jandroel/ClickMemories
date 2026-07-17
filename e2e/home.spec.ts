@@ -93,10 +93,14 @@ test("work portfolio presents an editorial selection and grouped filters", async
   await expect(page.getByRole("link", { name: /Proyecto destacado Velo y memoria/ })).toBeVisible();
   await expect(page.getByRole("button", { name: "Todos" })).toBeVisible();
   await page.getByRole("button", { name: /Marcas \+ contenido/ }).click();
-  await expect(page.getByText("Café Aurora")).toBeVisible();
-  await expect(page.getByText("Impulso social")).toBeVisible();
-  await expect(page.getByText(/Mostrando 2 proyectos en Marcas \+ contenido/)).toBeVisible();
-  await expect(page.getByText("Luz de abril")).toBeHidden();
+  await expect(page.locator("[data-project-stage] [data-stage-title]")).toHaveText("Casa Nativa");
+  await page.getByRole("button", { name: "Previsualizar Café Aurora" }).click();
+  await expect(page.locator("[data-project-stage] [data-stage-title]")).toHaveText("Café Aurora");
+  await expect(page.locator("[data-project-stage] [data-stage-image]")).toHaveAttribute("src", "/images/projects/cafe-aurora.webp");
+  await expect(page.getByRole("button", { name: "Previsualizar Café Aurora" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Previsualizar Impulso social" })).toBeVisible();
+  await expect(page.getByText(/Mostrando 4 proyectos en Marcas \+ contenido/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "Previsualizar Luz de abril" })).toBeHidden();
 });
 
 test("services page guides visitors through offers and packages", async ({ page }) => {

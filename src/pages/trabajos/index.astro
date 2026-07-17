@@ -7,7 +7,9 @@ const projects = (await getCollection("trabajos")).sort((a, b) => b.data.date.va
 const featuredProject = projects[0];
 const portfolioProjects = projects.slice(1);
 const featuredYear = featuredProject.data.date.getFullYear();
-const ctaImage = featuredProject.data.gallery[1]?.src ?? featuredProject.data.cover;
+const ctaImage = projects.find((project) => project.id === "casa-nativa")?.data.cover ?? featuredProject.data.cover;
+const completeCases = projects.filter((project) => project.data.projectType === "Caso completo").length;
+const conceptCases = projects.length - completeCases;
 ---
 
 <BaseLayout
@@ -39,6 +41,21 @@ const ctaImage = featuredProject.data.gallery[1]?.src ?? featuredProject.data.co
         <span>{featuredProject.data.category} · {featuredProject.data.location}</span>
         <span class="works-featured__action">Ver historia <span aria-hidden="true">↗</span></span>
       </a>
+    </div>
+  </section>
+
+  <section class="works-proof" aria-label="Alcance de la colección">
+    <div class="container works-proof__grid">
+      <p>
+        <span>Una colección más amplia</span>
+        Casos completos y conceptos transparentes para mostrar dirección, proceso y entrega.
+      </p>
+      <dl>
+        <div><dt>{String(projects.length).padStart(2, "0")}</dt><dd>direcciones visuales</dd></div>
+        <div><dt>{String(completeCases).padStart(2, "0")}</dt><dd>casos completos</dd></div>
+        <div><dt>{String(conceptCases).padStart(2, "0")}</dt><dd>conceptos demostrativos</dd></div>
+        <div><dt>Foto + film</dt><dd>formatos combinados</dd></div>
+      </dl>
     </div>
   </section>
 
